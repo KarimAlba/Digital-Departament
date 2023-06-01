@@ -21,11 +21,18 @@ const Registration = (props: any) => {
 
                     <div className={styles.column}>
                         <input type="text" placeholder="Дата рождения"/>
-                        <input type="сheckbox"/>
+                        <div className='switcher'>
+                            <span className='switcher_sex'>M</span>
+                            <label className='switch'>
+                                <input type="checkbox"/>
+                                <span className="slider round"></span>
+                            </label>
+                            <span className='switcher_sex'>Ж</span>
+                        </div>
                         <input type="text" placeholder="Род деятельности"/>
                         <input type="text" placeholder="Должность"/>
                         <button className={styles['reg-btn']}>
-                            <Link to='/autorisation'>
+                            <Link to='/'>
                                 Зарегистрироваться
                             </Link>
                         </button>

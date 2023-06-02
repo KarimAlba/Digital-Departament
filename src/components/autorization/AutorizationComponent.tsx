@@ -13,8 +13,12 @@ const Autorization = (props: any) => {
                     name="password" placeholder='Введите пароль'
                 />
                 <div className={styles.btns}>
-                    <button>Войти</button>
-                    <a href="">Сброс пароля</a>
+                    <button>
+                        <Link to='/main'>
+                            Войти
+                        </Link>
+                    </button>
+                    <a href="" className={styles['get-password']}>Сброс пароля</a>
                 </div>
                 <button className={styles.registration}>
                     <Link to='/registration'>

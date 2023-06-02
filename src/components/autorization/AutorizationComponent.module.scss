@@ -64,10 +64,13 @@
                 background: #075497;
                 border-radius: 6px;
                 border: none;
-                color: #ffff;
+                
+                a{
+                    color: #ffff;
+                }
             }
 
-            a{
+            .get-password{
                 margin: auto;
                 width: 45%;
                 color: #075497;

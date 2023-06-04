@@ -20,9 +20,17 @@
         .column{
             height: 100%;
             width: 50%;
+            position: relative;
             display: flex;
             flex-flow: column;
             justify-content: start;
+
+            .date-input{
+                cursor: pointer;
+                border: none;
+                border: 1px solid #C1CAD2;
+            }
+            
         }
     }
 
@@ -34,9 +42,6 @@
         margin: 0 0 15px 0%;
         width: 90%;
         text-align: left;
-    }
-
-    input{
         padding:0 7px;
         height: 35px;
         box-sizing: border-box;
@@ -74,8 +79,4 @@
             color: #ffff;
         }
     }
-}
-
-.date-input{
-    cursor: pointer;
 }

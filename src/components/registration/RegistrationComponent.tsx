@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './RegistrationComponent.module.scss';
 import { Link } from 'react-router-dom';
 import IUser from '../../models/IUser';
@@ -9,17 +9,16 @@ const Registration = (props: any) => {
     const [userLogin, setUsersLogin] = useState<string>('');
     const [userEmail, setUsersEmail] = useState<string>('');
     const [userPassword, setUsersPassword] = useState<string>('');
+    const [correctPassword, setCorrectPassword] = useState<boolean>(true);
     const [userBirthday, setUsersBirthday] = useState<string>('');
     const [userSex, setUserSex] = useState<string>('');
     const [userProfession, setUsersProfession] = useState<string>('');
     const [userPosition, setUsersPosition] = useState<string>(''); 
 
-    const [correctPassword, setCorrectPassword] = useState<boolean>(true);
-
     const passwordChecking = (e: any) => {
-        e.target.value == userPassword?
+        e.target.value === userPassword?
             setCorrectPassword(true):
-            setCorrectPassword(false)
+            setCorrectPassword(false);
     }
     
     const handleSwitchClick = () => {
@@ -41,7 +40,6 @@ const Registration = (props: any) => {
     const handlePositionChange = (e: any) => {setUsersPosition(e.target.value)}
 
     const [newUser, setNewUser] = useState<IUser | {}>({});
-
     const handleReqistrationClick = () => {
         const user: IUser = {
             name: userName,
@@ -53,10 +51,27 @@ const Registration = (props: any) => {
             proffession: userProfession,
             position: userPosition
         }
-
         setNewUser(user);
-        console.log(user);
     }
+
+    const [registrationReady, setRegistrationReady] = useState<boolean>(true);
+    const checkRegistrationReady = () => {
+        if (userName && userLogin && userEmail 
+                && userPassword && userBirthday && correctPassword 
+                && userProfession && userPosition 
+            ) {
+                setRegistrationReady(true);
+                console.log(1);
+            } else {
+                console.log(0);
+                setRegistrationReady(false);
+            }
+    }
+
+    useEffect(() => {
+        checkRegistrationReady();
+    }, 
+    [userPosition]);
 
     return(
         <div className='background'>
@@ -77,7 +92,7 @@ const Registration = (props: any) => {
                             type="password" placeholder="Повторите пароль"
                             onInput={passwordChecking}
                             style={correctPassword?
-                                {border:'border: 1px solid #C1CAD2'}: 
+                                {border:'1px solid #C1CAD2'}: 
                                 {border: '1px solid red'}
                             }
                         />
@@ -110,14 +125,18 @@ const Registration = (props: any) => {
                             type="text" placeholder="Должность"
                             onInput={handlePositionChange}
                         />
-                        <button 
-                            className={styles['reg-btn']}
-                            onClick={handleReqistrationClick}
-                        >
-                            <Link to='/'>
-                                Зарегистрироваться
-                            </Link>
-                        </button>
+                        {
+                            !registrationReady? 
+                            <div className={styles['registration-back']}></div>
+                            :<button 
+                                className={styles['reg-btn']}
+                                onClick={handleReqistrationClick}
+                            >
+                                <Link to='/'>
+                                    Зарегистрироваться
+                                </Link>
+                            </button>
+                        }
                     </div>
                 </div>
             </div>

@@ -63,6 +63,15 @@
         border-bottom: 1px solid #309FFF;
     }
 
+    .registration-back{
+        position: absolute;
+        top: 65%;
+        left: 25%;
+        height: 60px;
+        width: 70%;
+        background-color: #ffff;
+    }
+
     .reg-btn{
         height: 40px;
         width: 60%;
@@ -74,9 +83,20 @@
         border-radius: 6px;
         outline: none;
         border: none;
+        animation: show 1.5s linear;
 
         a{
             color: #ffff;
         }
+    }
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
     }
 }

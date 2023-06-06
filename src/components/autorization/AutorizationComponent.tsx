@@ -8,8 +8,12 @@ const Autorization = (props: any) => {
     const [userPassword, setUserPassword] = useState<string>('');
     const [visitor, setVisitor] = useState<IUser | {}>({});
 
-    const handleLoginChange = (e: any) => {setUserLogin(e.target.value)}
-    const handlePasswordChange = (e: any) => {setUserPassword(e.target.value)}
+    const handleLoginChange = (e: any) => {
+        setUserLogin(e.target.value);
+    }
+    const handlePasswordChange = (e: any) => {
+        setUserPassword(e.target.value);
+    }
 
     const handleComeClick = () => {
         const user: IUser = {
@@ -17,6 +21,8 @@ const Autorization = (props: any) => {
             password: userPassword
         } 
         
+        localStorage.setItem('login', user.login);
+        localStorage.setItem('password', user.password);
         setVisitor(user);
         console.log(user);
     }

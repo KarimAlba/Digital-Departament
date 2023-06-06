@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import styles from './RegistrationComponent.module.scss';
+import styles from './style.module.scss'
 import { Link } from 'react-router-dom';
 import IUser from '../../models/IUser';
+import UserProffessionModal from '../modals/UserProffesionModalComponent';
 
 const Registration = (props: any) => {
     const [sexMan, setSexMan] = useState<boolean>(true);
@@ -12,7 +13,6 @@ const Registration = (props: any) => {
     const [correctPassword, setCorrectPassword] = useState<boolean>(true);
     const [userBirthday, setUsersBirthday] = useState<string>('');
     const [userSex, setUserSex] = useState<string>('');
-    const [userProfession, setUsersProfession] = useState<string>('');
     const [userPosition, setUsersPosition] = useState<string>(''); 
 
     const passwordChecking = (e: any) => {
@@ -36,8 +36,11 @@ const Registration = (props: any) => {
             setUserSex('male')
         } else setUserSex('female')
     }
-    const handleProffesionChange = (e: any) => {setUsersProfession(e.target.value)}
+
     const handlePositionChange = (e: any) => {setUsersPosition(e.target.value)}
+
+    const [userProfession, setUsersProfession] = useState<string>('');
+    const handleProffesionChange = (phrase: string) => {setUsersProfession(phrase)}
 
     const [newUser, setNewUser] = useState<IUser | {}>({});
     const handleReqistrationClick = () => {
@@ -117,10 +120,7 @@ const Registration = (props: any) => {
                             </label>
                             <span className='switcher_sex' style={sexMan? {color: '#C1CAD2'}: {color: '#FF3C82', fontWeight:700}}>Ж</span>
                         </div>
-                        <input 
-                            type="text" placeholder="Род деятельности"
-                            onInput={handleProffesionChange}
-                        />
+                        <UserProffessionModal handleProffesionChange={handleProffesionChange}/>
                         <input 
                             type="text" placeholder="Должность"
                             onInput={handlePositionChange}

@@ -1,9 +1,8 @@
 import './App.scss';
 import { Routes, Route } from 'react-router-dom';
-import Autorization from '../components/autorization/AutorizationComponent';
-import Registration from '../components/registration/RegistrationComponent';
-import Main from '../components/mainComponent/MainComponent';
-
+import Autorization from '../components/AutorizationComponent';
+import Registration from '../components/RegistrationComponent';
+import Main from '../components/MainComponent';
 function App() {
   return (
     <div className="App">

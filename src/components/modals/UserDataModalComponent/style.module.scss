@@ -1,0 +1,110 @@
+.modal{
+    position: fixed;
+    top: 75px;
+    left: 73%;
+    padding:7px 0 7px 1%;
+    width: 25%;
+    height: 85%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    box-sizing: border-box;
+
+    h3{
+        margin:5px 0 0 0;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 20px;
+        color: #707070;
+    }
+
+    input{
+        padding: 0 0 0 2%;
+        width: 90%;
+        height: 30px;
+        border: 1px solid #C1CAD2;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    .email{
+        position: relative;
+        width: 90%;
+        display: flex;
+
+        .email_background{
+            padding: 7px 5px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 63%;
+            height: 35px;
+            box-sizing: border-box;
+            background: #D0CBCB;
+            border: 1px solid #C1CAD2;
+            border-radius: 6px;
+            font-weight: 400;
+            font-size: 14px;
+            color: #626567;
+        }
+
+        .email_input{
+            width: 60%;
+        }
+
+        .email_img{
+            margin: auto 10px;
+            width: 20px;
+            height: 20px;
+            background-image: url(../../../assets/images/icons/pen-icon.svg);
+            background-repeat: no-repeat;
+            background-size: 22px;
+            cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 2 2, pointer;
+        }
+    }
+
+    .password{
+        width: 40%;
+        height: 35px;
+        background: #FFFFFF;
+        border: 1px solid #C1CAD2;
+        border-radius: 6px;
+        color: #626567;
+    }
+
+    .password-input{
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .proffession{
+        margin: -20px 0 0 0;
+    }
+
+    .btns{
+        width: 92%;
+        display: flex;
+        justify-content: space-between;
+
+        button{
+            width: 30%;
+            height: 25px;
+            color: #FFFFFF;
+            background: #10599D;
+            border-radius: 12px;
+            border: none;
+        }
+        
+        .exit{
+            background: #E62553;
+        }
+    }
+
+    .date-input{
+        padding: 0 5px 0 5px;
+        box-sizing: border-box;
+    }
+}

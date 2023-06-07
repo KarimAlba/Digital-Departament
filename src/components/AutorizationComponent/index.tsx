@@ -1,4 +1,4 @@
-import styles from './AutorizationComponent.module.scss';
+import styles from './style.module.scss'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import IUser from '../../models/IUser';

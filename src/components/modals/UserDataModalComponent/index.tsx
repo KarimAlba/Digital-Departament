@@ -1,6 +1,7 @@
-import styles from './style.module.scss'
+import styles from './style.module.scss';
 import { useState } from 'react';
-import IUser from '../../../models/IUser'
+import IUser from '../../../models/IUser';
+import UserProffessionModal from '../UserProffesionModalComponent';
 
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;
@@ -37,6 +38,9 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
     const [userBirthday, setUsersBirthday] = useState<string>('');
     const handleBirthdayChange = (e: any) => {setUsersBirthday(e.target.value)};
 
+    const [userProfession, setUsersProfession] = useState<string>('');
+    const handleProffesionChange = (phrase: string) => {setUsersProfession(phrase)};
+
     return(
         <div className={styles.modal}>
             <h3>Имя</h3>
@@ -60,7 +64,8 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
             </div>
             <h3>Пароль</h3>
             {abilityPassword?
-                <input 
+                <input
+                    className={styles['password-input']} 
                     type="text" value={userPassword} 
                     onInput={handlePasswordChange}
                     onBlur={() => setAbilityPassword(false)}
@@ -85,7 +90,9 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
                 </label>
                 <span className='switcher_sex' style={sexMan? {color: '#C1CAD2'}: {color: '#FF3C82', fontWeight:700}}>Ж</span>
             </div>
-            <input type="text" placeholder='Род деятельности' className={styles.proffession}/>
+            <div style={{position: 'relative'}}>
+                <UserProffessionModal handleProffesionChange={handleProffesionChange}/>
+            </div>
             <input type="text"  placeholder='Должность'/>
             <div className={styles.btns}>
                 <button>Сохранить</button>

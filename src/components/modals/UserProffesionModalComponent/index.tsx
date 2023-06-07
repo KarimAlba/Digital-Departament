@@ -7,10 +7,18 @@ interface UserProffessionModal{
 
 const UserProffessionModal = (props: UserProffessionModal) => {
     const { handleProffesionChange } = props;
-    const [selectedProf, setSelectedProf] = useState<string>('ВУЗ');
-    const setUniversity = () => {setSelectedProf('ВУЗ')}
-    const setWork = () => {setSelectedProf('Предприятие')}
-    const setOther = () => {setSelectedProf('Другое')}
+    const [selectedProf, setSelectedProf] = useState<string>('');
+    const setUniversity = () => {
+        setSelectedProf('ВУЗ');
+        setIsOpen(false);
+    }
+    const setWork = () => {
+        setSelectedProf('Предприятие');
+        setIsOpen(false);
+    }
+    const setOther = (e: any) => {
+        setSelectedProf(e.target.value);
+    }
 
     const getResultOfProffessionSelect = () => {
         handleProffesionChange(selectedProf);
@@ -21,20 +29,30 @@ const UserProffessionModal = (props: UserProffessionModal) => {
     },
     []);
 
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
 
     return (
         <div>
             {isOpen? 
+                <div>
+                    <input 
+                        type="text" value={selectedProf}
+                    />
+                    <ul className={styles.list}>
+                        <li onClick={setUniversity}>ВУЗ</li>
+                        <li onClick={setWork}>Предприятие</li>
+                        <input 
+                            type='text' onInput={setOther} placeholder='Другое'
+                            onBlur={() => setIsOpen(false)} className={styles['other-input']}
+                        />
+                    </ul>
+                </div>:
                 <input 
-                    type="text" placeholder='Род деятельности' 
-                    onFocus={() => setIsOpen(false)}
-                />:
-                <ul onBlur={() => setIsOpen(true)} className={styles.list}>
-                    <li onClick={setUniversity}>ВУЗ</li>
-                    <li onClick={setWork}>Предприятие</li>
-                    <li onClick={setOther}>Другое</li>
-                </ul>
+                    type="text" placeholder='Род деятельности'
+                    value={selectedProf? selectedProf: ''} 
+                    onClick={() => setIsOpen(true)}
+                />
             }
         </div>
     )

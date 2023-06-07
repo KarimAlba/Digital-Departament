@@ -120,7 +120,9 @@ const Registration = (props: any) => {
                             </label>
                             <span className='switcher_sex' style={sexMan? {color: '#C1CAD2'}: {color: '#FF3C82', fontWeight:700}}>Ж</span>
                         </div>
-                        <UserProffessionModal handleProffesionChange={handleProffesionChange}/>
+                        <div style={{position: 'relative'}}>
+                            <UserProffessionModal handleProffesionChange={handleProffesionChange}/>
+                        </div>
                         <input 
                             type="text" placeholder="Должность"
                             onInput={handlePositionChange}

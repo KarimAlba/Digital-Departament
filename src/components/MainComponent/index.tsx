@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styles from './style.module.scss'
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import UserDataModal from '../modals/UserDataModalComponent';
 import IUser from '../../models/IUser';
-import IBook from '../../models/IBook';
+import PersonalBooks from '../PersonalBooksComponent';
+import License from '../LicenseComponent';
+import LastBook from '../LastBookComponent';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -14,45 +16,8 @@ const Main = (props: any) => {
         password: '111',
         email: 'karim_skiy@mail.ru',
         name: 'Карим Фаткуллин',
+        gender: 0
     }
-
-    const exampleBook: IBook = {
-        name: "Теория ракетных двигателей",
-        author: "Алемасов В.И., Дрегалин А.Ф., Тишин А.П.",
-        prefer: true,
-        date: '1964'
-    } 
-
-    const popularBooks: IBook[] = [exampleBook];
-
-    const authorPrepairing = (arr: string) =>{
-        if(arr.length > 14) {
-            const newAuthors = arr.slice(0, 11);
-            const result = newAuthors + '...'
-            return result;
-        } else {
-            return arr;
-        }
-    }
-
-    const popularBooksBlock = popularBooks.map(book => (
-        <div className={styles.book} key={book.name + book.author}>
-            <div 
-                className={styles['book_card-img']}
-                key={book.name}
-            ></div>
-            <div 
-                className={styles['book_footer']}
-                key={book.author}
-            >
-                <p key={book.author + book.name}>
-                    {authorPrepairing(book.author)}
-                </p>
-                <h4 key={book.name + 'aqa'}>{book.name}</h4>
-                <span key={book.name + 'aqa' +book.author}>{book.date}</span>
-            </div>
-        </div>
-    ))
 
     return (
         <div className={styles['main-container']}>
@@ -60,15 +25,15 @@ const Main = (props: any) => {
                 <header>
                     <div className={styles.logo}></div>
                     <input type="text" className={styles.search}/>
-                    <div className={styles.book}></div>
-                    <div className={styles.star}></div>
+                    <Link to='lastbook'  className={styles.book}></Link>
+                    <Link to='/'  className={styles.star}></Link>
                     <div className={styles.face} onClick={handleFaceClick}></div>
                 </header>
                 <nav>
-                    <Link to='/'>Вся литература</Link>
+                    <Link to='personalbooks'>Вся литература</Link>
                     <Link to='/'>Предметы</Link>
                     <Link to='/'>Тэги</Link>
-                    <Link to='/'>Правообладателям</Link>
+                    <Link to='license'>Правообладателям</Link>
                 </nav>
             </div>
             <div className={styles['user-library']}>
@@ -76,12 +41,12 @@ const Main = (props: any) => {
                     <UserDataModal handleFaceClick={handleFaceClick} exampleUser={exampleUser}/> 
                     : null
                 }
-                <div className={styles['popular-container']}>
-                    <h2>Популярное</h2>
-                    <div className={styles.books}>
-                        {popularBooksBlock}
-                    </div>
-                </div>
+
+                <Routes>
+                    <Route index path='personalbooks' element={<PersonalBooks/>}/>
+                    <Route path='license' element={<License/>}/>
+                    <Route path='lastbook' element={<LastBook/>}/>
+                </Routes>
             </div>
         </div>
     )

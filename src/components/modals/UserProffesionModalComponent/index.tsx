@@ -1,56 +1,69 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './styles.module.scss'
 
 interface UserProffessionModal{
-    handleProffesionChange: Function;
+    handleCareerChange: Function;
 }
 
 const UserProffessionModal = (props: UserProffessionModal) => {
-    const { handleProffesionChange } = props;
-    const [selectedProf, setSelectedProf] = useState<string>('');
+    const { handleCareerChange } = props;
+    const [selectedCareer, setSelectedCareer] = useState<string>('');
+
     const setUniversity = () => {
-        setSelectedProf('ВУЗ');
+        setSelectedCareer('ВУЗ');
         setIsOpen(false);
+        handleCareerChange('ВУЗ');
     }
+
     const setWork = () => {
-        setSelectedProf('Предприятие');
+        setSelectedCareer('Предприятие');
         setIsOpen(false);
-    }
-    const setOther = (e: any) => {
-        setSelectedProf(e.target.value);
+        handleCareerChange('Предприятие');
     }
 
-    const getResultOfProffessionSelect = () => {
-        handleProffesionChange(selectedProf);
+    const setOther = () => {
+        setIsOpen(false);
+        setIsOpenOther(true);
     }
 
-    useEffect(() => {
-        getResultOfProffessionSelect();
-    },
-    []);
+    const getResultOfOther = (e: any) => {
+        setSelectedCareer(e.target.value);
+        handleCareerChange(e.target.value);
+    }
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpenOther, setIsOpenOther] = useState<boolean>(false);
 
+    const handleBlurOther = (e: any) => {
+        if (!e.target.value) {
+            setIsOpen(false);
+            setIsOpenOther(false);
+        }
+    }
 
     return (
         <div>
-            {isOpen? 
+            {
+                isOpenOther? 
+                <input 
+                    type="text" placeholder='Другое' 
+                    onInput={(e: any) => getResultOfOther(e)}
+                    onBlur={(e: any) => handleBlurOther(e)}
+                />:
+                isOpen? 
                 <div>
                     <input 
-                        type="text" value={selectedProf}
+                        type="text" defaultValue={selectedCareer}
                     />
                     <ul className={styles.list}>
-                        <li onClick={setUniversity}>ВУЗ</li>
-                        <li onClick={setWork}>Предприятие</li>
-                        <input 
-                            type='text' onInput={setOther} placeholder='Другое'
-                            onBlur={() => setIsOpen(false)} className={styles['other-input']}
-                        />
+                        <li onClick={() => setUniversity()}>ВУЗ</li>
+                        <li onClick={() => setWork()}>Предприятие</li>
+                        <li onClick={() => setOther()}>Другое</li>
                     </ul>
                 </div>:
                 <input 
                     type="text" placeholder='Род деятельности'
-                    value={selectedProf? selectedProf: ''} 
+                    defaultValue={selectedCareer? selectedCareer: ''} 
                     onClick={() => setIsOpen(true)}
                 />
             }

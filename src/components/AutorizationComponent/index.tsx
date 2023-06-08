@@ -24,7 +24,6 @@ const Autorization = (props: any) => {
         localStorage.setItem('login', user.login);
         localStorage.setItem('password', user.password);
         setVisitor(user);
-        console.log(user);
     }
 
     return (
@@ -43,7 +42,7 @@ const Autorization = (props: any) => {
                 />
                 <div className={styles.btns}>
                     <button onClick={handleComeClick}>
-                        <Link to='main'>
+                        <Link to='main/personalbooks'>
                             Войти
                         </Link>
                     </button>

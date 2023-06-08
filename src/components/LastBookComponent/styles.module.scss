@@ -1,0 +1,124 @@
+.book{
+    display: flex;
+    justify-content: space-around;
+
+    .book_container{
+        width: 48%;
+        display: flex;
+        flex-flow: column;
+        text-align: center;
+        
+        .book_img{
+            margin: 20px auto 10px auto;
+            width: 40%;
+            height: 370px;
+            background: url(../../assets/images/icons/default-book-icon.svg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        .reader{
+            width: 40%;
+            height: 50px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0px 0px 10px 4px rgba(53, 69, 206, 0.25);
+            border: none;
+            border-radius: 8px;
+
+            button{
+                margin: auto;
+                width: 40%;
+                height: 30px;
+                background: rgba(255, 255, 255, 0.27);
+                border: none;
+                border-radius: 8px;
+                color: #ffff;
+            }
+        }
+    }
+
+    .book_description{
+        position: relative;
+        width: 48%;
+        display: flex;
+        flex-flow: column;
+
+        h2{
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 28px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #323965;
+        }
+
+        h4{
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: rgba(31, 34, 53, 0.9);
+        }
+
+        .book_date{
+            position: absolute;
+            top: 20px;
+            left: 90%;
+            color: #0B1839;
+        }
+
+        p{
+            height: 120px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+            color: #000000;
+        }
+    }
+
+    .book_description_footer{
+        width: 65%;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        .subjects{
+            display: flex;
+            justify-content: space-between;
+
+            .subject{
+                width: 47%;
+                height: auto;
+                padding: 2px 0;
+                text-align: center;
+                box-sizing: border-box;
+                border-radius: 8px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 11px;
+                line-height: 15px;
+                color: #000000;
+            }
+        }
+
+        a{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 14px;
+            color: #0D222E;
+            text-decoration: underline;
+        }
+    }
+}

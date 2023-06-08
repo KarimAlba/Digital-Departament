@@ -13,6 +13,23 @@
     border-radius: 20px;
     box-sizing: border-box;
 
+    .close-btn{
+        top: 10px;
+        left: 90%;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: #fff;
+    }
+
+    .close-btn:hover{
+        color: #10599D;
+        border: 1px solid #10599D;
+        transform: scale(1.2);
+    }
+
     h3{
         margin:5px 0 0 0;
         font-weight: 400;
@@ -92,14 +109,19 @@
         button{
             width: 30%;
             height: 25px;
-            color: #FFFFFF;
             background: #10599D;
             border-radius: 12px;
             border: none;
+            color: #FFFFFF;
         }
         
         .exit{
             background: #E62553;
+
+            a{
+                text-decoration: none;
+                color: #FFFFFF;
+            }
         }
     }
 

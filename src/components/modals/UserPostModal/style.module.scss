@@ -1,0 +1,30 @@
+.post-container{
+    position: relative;
+    .list{
+        top: -70px;
+        left: 30%;
+        position: absolute;
+        width: 70%;
+        height: 100px;
+        overflow-y: scroll;
+        z-index: 2;
+    
+        li{
+            margin: 2px 0;
+            padding: 2px 2px;
+            width: 90%;
+            height: 25px;
+            background: #FFFFFF;
+            border: 1px solid #C1CAD2;
+            border-radius: 6px;
+            box-sizing: border-box;
+            color: black;
+            list-style-type: none;
+            z-index: 2;
+        }
+    
+        li:hover{
+            background: #C1CAD2;
+        }
+    }
+}

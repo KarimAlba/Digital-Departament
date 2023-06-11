@@ -1,5 +1,7 @@
-import IBook from "../../models/IBook";
+import IBook from '../../../models/IBook';
 import styles from './styles.module.scss';
+import BookImg from '../../../assets/images/icons/default-book-icon.svg';
+import PreferBook from '../../../assets/images/icons/prefer-icon.svg';
 
 const PersonalBooks = (props: any) => {
     const exampleBook1: IBook = {
@@ -15,7 +17,7 @@ const PersonalBooks = (props: any) => {
         prefer: true,
         date: '2013'
     } 
-    
+     
     const popularBooks: IBook[] = [exampleBook1, exampleBook2];
 
     const authorPrepairing = (arr: string) =>{
@@ -30,18 +32,18 @@ const PersonalBooks = (props: any) => {
 
     const popularBooksBlock = popularBooks.map(book => (
         <div className={styles.book} key={book.name + book.author}>
-            {
-                book.prefer? 
-                <div 
+            {book.prefer 
+                ? <img 
+                    src={PreferBook}
                     className={styles['book_prefer']}
                     key={book.name + 'books prefer'}
-                ></div>: 
-                null
+                /> 
+                : null
             }
-            <div 
+            <img
                 className={styles['book_card-img']}
-                key={book.name}
-            ></div>
+                key={book.name} src={BookImg}
+            />
             <div 
                 className={styles['book_footer']}
                 key={book.author}

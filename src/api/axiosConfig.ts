@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://192.168.160.130:3000';
+const baseUrl = 'http://94.26.229.117:3000';
 
 axios.defaults.baseURL = baseUrl;
 

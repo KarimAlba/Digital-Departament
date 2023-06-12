@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import IUser from '../../../models/IUser';
 import UserProffessionModal from '../../modals/UserProffesionModal';
 import AccountAPI from '../../../api/AccountAPI';
 import UserPostModal from '../../modals/UserPostModal';
-import Checkbox from '../Checkbox';
+
+import Switcher from '../Switcher';
 import Password from '../Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
+import EnumGender from '../../../models/EnumGender';
 
 const Registration = (props: any) => {
-    const [gender, setGender] = useState<number>(0);
+    const [gender, setGender] = useState<EnumGender>(EnumGender.Male);
     const [userName, setUsersName] = useState<string>('');
     const [userLogin, setUsersLogin] = useState<string>('');
     const [userEmail, setUsersEmail] = useState<string>('');
@@ -27,14 +29,10 @@ const Registration = (props: any) => {
     const [isActiveRepeatPassword, setIsActiveRepeatPassword] = useState<boolean>(false);
     const [showedRepeatPassword, setShowedRepeatPassword] = useState<boolean>(false); 
     const [userCareer, setUsersCareer] = useState<string>('');
-    const [registrationReady, setRegistrationReady] = useState<boolean>(true);
-    const [isOpenCareer, setIsOpenCareer] = useState<boolean>(false);
-    const [isOpenPost, setIsOpenPost] = useState<boolean>(false);
+    const [mistakesArr, setMistakesArr] = useState<string[]>([]);
+    const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false); 
 
-    const openModals = () => {
-        setIsOpenCareer(false);
-        setIsOpenPost(false);
-    }
+    const navigate = useNavigate();
 
     const passwordChecking = (e: any) => {
         e.target.value === userPassword?
@@ -83,17 +81,62 @@ const Registration = (props: any) => {
         }
         setNewUser(user);
         sendReq(user);
+        checkRegistrationReady();
     }
 
     const checkRegistrationReady = () => {
-        if (userName && correctName && userLogin && correctLogin 
-                && userEmail && correctEmail
-                && userPassword && userBirthDate && correctPassword 
-                && userCareer && userPost
-            ) {
-            setRegistrationReady(true);
+        const phraseArr: string[] = [];
+
+        if (!userName) {
+            phraseArr.push('Заполните поле "Имя"');
+        }
+
+        if (!correctName) {
+            phraseArr.push('Некорректно заполнено поле "Имя"');
+        }
+
+        if (!userLogin) {
+            phraseArr.push('Заполните поле "Логин"');
+        }
+
+        if (!correctLogin) {
+            phraseArr.push('Поле "Логин" должно состоять не менее чем из 6 символов');
+        }
+
+        if (!userEmail) {
+            phraseArr.push('Заполните поле "Email"');
+        }
+
+        if (!correctEmail) {
+            phraseArr.push('Некорректно заполнено поле "Email"');
+        }
+
+        if (!userPassword) {
+            phraseArr.push('Заполните поле "Пароль"');
+        }
+
+        if (!correctPassword) {
+            phraseArr.push('Пароли не совпадают');
+        }
+
+        if (!userBirthDate) {
+            phraseArr.push('Заполните поле "Дата рождения"');
+        }
+
+        if (!userCareer) {
+            phraseArr.push('Заполните поле "Род деятельности"');
+        }
+
+        if (!userPost) {
+            phraseArr.push('Заполните поле "Должность"');
+        }
+
+        if (phraseArr.length > 0) {
+            setMistakesArr(phraseArr);
+            setIsOpenMistakes(true);
         } else {
-            setRegistrationReady(false);
+            navigate('/');
+            setIsOpenMistakes(false);
         }
     }
 
@@ -122,16 +165,13 @@ const Registration = (props: any) => {
         }
     }
 
-    const getGender = (value: number) => {
+    const getGender = (value: EnumGender) => {
         setGender(value);
     }
 
-    useEffect(() => {
-        checkRegistrationReady();
-    }, [userPost]);
-
     return(
         <div className='background'>
+            {isOpenMistakes? <MistakeModal phraseArr={mistakesArr}/> : null}
             <div className={styles.registration}>
                 <h2>Регистрация</h2>
                 <div className={styles['columns-container']}>
@@ -149,7 +189,6 @@ const Registration = (props: any) => {
                                 ? {border: '1px solid #C1CAD2'}
                                 : {border: '1px solid red'}  
                             }
-                            onClick={() => openModals()}
                         />
                         <input 
                             type="email" placeholder="Email" onInput={handleEmailChange}
@@ -157,12 +196,10 @@ const Registration = (props: any) => {
                                 ? {border: '1px solid #C1CAD2'}
                                 : {border: '1px solid red'}  
                             }
-                            onClick={() => openModals()}
                         />
                         <Password getPasswordValue={getPasswordValue}/>  
                         <div  
                             className={styles.password}
-                            onClick={() => openModals()}
                         >
                            {isActiveRepeatPassword
                                 ? <label htmlFor="repeat-password">Повторите пароль</label>
@@ -207,27 +244,20 @@ const Registration = (props: any) => {
                             type="text"
                             onFocus={(e:any) => e.target.type = 'date'}
                             onBlur={(e:any) => e.target.type = 'text'}
-                            onClick={() => openModals()}
                             onInput={handleBirthDateChange} 
                             min="1946-01-01" max="2020-12-31"
                         />
-                        <Checkbox getGender={getGender}/>
+                        <Switcher getGender={getGender} genderValue={EnumGender.Female}/>
                         <div style={{position: 'relative'}}>
-                            <UserProffessionModal handleCareerChange={handleCareerChange} isOpenCareer={isOpenCareer}/>
+                            <UserProffessionModal handleCareerChange={handleCareerChange}/>
                         </div>
-                        <UserPostModal handlePostChange={handlePostChange} isOpenPost={isOpenPost}/>
-                        {!registrationReady
-                            ? <div className={styles['registration-back']}></div> 
-                            : null 
-                        }
-                            <button 
-                                className={styles['reg-btn']}
-                                onClick={handleReqistrationClick}
-                            >
-                                <Link to='/'>
-                                    Зарегистрироваться
-                                </Link>   
-                            </button>
+                        <UserPostModal handlePostChange={handlePostChange}/>
+                        <button 
+                            className={styles['reg-btn']}
+                            onClick={handleReqistrationClick}
+                        >
+                            Зарегистрироваться  
+                        </button>
 
                     </div>
                 </div>

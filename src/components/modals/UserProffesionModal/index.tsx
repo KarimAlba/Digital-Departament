@@ -3,13 +3,13 @@ import styles from './styles.module.scss';
 
 interface UserProffessionModal{
     handleCareerChange: Function;
-    isOpenCareer: boolean;
+    defVal?: string;
 }
 
 const UserProffessionModal = (props: UserProffessionModal) => {
-    const { handleCareerChange, isOpenCareer } = props;
+    const { handleCareerChange, defVal } = props;
     const [selectedCareer, setSelectedCareer] = useState<string>('');
-    const [isOpen, setIsOpen] = useState<boolean>(isOpenCareer);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isOpenOther, setIsOpenOther] = useState<boolean>(false);
 
     const setUniversity = () => {
@@ -74,7 +74,7 @@ const UserProffessionModal = (props: UserProffessionModal) => {
                     </div>
                     : <input 
                         type="text" placeholder='Род деятельности'
-                        defaultValue={selectedCareer? selectedCareer: ''} 
+                        defaultValue={selectedCareer? selectedCareer: defVal} 
                         onClick={() => setIsOpen(true)}
                     />
             }

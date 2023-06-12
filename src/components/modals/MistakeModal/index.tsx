@@ -2,18 +2,22 @@ import styles from './style.module.scss';
 import { useEffect, useState } from 'react';
 
 interface MistakeModalPropsTypes{
-    phrase: string;
+    phraseArr: string[];
 }
 
 const MistakeModal = (props: MistakeModalPropsTypes) => {
-    const { phrase } = props;
+    const { phraseArr } = props;
     const [isOpen, setIsOpen] = useState<boolean>(true);
 
     const closeModal = () => {
         setTimeout(() => {
             setIsOpen(false);
-        }, 2000);
+        }, 3000);
     }
+
+    const messages = phraseArr.map(item => (
+        <p key={item + String(new Date())}>{item}</p>
+    ))
 
     useEffect(() => {
         closeModal();
@@ -22,7 +26,8 @@ const MistakeModal = (props: MistakeModalPropsTypes) => {
     return (
         isOpen
             ? <div className={styles.modal}>
-                <h2>{`Ошибка в ${phrase}`}</h2>
+                <h2>Проверьте правильность заполнения формы</h2>
+                {messages}
             </div>
             : null
     )

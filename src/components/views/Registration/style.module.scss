@@ -68,15 +68,6 @@
         }
     }
 
-    .registration-back{
-        position: absolute;
-        top: 65%;
-        left: 25%;
-        height: 60px;
-        width: 70%;
-        background-color: #ffffff55;
-    }
-
     .reg-btn{
         height: 40px;
         width: 60%;
@@ -88,9 +79,6 @@
         border-radius: 6px;
         outline: none;
         border: none;
-
-        a{
-            color: #ffff;
-        }
+        color: #ffff;
     }
 }

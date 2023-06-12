@@ -1,21 +1,31 @@
 import styles from './style.module.scss';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import IServerUser from '../../../models/IServerUser';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
 import IVisitor from '../../../models/IVisitor';
 import Password from '../Password';
+import MistakeModal from '../../modals/MistakeModal';
 
 const Autorization = (props: any) => {
     const [userLogin, setUserLogin] = useState<string>('');
     const [userPassword, setUserPassword] = useState<string>('');
-    const [correctData, setCorrectData] = useState<boolean>(true);
+    const [mistakesArr, setMistakesArr] = useState<string[]>([]);
+    const navigate = useNavigate();
+    const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
 
-    const handleLoginChange = (e: any) => {setUserLogin(e.target.value)};
-    const getPasswordValue = (phrase: string) => {setUserPassword(phrase)};
+    const handleLoginChange = (e: any) => {
+        setUserLogin(e.target.value);
+        setIsOpenMistakes(false);
+    };
+    const getPasswordValue = (phrase: string) => {
+        setUserPassword(phrase);
+        setIsOpenMistakes(false);
+    };
 
-    const handleComeClick = () => {
+    const handleComeClick = (e: any) => {
+        e.preventDefault();
         const user: IVisitor = {
             login: userLogin,
             password: userPassword
@@ -23,34 +33,48 @@ const Autorization = (props: any) => {
         sendReq(user);
     }
 
+    const fillLocalStorage = (person: IServerUser) => {
+        localStorage.setItem('name', String(person.name));
+        localStorage.setItem('login', String(person.login));
+        localStorage.setItem('email', String(person.email));
+        localStorage.setItem('birthDate', String(person.birthDate));
+        localStorage.setItem('gender', String(person.gender));
+        localStorage.setItem('career', String(person.career));
+        localStorage.setItem('post', String(person.post));
+    }
+
     const sendReq = (user: IServerUser) => {
         AccountAPI.autorization(user)
             .then(response => {
                 if (response.status <= 204) {
                     const user = response.data.user;
-                    for (let key in user) {
-                        localStorage.setItem(`${key}`, user.key);
-                    }
-                    setCorrectData(true);
-                    console.log(response);
+                    fillLocalStorage(user);
+                    console.log(user);
                     localStorage.setItem('token', response.data.token);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
-                } else {
-                    setCorrectData(false);
+                    navigate('main/personalbooks');
+                    setIsOpenMistakes(false);
                 }
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error.response.data.message);
+                const copyMistakesArr = Object.assign([], mistakesArr);
+                copyMistakesArr.push(error.response.data.message);
+                setMistakesArr(copyMistakesArr);
+                setIsOpenMistakes(true);
+            });
+    }
+
+    const checkToken = () => {
+        if (localStorage.getItem('token')) {
+            
+        }
     }
 
     return (
         <div className={styles.autorization}>
-            {!correctData
-                ? (<div className={styles.message}>
-                    <h3>Проверьте правильность введенных данных</h3>
-                </div>)
-                :  null
-            }
-            <form action="">
+            {isOpenMistakes ? <MistakeModal phraseArr= {mistakesArr}/> : null}
+            <form>
                 <h2>Авторизация</h2>
                 <input 
                     type="text" placeholder="Логин/Email"
@@ -59,19 +83,18 @@ const Autorization = (props: any) => {
                 />
                 <Password getPasswordValue={getPasswordValue}/>
                 <div className={styles.btns}>
-                    <button onClick={handleComeClick}>
-                        <Link to={'/main/personalbooks'}>
-                            Войти
-                        </Link>
+                    <button onClick={(e: any) => handleComeClick(e)}>
+                        Войти
                     </button>
                     <button className={styles['password-new-btn']}>
                         Сброс пароля
                     </button>
                 </div>
-                <button className={styles.registration}>
-                    <Link to='registration'>
-                        Зарегистрироваться
-                    </Link>
+                <button 
+                    className={styles.registration}
+                    onClick={() => navigate('registration')}
+                >
+                    Зарегистрироваться
                 </button>
             </form>
         </div>

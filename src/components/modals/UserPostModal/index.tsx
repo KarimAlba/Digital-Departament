@@ -3,13 +3,13 @@ import { useState } from 'react';
 
 interface UserPostModalPropsTypes{
     handlePostChange: Function;
-    isOpenPost: boolean;
+    defVal?: string;
 }
 
 const UserPostModal = (props: UserPostModalPropsTypes) => {
-    const { handlePostChange, isOpenPost }= props;
+    const { handlePostChange, defVal }= props;
     const [selectedPost, setSelectedPost] = useState<string>('');
-    const [isOpen, setIsOpen] = useState<boolean>(isOpenPost);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isOpenOther, setIsOpenOther] = useState<boolean>(false);
 
     const setUserCareer = (e: any) => {
@@ -63,11 +63,6 @@ const UserPostModal = (props: UserPostModalPropsTypes) => {
         setIsOpenOther(true);
     };
 
-    const getResultOfOther = (e: any) => {
-        setSelectedPost(e.target.value);
-        handlePostChange(e.target.value);
-    };
-
     const handleBlurOther = (e: any) => {
         if (!e.target.value) {
             setIsOpen(false);
@@ -101,7 +96,7 @@ const UserPostModal = (props: UserPostModalPropsTypes) => {
                     </div>)
                     : (<input 
                         type="text" placeholder='Должность'
-                        defaultValue={selectedPost? selectedPost: ''} 
+                        defaultValue={selectedPost? selectedPost: defVal} 
                         onClick={() => setIsOpen(true)}
                     />)
             }

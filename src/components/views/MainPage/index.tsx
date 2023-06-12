@@ -1,34 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './style.module.scss'
 import { Link, Routes, Route } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
-import IUser from '../../../models/IUser';
 import PersonalBooks from '../PersonalBooks';
 import License from '../License';
 import LastBook from '../LastBook';
-import Gender from '../../../models/EnumGender';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
+import MistakeModal from '../../modals/MistakeModal/index';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
-    const handleFaceClick = () => {setUserData(!userData)};
-
-    const exampleUser: IUser = {
-        login: 'karim_skiy',
-        password: '111',
-        email: 'karim_skiy@mail.ru',
-        name: 'Карим Фаткуллин',
-        gender: Gender.Male,
-        birthDate: '12.01.2001',
-        career: 'ВУЗ',
-        post: 'Студент'
-    }
+    const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
+    const handleFaceClick = () => {setUserData(!userData)}; 
+    const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
 
     return (
         <div 
             className={styles['main-container']} 
         >
+            {isOpenMistakes ? <MistakeModal phraseArr = {['Некорректно заполненные поля']}/> : null}
             <div className={styles['main-container_head']}>
                 <div className={styles.header}>
                     <img src={Logo} alt="" className={styles.logo}/>
@@ -48,7 +39,7 @@ const Main = (props: any) => {
                 {userData
                     ? <UserDataModal 
                         handleFaceClick={handleFaceClick} 
-                        exampleUser={exampleUser}
+                        handleMistakeBorn={handleMistakeBorn}
                     /> 
                     : null
                 }

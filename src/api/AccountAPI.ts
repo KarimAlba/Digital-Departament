@@ -1,5 +1,6 @@
 import IUser from "../models/IUser";
 import IServerUser from "../models/IServerUser";
+import IEditUser from "../models/IEditUser";
 import axiosConfig from "./axiosConfig";
 
 class AccountAPI{
@@ -9,6 +10,10 @@ class AccountAPI{
 
     public static autorization(body: IServerUser) {
         return axiosConfig.post('/account/sign-in', {...body});
+    }
+
+    public static edit(body: IEditUser) {
+        return axiosConfig.put('/account/edit', {...body});
     }
 }
 

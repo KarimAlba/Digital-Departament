@@ -1,0 +1,50 @@
+.switcher{
+    height: 50px;
+    position: relative;
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+
+    .switcher_sex{
+        margin: auto;
+        font-size: 18px;
+    }
+
+    .background{
+        margin: auto;
+        position: relative;
+        width: 50px;
+        height: 25px;
+        border-radius: 15px;
+
+        .maleSlider, 
+        .femaleSlider{
+            position: absolute;
+            width: 24px;
+            height: 18px;
+            top: 2.5px;
+            left: 2px;
+            cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
+            background-color: #fff;
+            -webkit-transition: .4s;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+            background-color: #ffff;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        .femaleSlider{
+            left: 22px;
+        }
+
+        .maleSlider:active, 
+        .femaleSlider:active{
+            transform: matrix(-1, 0, 0, 1, 0, 0);
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+    }
+}
+

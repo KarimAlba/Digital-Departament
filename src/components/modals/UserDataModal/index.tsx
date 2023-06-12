@@ -80,6 +80,8 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
     const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)};
     const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
 
+    //Дарова
+
     const sendReq = (user: IEditUser) => {
         if (user.name && user.login && user.email && user.gender
             && user.birthDate && user.career && user.post   
@@ -94,7 +96,6 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                     console.log(response);
                     const user = response.data.user;
                     fillLocalStorage(user);
-                    // localStorage.setItem('token', response.data.token);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
                     handleMistakeBorn(false);
                 }
@@ -108,7 +109,7 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
     const handleSave = (e: any) => {
         handleMistakeBorn(false);
         e.preventDefault();
-        // handleFaceClick();
+        handleFaceClick();
         const user: IEditUser = {
             name: userName,
             login: userLogin,

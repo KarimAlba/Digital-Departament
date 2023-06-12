@@ -1,51 +1,60 @@
 import styles from './style.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import IUser from '../../../models/IUser';
-import UserProffessionModal from '../UserProffesionModalComponent';
+import UserProffessionModal from '../UserProffesionModal';
+import Checkbox from '../../views/Checkbox';
+import EmailImg from '../../../assets/images/icons/pen-icon.svg';
+import UserPostModal from '../UserPostModal';
 
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;
     exampleUser: IUser;
 }
 
-const UserDataModal = (props: UserDataModalPropsTypes) =>{
+const UserDataModal = (props: UserDataModalPropsTypes) => {
     const { handleFaceClick, exampleUser } = props;
-    const [gender, setGender] = useState<number | undefined>(exampleUser.gender);
-
-    const handleSwitchClick = () => {
-        if (gender == 0) {
-            setGender(1);
-        } else {
-            setGender(0);
-        }
-    }
 
     const [emailCorrection, setEmailCorrection] = useState<boolean>(true);
     const [userEmail, setUserEmail] = useState<string | undefined>(exampleUser.email);
+    const [userPassword, setUserPassword] = useState<string | undefined>(exampleUser.password);
+    const [userBirthDate, setUsersBirthDate] = useState<string>('');
+    const [gender, setGender] = useState<number | undefined>(exampleUser.gender);
+    const [userCareer, setUsersCareer] = useState<string>('');
+    const [usersPost, setUsersPost] = useState<string>('');
+
+    const [abilityPassword, setAbilityPassword] = useState<boolean>(false);
+    const [isOpenCareer, setIsOpenCareer] = useState<boolean>(false);
+    const [isOpenPost, setIsOpenPost] = useState<boolean>(false);
+
+    const openModals = () => {
+        setIsOpenCareer(false);
+        setIsOpenPost(false);
+    }
+
     const handleEmailChange = (e: any) => {
         e.preventDefault();
         setUserEmail(e.target.value);
     }
 
-    const [abilityPassword, setAbilityPassword] = useState<boolean>(false);
-    const [userPassword, setUserPassword] = useState<string | undefined>(exampleUser.password);
     const handlePasswordChange = (e: any) => {
         setUserPassword(e.target.value);
     }
 
-    const [userBirthDate, setUsersBirthDate] = useState<string>('');
     const handleBirthDateChange = (e: any) => {setUsersBirthDate(e.target.value)};
 
-    const [userCareer, setUsersCareer] = useState<string>('');
+    const getGender = (value: number) => {
+        setGender(value);
+    }
+
     const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)};
 
-    const [usersPost, setUsersPost] = useState<string>('');
+    const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
 
     return(
-        <div className={styles.modal}>
+        <div className={styles.modal} onBlur={() => handleFaceClick()}>
             <button 
-                onClick={() => {handleFaceClick()}}
+                onClick={() => handleFaceClick()}
                 className={styles['close-btn']}
             >
                 x
@@ -56,32 +65,37 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
             <input type="text" name="login" placeholder={exampleUser.login}/>
             <h3>Электронная почта</h3>
             <div className={styles.email}>
-                {emailCorrection? 
-                    <div className={styles['email_background']}>
+                {emailCorrection
+                    ? <div className={styles['email_background']}>
                         {userEmail}
                     </div>
-                    :null
+                    : null
                 }
                 <input 
                     type="text" value={userEmail} 
                     className={styles['email_input']}
                     onInput={handleEmailChange}
                 />
-                <div 
+                <img 
                     className={styles['email_img']} 
+                    src={EmailImg} alt="" 
                     onClick={() => {setEmailCorrection(!emailCorrection)}}
-                >
-                </div>
+                />
             </div>
             <h3>Пароль</h3>
-            {abilityPassword?
-                <input
+            {abilityPassword
+                ? <input
                     className={styles['password-input']} 
                     type="text" value={userPassword} 
                     onInput={handlePasswordChange}
                     onBlur={() => setAbilityPassword(false)}
-                />:
-                <button className={styles.password} onClick={() => setAbilityPassword(true)}>Сменить пароль</button> 
+                />
+                : <button 
+                    className={styles.password} 
+                    onClick={() => setAbilityPassword(true)}
+                >
+                    Сменить пароль
+                </button> 
             }
             <input 
                 placeholder='Дата рождения'
@@ -93,31 +107,11 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
                 onInput={handleBirthDateChange} 
                 min="1946-01-01" max="2020-12-31"
             />
-            <div className='switcher'>
-                <span 
-                    className='switcher_sex' 
-                    style={gender == 0?{color: '#0488FD', fontWeight:700}: {color: '#C1CAD2'}}
-                >
-                    M
-                </span>
-                <label className='switch'>
-                    <input type="checkbox"  onClick={handleSwitchClick}/>
-                    <span className="slider round"></span>
-                </label>
-                <span 
-                    className='switcher_sex' 
-                    style={gender == 1? {color: '#FF3C82', fontWeight:700}: {color: '#C1CAD2'}}
-                >
-                    Ж
-                </span>
-            </div>
+            <Checkbox getGender={getGender} genderValue={exampleUser.gender}/>
             <div style={{position: 'relative'}}>
-                <UserProffessionModal handleCareerChange={handleCareerChange}/>
+                <UserProffessionModal handleCareerChange={handleCareerChange} isOpenCareer={isOpenCareer}/>
             </div>
-            <input 
-                type="text"  placeholder='Должность'
-                onInput={(e:any) => setUsersPost(e.target.value)}
-            />
+            <UserPostModal handlePostChange={handlePostChange} isOpenPost={isOpenPost}/>
             <div className={styles.btns}>
                 <button>Сохранить</button>
                 <button className={styles.exit}>
@@ -130,4 +124,4 @@ const UserDataModal = (props: UserDataModalPropsTypes) =>{
     )
 }
 
-export default UserDataModal
+export default UserDataModal;

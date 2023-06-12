@@ -14,7 +14,7 @@
         .book{
             position: relative;
             margin: 0 1% 0 0;
-            width: 10%;
+            width: 9%;
             height: auto;
             display: flex;
             flex-flow: column;
@@ -27,8 +27,6 @@
                 position: absolute;
                 width: 15%;
                 height: 20px;
-                background-image: url(../../assets/images/icons/prefer-icon.svg);
-                background-repeat: no-repeat;
             }
 
             .book_footer{
@@ -60,8 +58,6 @@
             margin: 5px auto;
             width: 90%;
             height: 150px;
-            background-image: url(../../assets/images/icons/default-book-icon.svg);
-            background-size: 100%;
         }
     }
 }

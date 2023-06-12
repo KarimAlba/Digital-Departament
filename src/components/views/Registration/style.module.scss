@@ -26,7 +26,7 @@
             justify-content: start;
 
             .date-input{
-                cursor: url(../../assets/images/icons/focused-rocket-icon.svg) 2 2, pointer;
+                cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
                 border: none;
                 border: 1px solid #C1CAD2;
             }
@@ -58,9 +58,14 @@
     }
 
     .password{
-        border: none;
-        border-radius: 0;
-        border-bottom: 1px solid #309FFF;
+        position: relative;
+
+        .password_eye{
+            position: absolute;
+            top: 25px;
+            left: 80%;
+            cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
+        }
     }
 
     .registration-back{
@@ -69,7 +74,7 @@
         left: 25%;
         height: 60px;
         width: 70%;
-        background-color: #ffff;
+        background-color: #ffffff55;
     }
 
     .reg-btn{
@@ -83,20 +88,9 @@
         border-radius: 6px;
         outline: none;
         border: none;
-        animation: show 1.5s linear;
 
         a{
             color: #ffff;
         }
-    }
-}
-
-@keyframes show {
-    from {
-        opacity: 0;
-    }
-
-    to{
-        opacity: 1;
     }
 }

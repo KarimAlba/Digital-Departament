@@ -4,9 +4,21 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(../../assets/images/background.png);
+    background-image: url(../../../assets/images/background.png);
     background-repeat: no-repeat;
     font-family: 'Roboto';
+
+    .message{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30%;
+        background-color: red;
+
+        h3{
+            color: #ffff;
+        }
+    }
 
     form{
         padding-bottom: 20px;
@@ -19,40 +31,36 @@
         background-color: #ffff;
         box-shadow: 0px -5px 20px rgba(119, 140, 151, 0.25);
         border-radius: 20px;
-        text-align: center;
 
         h2{
+            margin: auto;
+            font-size: 32px;
+            line-height: 40px;
             color: rgba(7, 84, 151, 0.81);
         }
 
-        input{
-            padding:0 7px;
-            height: 35px;
-            width: 86%;
-            margin: 0 0 0 7%;
-            box-sizing: border-box;
-            text-align: left;
-            border: 1px solid #C1CAD2;
-            border-radius: 6px;
-            outline: none;
-        }
-
         label{
-            margin: 10px 0 -5px 7%;
+            margin: 0 0 0 5%;
             text-align: left;
             font-size: 12px;
             color: #309FFF;
         }
 
-        .password{
-            border: none;
-            border-radius: 0;
-            border-bottom: 1px solid #309FFF;
+        input{
+            margin: 0 0 15px 5%;
+            width: 90%;
+            text-align: left;
+            padding:0 7px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 1px solid #C1CAD2;
+            border-radius: 6px;
+            outline: none;
         }
 
         .btns{
-            margin: 0 0 0 7%;
-            width: 86%;
+            margin: 0 0 0 5%;
+            width: 90%;
             display: flex;
             justify-content: space-between;
 
@@ -62,25 +70,26 @@
                 background: #075497;
                 border-radius: 6px;
                 border: none;
+                color: #ffff;
                 
                 a{
                     color: #ffff;
                 }
             }
 
-            .get-password{
+            .password-new-btn{
                 margin: auto;
                 width: 45%;
                 color: #075497;
+                background-color: #ffff;
                 text-decoration: underline #075497;
             }
         }
 
         .registration{
-            margin: 0 0 0 7%;
-            width: 86%;
+            margin: 10px 0 0 5%;
+            width: 90%;
             height: 40px;
-            font-family: 'Roboto';
             font-style: normal;
             font-weight: 700;
             background: #F7F7F7;

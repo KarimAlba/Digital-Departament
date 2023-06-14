@@ -14,10 +14,11 @@ import EnumGender from '../../../models/EnumGender';
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;
     handleMistakeBorn: Function;
+    isInternet: boolean;
 }
 
 const UserDataModal = (props: UserDataModalPropsTypes) => {
-    const { handleFaceClick, handleMistakeBorn } = props;
+    const { handleFaceClick, handleMistakeBorn, isInternet } = props;
 
     const [emailCorrection, setEmailCorrection] = useState<boolean>(true);
     const [userName, setUserName] = useState<string>('');
@@ -80,13 +81,11 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
     const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)};
     const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
 
-    //Дарова
-
     const sendReq = (user: IEditUser) => {
         if (user.name && user.login && user.email && user.gender
-            && user.birthDate && user.career && user.post   
+            && user.birthDate && user.career && user.post && isInternet    
         ) {
-            console.log(user);
+            console.log('😈');
             return
         };
 

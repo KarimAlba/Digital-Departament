@@ -7,6 +7,7 @@ import axiosConfig from '../../../api/axiosConfig';
 import IVisitor from '../../../models/IVisitor';
 import Password from '../Password';
 import MistakeModal from '../../modals/MistakeModal';
+import InternetModal from '../../modals/InternetModal';
 
 const Autorization = (props: any) => {
     const [userLogin, setUserLogin] = useState<string>('');
@@ -14,6 +15,7 @@ const Autorization = (props: any) => {
     const [mistakesArr, setMistakesArr] = useState<string[]>([]);
     const navigate = useNavigate();
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
+    const [isInternet, setIsInternet] = useState<boolean>(false);
 
     const handleLoginChange = (e: any) => {
         setUserLogin(e.target.value);
@@ -30,7 +32,14 @@ const Autorization = (props: any) => {
             login: userLogin,
             password: userPassword
         } 
-        sendReq(user);
+
+        if (userLogin && userPassword 
+            && isInternet && !isOpenMistakes 
+        ) {
+            sendReq(user);   
+        } else {
+            console.log('😈');
+        }
     }
 
     const fillLocalStorage = (person: IServerUser) => {
@@ -65,6 +74,10 @@ const Autorization = (props: any) => {
             });
     }
 
+    const getInernet = (value: boolean) => {
+        setIsInternet(value);
+    }
+
     const checkToken = () => {
         if (localStorage.getItem('token')) {
             
@@ -73,7 +86,8 @@ const Autorization = (props: any) => {
 
     return (
         <div className={styles.autorization}>
-            {isOpenMistakes ? <MistakeModal phraseArr= {mistakesArr}/> : null}
+            <InternetModal getInternet={getInernet}/>
+            {isOpenMistakes ? <MistakeModal phraseArr = {mistakesArr}/> : null}
             <form>
                 <h2>Авторизация</h2>
                 <input 

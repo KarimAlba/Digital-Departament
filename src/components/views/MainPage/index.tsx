@@ -8,17 +8,21 @@ import LastBook from '../LastBook';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';
+import InternetModal from '../../modals/InternetModal';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
+    const [isInternet, setIsInternet] = useState<boolean>(false);
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
+    const getInternet = (value: boolean) => {setIsInternet(value)};
 
     return (
         <div 
             className={styles['main-container']} 
         >
+            <InternetModal getInternet={getInternet}/>
             {isOpenMistakes ? <MistakeModal phraseArr = {['Некорректно заполненные поля']}/> : null}
             <div className={styles['main-container_head']}>
                 <div className={styles.header}>
@@ -40,6 +44,7 @@ const Main = (props: any) => {
                     ? <UserDataModal 
                         handleFaceClick={handleFaceClick} 
                         handleMistakeBorn={handleMistakeBorn}
+                        isInternet={isInternet}
                     /> 
                     : null
                 }

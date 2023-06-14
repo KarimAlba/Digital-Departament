@@ -5,12 +5,12 @@ import IUser from '../../../models/IUser';
 import UserProffessionModal from '../../modals/UserProffesionModal';
 import AccountAPI from '../../../api/AccountAPI';
 import UserPostModal from '../../modals/UserPostModal';
-
 import Switcher from '../Switcher';
 import Password from '../Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
 import EnumGender from '../../../models/EnumGender';
+import InternetModal from '../../modals/InternetModal';
 
 const Registration = (props: any) => {
     const [gender, setGender] = useState<EnumGender>(EnumGender.Male);
@@ -30,7 +30,8 @@ const Registration = (props: any) => {
     const [showedRepeatPassword, setShowedRepeatPassword] = useState<boolean>(false); 
     const [userCareer, setUsersCareer] = useState<string>('');
     const [mistakesArr, setMistakesArr] = useState<string[]>([]);
-    const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false); 
+    const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
+    const [internetConnection, setInternetConnection] = useState<boolean>(false); 
 
     const navigate = useNavigate();
 
@@ -38,35 +39,41 @@ const Registration = (props: any) => {
         e.target.value === userPassword?
             setCorrectPassword(true):
             setCorrectPassword(false);
-    }
+    };
 
     const handleNameChange = (e: any) => {
         setUsersName(e.target.value);
         checkNameValue(e.target.value);
-    }
+    };
+
     const handleLoginChange = (e: any) => {
         setUsersLogin(e.target.value);
         checkLoginValue(e.target.value);
-    }
+    };
 
     const handleEmailChange = (e: any) => {
         setUsersEmail(e.target.value);
         checkEmailValue(e.target.value);
-    }
+    };
 
     const handleBirthDateChange = (e: any) => {
         setUsersBirthDate(e.target.value);
-    }
+    };
 
-    const handlePostChange = (phrase: string) => {setUsersPost(phrase)}
-    const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)}
+    const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
+    const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)};
     const getPasswordValue = (phrase: string) => {setUsersPassword(phrase)}; 
 
     const sendReq = (user: IUser) => {
         AccountAPI.registration(user)
             .then(response => console.log(response))
-            .catch(error => console.log(error))
-    }
+            .catch(error => {
+                if (error.response.status === 400) {
+                    mistakesArr.push(error.response.data.message);
+                    setMistakesArr([...mistakesArr]);
+                }
+            })
+    };
 
     const handleReqistrationClick = () => {
         const user: IUser = {
@@ -82,7 +89,7 @@ const Registration = (props: any) => {
         setNewUser(user);
         sendReq(user);
         checkRegistrationReady();
-    }
+    };
 
     const checkRegistrationReady = () => {
         const phraseArr: string[] = [];
@@ -131,6 +138,10 @@ const Registration = (props: any) => {
             phraseArr.push('Заполните поле "Должность"');
         }
 
+        if (!internetConnection) {
+            phraseArr.push('Отсутствует подключение к интернету');
+        }
+
         if (phraseArr.length > 0) {
             setMistakesArr(phraseArr);
             setIsOpenMistakes(true);
@@ -138,7 +149,7 @@ const Registration = (props: any) => {
             navigate('/');
             setIsOpenMistakes(false);
         }
-    }
+    };
 
     const checkNameValue = (phrase: string) => {
         if ( phrase.search(/\d/) != -1 ) { 
@@ -146,7 +157,7 @@ const Registration = (props: any) => {
         } else {
             setCorrectName(true);
         }
-    }
+    };
 
     const checkLoginValue = (phrase: string) => {
         if (phrase.length >= 6) {
@@ -154,7 +165,7 @@ const Registration = (props: any) => {
         } else {
             setCorrectLogin(false);
         }
-    }
+    };
 
     const checkEmailValue = (phrase: string) => {
         const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
@@ -163,14 +174,17 @@ const Registration = (props: any) => {
         } else {
             setCorrectEmail(false);
         }
-    }
+    };
 
     const getGender = (value: EnumGender) => {
         setGender(value);
-    }
+    };
+
+    const getInternet = (value: boolean) => {setInternetConnection(value)};
 
     return(
         <div className='background'>
+            <InternetModal getInternet={getInternet}/>
             {isOpenMistakes? <MistakeModal phraseArr={mistakesArr}/> : null}
             <div className={styles.registration}>
                 <h2>Регистрация</h2>

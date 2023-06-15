@@ -1,9 +1,20 @@
 import IBook from '../../../models/IBook';
+import { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import BookImg from '../../../assets/images/icons/default-book-icon.svg';
 import PreferBook from '../../../assets/images/icons/prefer-icon.svg';
+import PublicationAPI from '../../../api/PublicationsAPI';
+import IServerBook from '../../../models/IServerBook';
 
 const PersonalBooks = (props: any) => {
+    const [favouritesBooks, setFavouritesBooks] = useState<IServerBook[] | []>([]);
+
+    const sendReq = () => {
+        PublicationAPI.getFavourites(1, 5)
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
+    };
+
     const exampleBook1: IBook = {
         name: "Теория ракетных двигателей",
         author: "Алемасов В.И., Дрегалин А.Ф., Тишин А.П.",
@@ -29,6 +40,10 @@ const PersonalBooks = (props: any) => {
             return arr;
         }
     }
+
+    useEffect(() => {
+        sendReq();
+    }, []);
 
     const popularBooksBlock = popularBooks.map(book => (
         <div className={styles.book} key={book.name + book.author}>

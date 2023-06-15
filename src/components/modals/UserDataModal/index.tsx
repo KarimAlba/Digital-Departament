@@ -124,11 +124,7 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
 
     useEffect(() => {
         getUserParams();
-    }, [])
-
-    useEffect(() => {
-        console.log(gender);
-    }, [gender])
+    }, []);
 
     return(
         <div className={styles.modal}>
@@ -177,7 +173,7 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                 min="1946-01-01" max="2020-12-31"
             />
 
-            <Switcher getGender={getGender} genderValue={EnumGender.Male}/>
+            <Switcher getGender={getGender} genderValue={gender}/>
 
             <div style={{position: 'relative'}}>
                 <UserProffessionModal handleCareerChange={handleCareerChange} defVal={userCareer}/>

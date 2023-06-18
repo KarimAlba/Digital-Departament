@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
-import IUser from '../../../models/IUser';
+import IUser from '../../../models/request/IUser';
 import UserProffessionModal from '../../modals/UserProffesionModal';
 import AccountAPI from '../../../api/AccountAPI';
 import UserPostModal from '../../modals/UserPostModal';
@@ -9,8 +9,9 @@ import Switcher from '../Switcher';
 import Password from '../Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
-import EnumGender from '../../../models/EnumGender';
+import EnumGender from '../../../models/request/EnumGender';
 import InternetModal from '../../modals/InternetModal';
+import Select from '../Selector';
 
 const Registration = (props: any) => {
     const [gender, setGender] = useState<EnumGender>(EnumGender.Male);
@@ -262,10 +263,16 @@ const Registration = (props: any) => {
                             min="1946-01-01" max="2020-12-31"
                         />
                         <Switcher getGender={getGender} genderValue={EnumGender.Female}/>
-                        <div style={{position: 'relative'}}>
-                            <UserProffessionModal handleCareerChange={handleCareerChange}/>
-                        </div>
-                        <UserPostModal handlePostChange={handlePostChange}/>
+                        <Select 
+                            getResult={handleCareerChange} multiple={false} 
+                            variation={['ВУЗ', 'Предприятие', 'Другое']}
+                            defaultValue='Род деятельности'
+                        />
+                        <Select 
+                            getResult={handlePostChange} multiple={false} 
+                            variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
+                            defaultValue='Должность'
+                        />
                         <button 
                             className={styles['reg-btn']}
                             onClick={handleReqistrationClick}

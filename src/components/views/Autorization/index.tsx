@@ -1,10 +1,10 @@
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import IServerUser from '../../../models/IServerUser';
+import IServerUser from '../../../models/response/IServerUser';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
-import IVisitor from '../../../models/IVisitor';
+import IVisitor from '../../../models/request/IVisitor';
 import Password from '../Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';
@@ -43,13 +43,18 @@ const Autorization = (props: any) => {
     }
 
     const fillLocalStorage = (person: IServerUser) => {
+        localStorage.clear();
         localStorage.setItem('name', String(person.name));
         localStorage.setItem('login', String(person.login));
         localStorage.setItem('email', String(person.email));
         localStorage.setItem('birthDate', String(person.birthDate));
         localStorage.setItem('gender', String(person.gender));
-        localStorage.setItem('career', String(person.career));
-        localStorage.setItem('post', String(person.post));
+        if (person.career) {
+            localStorage.setItem('career', String(person.career));
+        }
+        if (person.post) {
+            localStorage.setItem('post', String(person.post));
+        }
     }
 
     const sendReq = (user: IServerUser) => {
@@ -57,11 +62,11 @@ const Autorization = (props: any) => {
             .then(response => {
                 if (response.status <= 204) {
                     const user = response.data.user;
+                    console.log(response.data);
                     fillLocalStorage(user);
-                    console.log(user);
                     localStorage.setItem('token', response.data.token);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
-                    navigate('main/personalbooks');
+                    navigate('main');
                     setIsOpenMistakes(false);
                 }
             })

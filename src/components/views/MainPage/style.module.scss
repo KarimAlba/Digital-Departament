@@ -87,4 +87,46 @@
         background-image: url(../../../assets/images/background.png);
         background-size: 100%;
     }
+
+    .welcome-page{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .text{
+            margin: 40px 2%;
+            width: 40%;
+        }
+
+        img{
+            margin: 40px auto;
+            width: 20%;
+        }
+
+        .title{
+            animation: 21s infinite linear blink;
+        }
+    }
+}
+
+@keyframes blink{
+    from{
+        color: black;
+    }
+
+    25%{
+        color: #ff0000
+    }
+
+    50%{
+        color: #0dff04
+    }
+
+    75%{
+        color: #8772bc 
+    }
+
+    100%{
+        color: #FFFFFF;
+    }
 }

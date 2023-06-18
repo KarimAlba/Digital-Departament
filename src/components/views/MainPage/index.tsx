@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './style.module.scss'
 import { Link, Routes, Route } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
-import PersonalBooks from '../PersonalBooks';
 import License from '../License';
 import LastBook from '../LastBook';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';
 import InternetModal from '../../modals/InternetModal';
+import KorolevImg from '../../../assets/images/korolev.png';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -49,8 +49,18 @@ const Main = (props: any) => {
                     : null
                 }
 
+                <div className={styles['welcome-page']}>
+                    <div className={styles.text}>
+                        <h1>Главная</h1>
+                        <p>Приветствуем Вас на информационном портале <span className={styles.title}>Digital Departament</span></p>
+                        <p>Мы постарались сделать все возможное для того, чтобы поиск и обмен информацией в области инженерии, в частности ракетостроения, стали немного проще.</p>
+                        <p>Кроме доступа к большому количеству литературы, Вы получаете возможность помочь остальным, размещая свои публикации, обсуждая тот или иной материал посредством комментариев.</p>
+                        <p>Спасибо за использование нашего портала, желаем Вам успехов в изучении вашей тематики!</p>
+                    </div>
+                    <img src={KorolevImg} alt="korolev" />
+                </div>
+
                 <Routes>
-                    <Route index path='personalbooks' element={<PersonalBooks/>}/>
                     <Route path='license' element={<License/>}/>
                     <Route path='lastbook' element={<LastBook/>}/>
                 </Routes>

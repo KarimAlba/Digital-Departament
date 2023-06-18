@@ -1,6 +1,6 @@
-import IUser from "../models/IUser";
-import IServerUser from "../models/IServerUser";
-import IEditUser from "../models/IEditUser";
+import IUser from "../models/request/IUser";
+import IServerUser from "../models/response/IServerUser";
+import IEditUser from "../models/request/IEditUser";
 import axiosConfig from "./axiosConfig";
 
 class AccountAPI{

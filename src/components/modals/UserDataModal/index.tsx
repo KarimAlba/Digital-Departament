@@ -1,12 +1,9 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import UserProffessionModal from '../UserProffesionModal';
 import Switcher from '../../views/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
-import UserPostModal from '../UserPostModal';
 import AccountAPI from '../../../api/AccountAPI';
-import IServerUser from '../../../models/response/IServerUser';
 import axiosConfig from '../../../api/axiosConfig';
 import IEditUser from '../../../models/request/IEditUser';
 import EnumGender from '../../../models/request/EnumGender';
@@ -144,11 +141,10 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
 
     useEffect(() => {
         if (gender === 1) {
-            setEditGender('female');
-        } else {
             setEditGender('male');
+        } else {
+            setEditGender('female');
         }
-        console.log(editGender);
     }, [gender])
 
     return(
@@ -198,17 +194,22 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                 min="1946-01-01" max="2020-12-31"
             />
 
-            <Switcher getGender={getGender} genderValue={gender}/>
+            <Switcher getGender={getGender} genderValue={
+                    String(localStorage.getItem('gender')) === 'male' 
+                        ? EnumGender.Male
+                        : EnumGender.Female 
+                }
+            />
 
             <Select 
                 getResult={handleCareerChange} multiple={false} 
                 variation={['ВУЗ', 'Предприятие', 'Другое']}
-                defaultValue={userCareer}
+                defaultValue={String(localStorage.getItem('career'))}
             />
             <Select 
                 getResult={handlePostChange} multiple={false} 
                 variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
-                defaultValue={usersPost}
+                defaultValue={String(localStorage.getItem('post'))}
             />
 
             <div className={styles.btns}>

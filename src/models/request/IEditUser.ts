@@ -1,10 +1,8 @@
-import EnumGender from "./EnumGender";
-
 interface IEditUser{
     name: string;
     login: string;
     email: string;
-    gender: EnumGender;
+    gender: string;
     birthDate: string;
     career: string;
     post: string;

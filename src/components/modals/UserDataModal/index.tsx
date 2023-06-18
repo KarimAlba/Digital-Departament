@@ -6,16 +6,18 @@ import Switcher from '../../views/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import UserPostModal from '../UserPostModal';
 import AccountAPI from '../../../api/AccountAPI';
-import IServerUser from '../../../models/IServerUser';
+import IServerUser from '../../../models/response/IServerUser';
 import axiosConfig from '../../../api/axiosConfig';
-import IEditUser from '../../../models/IEditUser';
-import EnumGender from '../../../models/EnumGender';
+import IEditUser from '../../../models/request/IEditUser';
+import EnumGender from '../../../models/request/EnumGender';
+import IUserBody from '../../../models/request/IUserBody';
+import Select from '../../views/Selector';
 
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;
     handleMistakeBorn: Function;
     isInternet: boolean;
-}
+};
 
 const UserDataModal = (props: UserDataModalPropsTypes) => {
     const { handleFaceClick, handleMistakeBorn, isInternet } = props;
@@ -28,17 +30,17 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
     const [gender, setGender] = useState<EnumGender>(EnumGender.Male);
     const [userCareer, setUsersCareer] = useState<string>('');
     const [usersPost, setUsersPost] = useState<string>('');
+    const [editGender, setEditGender] = useState<string>('');
 
     const handleEmailChange = (e: any) => {
         e.preventDefault();
         setUserEmail(e.target.value);
-    }
+    };
 
     const handleBirthDateChange = (e: any) => {setUsersBirthDate(e.target.value)};
-
     const getGender = (value: number) => {
         setGender(value);
-    }
+    };
 
     const getUserParams = () => {
         if (localStorage.getItem('name')) {
@@ -56,8 +58,10 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
         if (localStorage.getItem('gender')) {
             if (localStorage.getItem('gender') === 'male') {
                 setGender(EnumGender.Male);
+                setEditGender('male');
             } else {
                 setGender(EnumGender.Female);
+                setEditGender('female');
             }
         };
         if (localStorage.getItem('career')) {
@@ -66,9 +70,24 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
         if (localStorage.getItem('post')) {
             setUsersPost(String(localStorage.getItem('post')));
         };
+    };
+
+    const updateLocalStorage = (user: IUserBody) => {
+        localStorage.clear();
+        const client: IUserBody = {
+            name: user.name,
+            login: user.login,
+            email: user.email,
+            birthDate: user.birthDate,
+            gender: editGender,
+            career: user.career,
+            post: user.post
+        };
+
+        fillLocalStorage(client);
     }
 
-    const fillLocalStorage = (person: IServerUser) => {
+    const fillLocalStorage = (person: IUserBody) => {
         localStorage.setItem('name', String(person.name));
         localStorage.setItem('login', String(person.login));
         localStorage.setItem('email', String(person.email));
@@ -76,34 +95,10 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
         localStorage.setItem('gender', String(person.gender));
         localStorage.setItem('career', String(person.career));
         localStorage.setItem('post', String(person.post));
-    }
+    };
 
     const handleCareerChange = (phrase: string) => {setUsersCareer(phrase)};
     const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
-
-    const sendReq = (user: IEditUser) => {
-        if (user.name && user.login && user.email && user.gender
-            && user.birthDate && user.career && user.post && isInternet    
-        ) {
-            console.log('😈');
-            return
-        };
-
-        AccountAPI.edit(user)
-            .then(response => {
-                if (response.status <= 204) {
-                    console.log(response);
-                    const user = response.data.user;
-                    fillLocalStorage(user);
-                    axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
-                    handleMistakeBorn(false);
-                }
-            })
-            .catch( error => {
-                console.log(error);
-                handleMistakeBorn(true);
-            })
-    }
 
     const handleSave = (e: any) => {
         handleMistakeBorn(false);
@@ -113,18 +108,48 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             name: userName,
             login: userLogin,
             email: userEmail,
-            gender: gender,
+            gender: editGender,
             birthDate: userBirthDate,
             career: userCareer,
             post: usersPost
         }
 
-        sendReq(user);
-    }
+        if (!user.name && !user.login && !user.email && !user.gender
+            && !user.birthDate && !user.career && !user.post && !isInternet    
+        ) {
+            console.log('😈');
+            return
+        };
+
+        AccountAPI.edit(user)
+            .then(response => {
+                if (response.status <= 204) {
+                    console.log(response);
+                    axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
+                    handleMistakeBorn(false);
+                }
+            })
+            .catch( error => {
+                console.log('error - ')
+                console.log(error);
+                handleMistakeBorn(true);
+            })
+
+            updateLocalStorage(user);
+    };
 
     useEffect(() => {
         getUserParams();
     }, []);
+
+    useEffect(() => {
+        if (gender === 1) {
+            setEditGender('female');
+        } else {
+            setEditGender('male');
+        }
+        console.log(editGender);
+    }, [gender])
 
     return(
         <div className={styles.modal}>
@@ -175,11 +200,16 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
 
             <Switcher getGender={getGender} genderValue={gender}/>
 
-            <div style={{position: 'relative'}}>
-                <UserProffessionModal handleCareerChange={handleCareerChange} defVal={userCareer}/>
-            </div>
-
-            <UserPostModal handlePostChange={handlePostChange} defVal={usersPost}/>
+            <Select 
+                getResult={handleCareerChange} multiple={false} 
+                variation={['ВУЗ', 'Предприятие', 'Другое']}
+                defaultValue={userCareer}
+            />
+            <Select 
+                getResult={handlePostChange} multiple={false} 
+                variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
+                defaultValue={usersPost}
+            />
 
             <div className={styles.btns}>
                 <button onClick={(e: any) => handleSave(e)}>Сохранить</button>
@@ -192,6 +222,6 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
 
         </div>
     )
-}
+};
 
 export default UserDataModal;

@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../../models/request/IUser';
-import UserProffessionModal from '../../modals/UserProffesionModal';
 import AccountAPI from '../../../api/AccountAPI';
-import UserPostModal from '../../modals/UserPostModal';
 import Switcher from '../Switcher';
 import Password from '../Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
@@ -87,6 +85,8 @@ const Registration = (props: any) => {
             career: userCareer,
             post: userPost
         }
+
+        console.log(gender);
         setNewUser(user);
         sendReq(user);
         checkRegistrationReady();
@@ -181,7 +181,7 @@ const Registration = (props: any) => {
         setGender(value);
     };
 
-    const getInternet = (value: boolean) => {setInternetConnection(value)};
+    const getInternet = (value: boolean) => {setInternetConnection(value)}
 
     return(
         <div className='background'>
@@ -262,7 +262,7 @@ const Registration = (props: any) => {
                             onInput={handleBirthDateChange} 
                             min="1946-01-01" max="2020-12-31"
                         />
-                        <Switcher getGender={getGender} genderValue={EnumGender.Female}/>
+                        <Switcher getGender={getGender} genderValue={gender}/>
                         <Select 
                             getResult={handleCareerChange} multiple={false} 
                             variation={['ВУЗ', 'Предприятие', 'Другое']}

@@ -49,12 +49,8 @@ const Autorization = (props: any) => {
         localStorage.setItem('email', String(person.email));
         localStorage.setItem('birthDate', String(person.birthDate));
         localStorage.setItem('gender', String(person.gender));
-        if (person.career) {
-            localStorage.setItem('career', String(person.career));
-        }
-        if (person.post) {
-            localStorage.setItem('post', String(person.post));
-        }
+        localStorage.setItem('career', String(person.career));
+        localStorage.setItem('post', String(person.post));
     }
 
     const sendReq = (user: IServerUser) => {

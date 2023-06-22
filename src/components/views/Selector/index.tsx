@@ -31,10 +31,6 @@ const Select = (props: SelectPropsTypes) => {
         getResult(val);
     }
 
-    useEffect(() => {
-        console.log(defaultValue);
-    }, []);
-
     return (
         <div className={styles.select} onClick={handleDivClick}>
             {isOpen

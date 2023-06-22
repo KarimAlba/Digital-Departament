@@ -13,11 +13,11 @@ const Switcher = (props: SwitcerPropsTypes) => {
 
     const handleSwitcherClick = () => {
         if (userGender) {
-            setUserGender(EnumGender.Male);
-            getGender(EnumGender.Male);
-        } else {
             setUserGender(EnumGender.Female);
             getGender(EnumGender.Female);
+        } else {
+            setUserGender(EnumGender.Male);
+            getGender(EnumGender.Male);
         }
     }
 

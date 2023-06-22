@@ -181,7 +181,7 @@ const Registration = (props: any) => {
         setGender(value);
     };
 
-    const getInternet = (value: boolean) => {setInternetConnection(value)};
+    const getInternet = (value: boolean) => {setInternetConnection(value)}
 
     return(
         <div className='background'>

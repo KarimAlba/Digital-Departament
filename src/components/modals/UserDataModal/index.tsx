@@ -1,6 +1,6 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Switcher from '../../views/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import AccountAPI from '../../../api/AccountAPI';
@@ -29,12 +29,17 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
     const [usersPost, setUsersPost] = useState<string>('');
     const [editGender, setEditGender] = useState<string>('');
 
+    const navigate = useNavigate();
+
     const handleEmailChange = (e: any) => {
         e.preventDefault();
         setUserEmail(e.target.value);
     };
 
-    const handleBirthDateChange = (e: any) => {setUsersBirthDate(e.target.value)};
+    const handleBirthDateChange = (e: any) => {
+        const date = e.target.value;
+        setUsersBirthDate(date)
+    };
     const getGender = (value: number) => {
         setGender(value);
     };
@@ -50,7 +55,7 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             setUserEmail(String(localStorage.getItem('email')));
         };
         if (localStorage.getItem('birthDate')) {
-            setUsersBirthDate(new Date(String(localStorage.getItem('birthDate'))).toLocaleDateString());
+            setUsersBirthDate((new Date(String(localStorage.getItem('birthDate'))).toLocaleDateString()));
         };
         if (localStorage.getItem('gender')) {
             if (localStorage.getItem('gender') === 'male') {
@@ -111,19 +116,23 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             post: usersPost
         }
 
-        if (!user.name && !user.login && !user.email && !user.gender
-            && !user.birthDate && !user.career && !user.post && !isInternet    
+        if (user.name && user.login && user.email && user.gender
+            && user.birthDate && user.career && user.post && !isInternet    
         ) {
             console.log('😈');
             return
         };
 
+        console.log(user);
+
         AccountAPI.edit(user)
             .then(response => {
                 if (response.status <= 204) {
                     console.log(response);
+                    updateLocalStorage(user);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
                     handleMistakeBorn(false);
+                    navigate('/');
                 }
             })
             .catch( error => {
@@ -131,8 +140,6 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                 console.log(error);
                 handleMistakeBorn(true);
             })
-
-            updateLocalStorage(user);
     };
 
     useEffect(() => {
@@ -158,10 +165,10 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             </button>
 
             <h3>Имя</h3>
-            <input type="text" name="name" defaultValue={userName}/>
+            <input type="text" name="name" defaultValue={userName} onInput={(e: any) => setUserName(e.target.value)}/>
 
             <h3>Логин</h3>
-            <input type="text" name="login" defaultValue={userLogin}/>
+            <input type="text" name="login" defaultValue={userLogin} onInput={(e: any) => setUserLogin(e.target.value)}/>
 
             <h3>Электронная почта</h3>
             <div className={styles.email}>

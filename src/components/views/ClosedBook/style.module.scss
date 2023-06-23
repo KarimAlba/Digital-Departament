@@ -1,0 +1,33 @@
+.book{
+    width: 11.2%;
+    height: 315px;
+    background-color: #fff;
+    border-radius: 6px;
+
+    img{
+        margin: 5px 0 0 4%;
+        height: 67%;
+    }
+
+    .book_description{
+        margin: 0px 0 0 4%;
+        display: flex;
+        flex-flow: column;
+
+        span{
+            margin: 3px 0px;
+            line-height: 12px;
+            font-size: 11px;
+        }
+
+        h6{
+            margin: 3px 0px;
+            line-height: 13px;
+            font-size: 12px;
+        }
+
+        .book_description_date{
+            margin: 3px 77%;
+        }
+    }
+}

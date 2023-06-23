@@ -1,0 +1,20 @@
+.library{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    padding: 3%;
+    box-sizing: border-box;
+
+    .selectors{
+        display: flex;
+
+        .select{
+            width: 30%;
+        }
+    }
+
+    .library_books{
+        display: flex;
+        justify-content: space-between;
+    }
+}

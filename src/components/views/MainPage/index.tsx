@@ -8,7 +8,9 @@ import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';
 import InternetModal from '../../modals/InternetModal';
-import KorolevImg from '../../../assets/images/korolev.png';
+import Favourites from '../Favourites';
+import Welcoming from '../Welcoming';
+import Library from '../Library';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -28,15 +30,27 @@ const Main = (props: any) => {
                 <div className={styles.header}>
                     <img src={Logo} alt="" className={styles.logo}/>
                     <input type="text" className={styles.search} onClick={() => setUserData(false)}/>
-                    <Link to='lastbook'  className={styles.book} onClick={() => setUserData(false)}></Link>
-                    <Link to='/'  className={styles.star} onClick={() => setUserData(false)}></Link>
+                    <Link 
+                        to='lastbook' className={styles.book} 
+                        onClick={() => setUserData(false)}
+                    >
+                    </Link>
+                    <Link 
+                        to='favourites' className={styles.star} 
+                        onClick={() => setUserData(false)}
+                    >
+                    </Link>
                     <img src={Face} className={styles.face} onClick={handleFaceClick}/>
                 </div>
                 <nav>
-                    <Link to='personalbooks' onClick={() => setUserData(false)}>Вся литература</Link>
+                    <Link to='library' onClick={() => setUserData(false)}>Вся литература</Link>
                     <Link to='/' onClick={() => setUserData(false)}>Предметы</Link>
                     <Link to='/' onClick={() => setUserData(false)}>Тэги</Link>
-                    <Link to='license' onClick={() => setUserData(false)}>Правообладателям</Link>
+                    <Link 
+                        to='license' onClick={() => setUserData(false)}
+                    >
+                        Правообладателям
+                    </Link>
                 </nav>
             </div>
             <div className={styles['user-library']}>
@@ -48,21 +62,12 @@ const Main = (props: any) => {
                     /> 
                     : null
                 }
-
-                <div className={styles['welcome-page']}>
-                    <div className={styles.text}>
-                        <h1>Главная</h1>
-                        <p>Приветствуем Вас на информационном портале <span className={styles.title}>Digital Departament</span></p>
-                        <p>Мы постарались сделать все возможное для того, чтобы поиск и обмен информацией в области инженерии, в частности ракетостроения, стали немного проще.</p>
-                        <p>Кроме доступа к большому количеству литературы, Вы получаете возможность помочь остальным, размещая свои публикации, обсуждая тот или иной материал посредством комментариев.</p>
-                        <p>Спасибо за использование нашего портала, желаем Вам успехов в изучении вашей тематики!</p>
-                    </div>
-                    <img src={KorolevImg} alt="korolev" />
-                </div>
-
                 <Routes>
+                    <Route path='welcoming' element={<Welcoming/>}/>
+                    <Route path='library' element={<Library/>}/>
                     <Route path='license' element={<License/>}/>
                     <Route path='lastbook' element={<LastBook/>}/>
+                    <Route path='favourites' element={<Favourites/>}/>
                 </Routes>
             </div>
         </div>

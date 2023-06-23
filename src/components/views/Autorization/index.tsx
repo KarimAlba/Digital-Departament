@@ -62,7 +62,7 @@ const Autorization = (props: any) => {
                     fillLocalStorage(user);
                     localStorage.setItem('token', response.data.token);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
-                    navigate('main');
+                    navigate('main/welcoming');
                     setIsOpenMistakes(false);
                 }
             })

@@ -1,20 +1,119 @@
 .library{
     width: 100%;
+    padding: 0 2%;
     display: flex;
     flex-flow: column;
-    padding: 3%;
     box-sizing: border-box;
 
+    h3{
+        margin: 20px 0;
+    }
+
     .selectors{
+        width: 99%;
+        position: relative;
         display: flex;
 
         .select{
             width: 30%;
         }
+
+        .sorting{
+            width: 12%;
+            top: 5px;
+            left: 88%;
+            position: absolute;
+    
+            .sorting_btn{
+                width: 35px;
+                height: 35px;
+                background-image: url(../../../assets/images/icons/sort-btn-icon.svg);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                border: none;
+                border-radius: 6px;
+            }
+
+            .sorting_modal{
+                border: 1px solid #000;
+                background-color: #fff;
+                border-radius: 6px;
+
+                button{
+                    width: 100%;
+                    border-radius: 6px;
+                    text-align: left;
+                    border: none;
+                    background-color: #fff;
+                }
+
+                button:hover{
+                    background-color: #727070;
+                }
+            }
+        }
     }
 
     .library_books{
+        width: 100%;
         display: flex;
         justify-content: space-between;
+
+        .book{
+            width: 11.2%;
+            height: 315px;
+            background-color: #fff;
+            border-radius: 6px;
+
+            img{
+                margin: 5px 0 0 4%;
+                height: 67%;
+            }
+
+            .book_description{
+                margin: 0px 0 0 4%;
+                display: flex;
+                flex-flow: column;
+
+                span{
+                    margin: 3px 0px;
+                    line-height: 12px;
+                    font-size: 11px;
+                }
+        
+                h6{
+                    margin: 3px 0px;
+                    line-height: 13px;
+                    font-size: 12px;
+                }
+
+                .book_description_date{
+                    margin: 3px 77%;
+                }
+            }
+        }
+    }
+
+    .pagination{
+        margin: 20px 0;
+        width: 19%;
+        display: flex;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 1);
+        border-radius: 2px;
+
+        button{
+            width: 14%;
+            height: 30px;
+            border: none;
+            border-radius: 1px;
+            background-color: rgba(255, 255, 255, 1);
+            font-size: 14px;
+            color: rgba(7, 84, 151, 1);
+        }
+
+        button:not(:last-child) {
+            border-right: 1px solid #C1CAD2;
+        }
     }
 }

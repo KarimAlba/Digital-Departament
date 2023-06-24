@@ -1,5 +1,5 @@
 import styles from './style.module.scss';
-import Select from '../Selector';
+import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
 import IServerBook from '../../../models/response/IServerBook';
 import PublicationAPI from '../../../api/PublicationsAPI';

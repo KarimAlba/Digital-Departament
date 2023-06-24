@@ -5,7 +5,7 @@ import IServerUser from '../../../models/response/IServerUser';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
 import IVisitor from '../../../models/request/IVisitor';
-import Password from '../Password';
+import Password from '../../ui/Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';
 

@@ -1,14 +1,14 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Switcher from '../../views/Switcher';
+import Switcher from '../../ui/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
 import IEditUser from '../../../models/request/IEditUser';
 import EnumGender from '../../../models/request/EnumGender';
 import IUserBody from '../../../models/request/IUserBody';
-import Select from '../../views/Selector';
+import Select from '../../ui/Selector';
 
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;

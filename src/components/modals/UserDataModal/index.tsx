@@ -9,6 +9,7 @@ import IEditUser from '../../../models/request/IEditUser';
 import EnumGender from '../../../models/request/EnumGender';
 import IUserBody from '../../../models/request/IUserBody';
 import Select from '../../ui/Selector';
+import CustomInput from '../../ui/CustomInput';
 
 interface UserDataModalPropsTypes{
     handleFaceClick: Function;
@@ -31,14 +32,20 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
 
     const navigate = useNavigate();
 
+    const handleNameChange = (phrase: string) => {
+        setUserName(phrase);
+    }
+
+    const handleLoginChange = (phrase: string) => {
+        setUserLogin(phrase);
+    }
+
     const handleEmailChange = (e: any) => {
-        e.preventDefault();
         setUserEmail(e.target.value);
     };
 
-    const handleBirthDateChange = (e: any) => {
-        const date = e.target.value;
-        setUsersBirthDate(date)
+    const handleBirthDateChange = (phrase: string) => {
+        setUsersBirthDate(phrase);
     };
     const getGender = (value: number) => {
         setGender(value);
@@ -164,11 +171,9 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                 x
             </button>
 
-            <h3>Имя</h3>
-            <input type="text" name="name" defaultValue={userName} onInput={(e: any) => setUserName(e.target.value)}/>
+            <CustomInput type="text" getValue={handleNameChange} defaultValue={String(localStorage.getItem('name'))} placeholderValue='Имя' labelValue='Имя'/>
 
-            <h3>Логин</h3>
-            <input type="text" name="login" defaultValue={userLogin} onInput={(e: any) => setUserLogin(e.target.value)}/>
+            <CustomInput type="text" getValue={handleLoginChange} defaultValue={String(localStorage.getItem('login'))} placeholderValue='Логин' labelValue='Логин'/>
 
             <h3>Электронная почта</h3>
             <div className={styles.email}>
@@ -189,16 +194,11 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                     onClick={() => {setEmailCorrection(!emailCorrection)}}
                 />
             </div>
-            <input 
-                placeholder='Дата рождения'
-                name='birthday'
-                className={styles['date-input']}
-                type="text"
-                defaultValue={userBirthDate}
-                onFocus={(e:any) => e.target.type = 'date'}
-                onBlur={(e:any) => e.target.type = 'text'}
-                onInput={handleBirthDateChange} 
-                min="1946-01-01" max="2020-12-31"
+
+            <CustomInput 
+                type="date" getValue={handleBirthDateChange} 
+                defaultValue={(new Date(String(localStorage.getItem('birthDate'))).toLocaleDateString())} 
+                placeholderValue='Дата рождения' labelValue='Дата рождения'
             />
 
             <Switcher getGender={getGender} genderValue={

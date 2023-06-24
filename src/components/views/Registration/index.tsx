@@ -3,13 +3,13 @@ import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../../models/request/IUser';
 import AccountAPI from '../../../api/AccountAPI';
-import Switcher from '../Switcher';
-import Password from '../Password';
+import Switcher from '../../ui/Switcher';
+import Password from '../../ui/Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
 import EnumGender from '../../../models/request/EnumGender';
 import InternetModal from '../../modals/InternetModal';
-import Select from '../Selector';
+import Select from '../../ui/Selector';
 
 const Registration = (props: any) => {
     const [gender, setGender] = useState<EnumGender>(EnumGender.Male);

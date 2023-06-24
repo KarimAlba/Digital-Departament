@@ -30,8 +30,8 @@ const Switcher = (props: SwitcerPropsTypes) => {
     }, []);
 
     return (
-        <div className={styles.switcher}>
-                        <span 
+        <div className={styles.switcher} onClick={handleSwitcherClick}>
+            <span 
                 className={styles['switcher_sex']}
                 style={userGender === EnumGender.Male
                     ? {color: '#0488FD', fontWeight:700}
@@ -42,7 +42,6 @@ const Switcher = (props: SwitcerPropsTypes) => {
             </span>
 
             <div 
-                onClick={handleSwitcherClick}
                 className={styles.background}
                 style={userGender === EnumGender.Male
                     ? {backgroundColor: '#0488FD'}

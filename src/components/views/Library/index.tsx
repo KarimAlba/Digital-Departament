@@ -3,9 +3,8 @@ import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
 import IServerBook from '../../../models/response/IServerBook';
 import PublicationAPI from '../../../api/PublicationsAPI';
-import PrevImg from '../../../assets/images/icons/to-prev-icon.svg';
-import NextImg from '../../../assets/images/icons/to-next-icon.svg'; 
 import ClosedBook from '../ClosedBook';
+import Pagination from '../../ui/Pagination';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
@@ -14,8 +13,6 @@ const Library = () => {
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
 
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
-    const [firstPagBtn, setFirstPagBtn] = useState<number>(1);
-    const [activePage, setActivePage] = useState<number>(1);
 
     const getTypeResult = () => {
         console.log('type');
@@ -34,11 +31,13 @@ const Library = () => {
             .catch(error => console.log(error))
     }
 
-    const booksBlock = books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>) 
+    const booksBlock = books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>); 
+
+    const getPage = (curPage: number) => {setPage(curPage)};
 
     useEffect(() => {
         sendReq();
-    }, []);
+    }, [page]);
 
     return (
         <div className={styles.library}>
@@ -84,21 +83,8 @@ const Library = () => {
                 {booksBlock}
             </div>
 
-            <div className={styles.pagination}>
-                <button className={styles['pagination_arrow']}>
-                    <img src={PrevImg} alt="arrow" />
-                </button>
-                <button>
-                        {firstPagBtn}
-                    </button>
-                <button>{firstPagBtn + 1}</button>
-                <button>...</button>
-                <button>{pagBtnsSize-1}</button>
-                <button>{pagBtnsSize}</button>
-                <button  className={styles['pagination_arrow']}>
-                    <img src={NextImg} alt="arrow" />
-                </button>
-            </div>
+            <Pagination size={pagBtnsSize} getPage={getPage}/>
+            
         </div>
     )
 }

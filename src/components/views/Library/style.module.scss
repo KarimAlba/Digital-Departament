@@ -60,26 +60,4 @@
         justify-content: space-between;
     }
 
-    .pagination{
-        margin: 20px 0;
-        width: 19%;
-        display: flex;
-        justify-content: center;
-        background-color: rgba(255, 255, 255, 1);
-        border-radius: 2px;
-
-        button{
-            width: 14%;
-            height: 30px;
-            border: none;
-            border-radius: 1px;
-            background-color: rgba(255, 255, 255, 1);
-            font-size: 14px;
-            color: rgba(7, 84, 151, 1);
-        }
-
-        button:not(:last-child) {
-            border-right: 1px solid #C1CAD2;
-        }
-    }
 }

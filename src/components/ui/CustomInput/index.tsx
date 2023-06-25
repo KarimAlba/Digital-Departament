@@ -1,5 +1,7 @@
 import styles from './style.module.scss';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 interface CustomInputPropsTypes{
     getValue: Function;
@@ -28,16 +30,21 @@ const CustomInput = (props: CustomInputPropsTypes) => {
         }
     }, []);
 
+    const [startDate, setStartDate] = useState<Date>(new Date());
+
     return (
             <div className={styles['active-input']}>
-                {isActive ? <label htmlFor="activeInput">{labelValue}</label> : null}
-                <input                 
-                    type={isActive ? type : 'text'} 
-                    className={isActive ? styles['focused-input'] : styles['text-input']} 
-                    placeholder={placeholderValue} defaultValue={value}
-                    onInput={handleInputChange} onBlur={() => setIsActive(false)}
-                    onClick={() => setIsActive(true)}
-                />
+                {isActive && type === 'text'? <label htmlFor="activeInput">{labelValue}</label> : null}
+                {isActive && type === 'date'
+                    ? <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date); setValue(date.toLocaleDateString())}} onSelect={() => setIsActive(false)}/>
+                    : <input                 
+                        type={isActive ? type : 'text'} 
+                        className={isActive ? styles['focused-input'] : styles['text-input']} 
+                        placeholder={placeholderValue} defaultValue={value}
+                        onInput={handleInputChange} onBlur={() => setIsActive(false)}
+                        onClick={() => setIsActive(true)}
+                    />
+                }
             </div>
 
     )

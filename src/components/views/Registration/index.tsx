@@ -10,6 +10,7 @@ import MistakeModal from '../../modals/MistakeModal';
 import EnumGender from '../../../models/request/EnumGender';
 import InternetModal from '../../modals/InternetModal';
 import Select from '../../ui/Selector';
+import CustomInput from '../../ui/CustomInput';
 
 const Registration = (props: any) => {
     const [gender, setGender] = useState<EnumGender>(EnumGender.Male);
@@ -40,23 +41,23 @@ const Registration = (props: any) => {
             setCorrectPassword(false);
     };
 
-    const handleNameChange = (e: any) => {
-        setUsersName(e.target.value);
-        checkNameValue(e.target.value);
+    const handleNameChange = (phrase: string) => {
+        setUsersName(phrase);
+        checkNameValue(phrase);
     };
 
-    const handleLoginChange = (e: any) => {
-        setUsersLogin(e.target.value);
-        checkLoginValue(e.target.value);
+    const handleLoginChange = (phrase: string) => {
+        setUsersLogin(phrase);
+        checkLoginValue(phrase);
     };
 
-    const handleEmailChange = (e: any) => {
-        setUsersEmail(e.target.value);
-        checkEmailValue(e.target.value);
+    const handleEmailChange = (phrase: string) => {
+        setUsersEmail(phrase);
+        checkEmailValue(phrase);
     };
 
-    const handleBirthDateChange = (e: any) => {
-        setUsersBirthDate(e.target.value);
+    const handleBirthDateChange = (phrase: string) => {
+        setUsersBirthDate(phrase);
     };
 
     const handlePostChange = (phrase: string) => {setUsersPost(phrase)};
@@ -191,26 +192,17 @@ const Registration = (props: any) => {
                 <h2>Регистрация</h2>
                 <div className={styles['columns-container']}>
                     <div className={styles.column}>
-                        <input 
-                            type="text" placeholder="Имя" onInput={handleNameChange}
-                            style={correctName
-                                ? {border: '1px solid #C1CAD2'}
-                                : {border: '1px solid red'}
-                            }
+                        <CustomInput 
+                            getValue={handleNameChange} placeholderValue='Имя' 
+                            type='text' labelValue='Имя'
                         />
-                        <input 
-                            type="text" placeholder="Логин" onInput={handleLoginChange}
-                            style={correctLogin
-                                ? {border: '1px solid #C1CAD2'}
-                                : {border: '1px solid red'}  
-                            }
+                        <CustomInput 
+                            getValue={handleLoginChange} placeholderValue='Логин' 
+                            type='text' labelValue='Логин'
                         />
-                        <input 
-                            type="email" placeholder="Email" onInput={handleEmailChange}
-                            style={correctEmail
-                                ? {border: '1px solid #C1CAD2'}
-                                : {border: '1px solid red'}  
-                            }
+                        <CustomInput 
+                            getValue={handleEmailChange} placeholderValue='Email' 
+                            type='email' labelValue='Email'
                         />
                         <Password getPasswordValue={getPasswordValue}/>  
                         <div  
@@ -252,15 +244,9 @@ const Registration = (props: any) => {
                     </div>
 
                     <div className={styles.column}>
-                        <input 
-                            placeholder='Дата рождения'
-                            name='birthday'
-                            className={styles['date-input']}
-                            type="text"
-                            onFocus={(e:any) => e.target.type = 'date'}
-                            onBlur={(e:any) => e.target.type = 'text'}
-                            onInput={handleBirthDateChange} 
-                            min="1946-01-01" max="2020-12-31"
+                        <CustomInput 
+                            getValue={handleBirthDateChange} placeholderValue='Дата рождения' 
+                            type='date' labelValue='Дата рождения'
                         />
                         <Switcher getGender={getGender} genderValue={gender}/>
                         <Select 

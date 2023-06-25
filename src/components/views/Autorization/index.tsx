@@ -8,6 +8,7 @@ import IVisitor from '../../../models/request/IVisitor';
 import Password from '../../ui/Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';
+import CustomInput from '../../ui/CustomInput';
 
 const Autorization = (props: any) => {
     const [userLogin, setUserLogin] = useState<string>('');
@@ -17,8 +18,8 @@ const Autorization = (props: any) => {
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
     const [isInternet, setIsInternet] = useState<boolean>(false);
 
-    const handleLoginChange = (e: any) => {
-        setUserLogin(e.target.value);
+    const handleLoginChange = (phrase: string) => {
+        setUserLogin(phrase);
         setIsOpenMistakes(false);
     };
     const getPasswordValue = (phrase: string) => {
@@ -91,11 +92,8 @@ const Autorization = (props: any) => {
             {isOpenMistakes ? <MistakeModal phraseArr = {mistakesArr}/> : null}
             <form>
                 <h2>Авторизация</h2>
-                <input 
-                    type="text" placeholder="Логин/Email"
-                    className={styles.login}
-                    onInput={handleLoginChange}
-                />
+                <CustomInput getValue={handleLoginChange} placeholderValue='Логин/Email' labelValue='Логин/Email' />
+
                 <Password getPasswordValue={getPasswordValue}/>
                 <div className={styles.btns}>
                     <button onClick={(e: any) => handleComeClick(e)}>

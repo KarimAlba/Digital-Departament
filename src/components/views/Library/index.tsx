@@ -11,6 +11,8 @@ const Library = () => {
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize]= useState<number>(7);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
+    const [authors, setAuthors] = useState<string[]>([]);
+    const [subjects, setSubjects] = useState<string[]>([]);
 
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
 
@@ -18,8 +20,8 @@ const Library = () => {
         console.log('type');
     }
     
-    const sendReq = () => {
-        PublicationAPI.getAllPublications({page: page, pageSize: pageSize})
+    const sendReq = (curPage: number) => {
+        PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
             .then(response => {
                 if (response.status <= 204) {
                     console.log(response);
@@ -31,13 +33,46 @@ const Library = () => {
             .catch(error => console.log(error))
     }
 
-    const booksBlock = books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>); 
+    const getAuthors = (name?: string) => {
+        PublicationAPI.getAuthors(name)
+            .then(response => {
+                if (response.status <= 204) {
+                    console.log(response.data);
+                    if (response.data) {
+                        const newAuthors = response.data.map((item: {id: number, name: string}) => String(item.name));
+                        console.log(newAuthors);
+                        setAuthors(newAuthors);
+                    }
+                }
+            })
+            .catch(error => console.log(error));
+    };
 
-    const getPage = (curPage: number) => {setPage(curPage)};
+    const getSubjects = (name?: string) => {
+        PublicationAPI.getSubjects(name)
+            .then(response => {
+                if (response.status <= 204) {
+                    console.log(response.data);
+                    if (response.data) {
+                        const newSubjects = response.data.map((item: {id: number, name: string}) => String(item.name));
+                        console.log(newSubjects);
+                        setSubjects(newSubjects);
+                    }
+                }
+            })
+            .catch(error => console.log(error));
+    }
+
+    const getPage = (curPage: number) => {
+        setPage(curPage);
+        sendReq(curPage);
+    };
 
     useEffect(() => {
-        sendReq();
-    }, [page]);
+        sendReq(page);
+        getAuthors();
+        getSubjects();
+    }, []);
 
     return (
         <div className={styles.library}>
@@ -46,19 +81,19 @@ const Library = () => {
                 <div className={styles.select}>
                     <Select 
                         getResult={getTypeResult} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
-                        multiple={false} defaultValue='Тип'
+                        multiple={false} defaultValue='Тип' isImg={true}
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
-                        multiple={false} defaultValue='Автор'
+                        getResult={getTypeResult} variation={authors} 
+                        multiple={true} defaultValue='Автор' isImg={true} placeholderVal='Выбранные авторы'
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
-                        multiple={false} defaultValue='Предмет'
+                        getResult={getTypeResult} variation={subjects} 
+                        multiple={true} defaultValue='Предмет' isImg={true} placeholderVal='Выбранные предметы'
                     />
                 </div>
 
@@ -80,7 +115,7 @@ const Library = () => {
             </div>
 
             <div className={styles['library_books']}>
-                {booksBlock}
+                {books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>)}
             </div>
 
             <Pagination size={pagBtnsSize} getPage={getPage}/>

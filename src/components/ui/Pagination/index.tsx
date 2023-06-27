@@ -33,12 +33,47 @@ const Pagination = (props: PaginationPropsTypes) => {
         if (e.target.textContent !== currentPage) {
             setCurrentPage(e.target.textContent);
             getPage(Number(e.target.textContent));
-        }
-    }
+        };
+    };
+
+    const handlePrevClick = () => {
+        if (arrayOfBtnText[0] === '1') {
+            return
+        } else {
+            const copy = Object.assign([], arrayOfBtnText);
+            const index = copy.findIndex(item => item === '...');
+            if (index) {
+                const newPart = copy.slice(0, index).map(item => String(+item - 1));
+                copy.splice(0, index, newPart[0], newPart[1]);
+                console.log('edited'); 
+                setArrayOfBtnText(copy);
+            } 
+        };
+    };
+
+    const handleNextClick = () =>  {
+        if (arrayOfBtnText[1] === String(pagBtnsSize - 2)) {
+            const copy = Object.assign([], arrayOfBtnText);
+            const index = copy.findIndex(item => item === '...');
+            copy.splice(index, 1);
+            setArrayOfBtnText(copy);
+            return
+        } else {
+            const copy = Object.assign([], arrayOfBtnText);
+            const index = copy.findIndex(item => item === '...');
+            const newPart = copy.slice(0, index).map(item => String(+item + 1));
+            copy.splice(0, index, newPart[0], newPart[1]);
+            console.log('edited'); 
+            setArrayOfBtnText(copy);
+        };
+    };
+
 
     const btns = arrayOfBtnText.map(item => 
-        <button key={item} className={styles.passive} onClick={(e: any) => handleBtnClick(e)}>{item}</button>
-    )
+        <button key={item} className={styles.passive} onClick={(e: any) => handleBtnClick(e)}>
+            {item}
+        </button>
+    );
 
     useEffect(() => {
         prepareArray();
@@ -47,16 +82,16 @@ const Pagination = (props: PaginationPropsTypes) => {
     return (
         pagBtnsSize !== 0
             ? (<div className={styles.pagination}>
-                <button className={styles['pagination_arrow']}>
+                <button className={styles['pagination_arrow']} onClick={() => handlePrevClick()}>
                     <img src={PrevImg} alt="arrow" />
                 </button>
                 {btns}
-                <button  className={styles['pagination_arrow']}>
+                <button  className={styles['pagination_arrow']} onClick={() => handleNextClick()}>
                     <img src={NextImg} alt="arrow" />
                 </button>
             </div> )
             : null
     )
-}
+};
 
 export default Pagination;

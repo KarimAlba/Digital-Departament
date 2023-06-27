@@ -15,7 +15,7 @@
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        color: #000000a7
+        color: #000000a7;
     }
 
     .list{
@@ -43,6 +43,33 @@
     
         li:hover{
             background: #C1CAD2;
+        }
+    }
+}
+
+.multiple-select_value{
+    top: 35px;
+    left: 0;
+    position: absolute;
+    display: flex;
+
+    .multiple-select_value_item{
+        margin-right: 3px;
+        width: 120px;
+        padding: 3px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 5px;
+        background: rgba(199, 235, 255, 0.82);
+        font-size: 13px;
+
+        button{
+            background: none;
+            border: none;
+        }
+
+        button:hover{
+            color: #FFFFFF;
         }
     }
 }

@@ -16,6 +16,18 @@ class PublicationAPI {
             params: {...body}
         });
     };
+
+    public static getAuthors(name?: string) {
+        return axiosConfig.get('/authors/filter', {
+            params: {name}
+        });
+    };
+
+    public static getSubjects(name?: string) {
+        return axiosConfig.get('/subjects/filter', {
+            params: {name}
+        });
+    };
 };
 
 export default PublicationAPI;

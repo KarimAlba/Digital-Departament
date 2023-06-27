@@ -1,6 +1,8 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
 import PublicationAPI from '../../../api/PublicationsAPI';
+import IServerBook from '../../../models/response/IServerBook';
+import ClosedBook from '../ClosedBook';
 
 interface FavouritesPropsTypes{
 
@@ -10,6 +12,7 @@ const Favourites = (props: FavouritesPropsTypes) => {
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(7);
     const [contains, setContains] = useState<boolean>(true);
+    const [books, setBooks] = useState<IServerBook[]>([]);
 
     const sendReq = () => {
         PublicationAPI.getFavourites(page, pageSize)
@@ -20,7 +23,7 @@ const Favourites = (props: FavouritesPropsTypes) => {
                         setContains(false);
                     } else {
                         setContains(true);
-                        console.log(response.data.data);
+                        setBooks(response.data.data)
                     }
                 }
             })
@@ -32,12 +35,12 @@ const Favourites = (props: FavouritesPropsTypes) => {
     }, []);
 
     return (
-        <div className={styles.favourites}>
+        <div className={styles.container}>
             <h3>Избранное</h3>
             {!contains
                 ? <h5>Вы еще пока не добавили в избранное ни одной книги</h5>
                 : (<div className={styles.favourites}>
-                    <h3>Вот они родимые</h3>
+                    {books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>)}
                 </div>)
             }
         </div>

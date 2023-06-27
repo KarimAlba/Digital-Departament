@@ -28,6 +28,14 @@ class PublicationAPI {
             params: {name}
         });
     };
+
+    public static updateFavourites(body: {id?: number}) {
+        return axiosConfig.put(`/favourites/update/${body.id}`, {
+            Body: {
+                id: body.id
+            }
+        });
+    };
 };
 
 export default PublicationAPI;

@@ -5,6 +5,7 @@ import IServerBook from '../../../models/response/IServerBook';
 import PublicationAPI from '../../../api/PublicationsAPI';
 import ClosedBook from '../ClosedBook';
 import Pagination from '../../ui/Pagination';
+import IBook from '../../../models/request/IBook';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
@@ -13,7 +14,7 @@ const Library = () => {
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
     const [authors, setAuthors] = useState<string[]>([]);
     const [subjects, setSubjects] = useState<string[]>([]);
-
+    const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
 
     const getTypeResult = () => {
@@ -24,7 +25,6 @@ const Library = () => {
         PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response);
                     const maxPageSize = Math.floor(response.data.totalCount / 4);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
@@ -37,10 +37,8 @@ const Library = () => {
         PublicationAPI.getAuthors(name)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response.data);
                     if (response.data) {
                         const newAuthors = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        console.log(newAuthors);
                         setAuthors(newAuthors);
                     }
                 }
@@ -52,15 +50,44 @@ const Library = () => {
         PublicationAPI.getSubjects(name)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response.data);
                     if (response.data) {
                         const newSubjects = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        console.log(newSubjects);
                         setSubjects(newSubjects);
                     }
                 }
             })
             .catch(error => console.log(error));
+    }
+
+    const sendFiltrationRequest = (bookVal: IBook) => {
+        PublicationAPI.getAllPublications(bookVal)
+            .then(response => {
+                if (response.status <= 204) {
+                    const maxPageSize = Math.floor(response.data.totalCount / 4);
+                    setPagBtnsSize(maxPageSize);
+                    setBooks(response.data.data);
+                }
+            })
+            .catch(error => console.log(error));
+    };
+
+    const filterByType = (val: string) => {
+        const copy = Object.assign({}, book);
+        copy.type = ['0'];
+        sendFiltrationRequest(copy);
+        console.log(copy);
+    }
+
+    const filterByAuthors = (val: string) => {
+        const copy = Object.assign({}, book);
+        copy.authors = [1];
+        sendFiltrationRequest(copy);
+    }
+
+    const filterBySubjects = (val: string) => {
+        const copy = Object.assign({}, book);
+        copy.subjects = [1];
+        sendFiltrationRequest(copy);
     }
 
     const getPage = (curPage: number) => {
@@ -80,19 +107,19 @@ const Library = () => {
             <div className={styles.selectors}>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
+                        getResult={filterByType} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
                         multiple={false} defaultValue='Тип' isImg={true}
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={authors} 
+                        getResult={filterByAuthors} variation={authors} 
                         multiple={true} defaultValue='Автор' isImg={true} placeholderVal='Выбранные авторы'
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={subjects} 
+                        getResult={filterBySubjects} variation={subjects} 
                         multiple={true} defaultValue='Предмет' isImg={true} placeholderVal='Выбранные предметы'
                     />
                 </div>

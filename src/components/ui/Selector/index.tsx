@@ -1,5 +1,5 @@
 import styles from './style.module.scss';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import SelectImg from '../../../assets/images/icons/select-icon.svg';
 
 interface SelectPropsTypes{
@@ -15,7 +15,6 @@ const Select = (props: SelectPropsTypes) => {
     const { variation, multiple, getResult, defaultValue, isImg, placeholderVal } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [value, setValue] = useState<string>(defaultValue);
-
     const [multipleValue, setMultipleValue] = useState<string[]>([]);
 
     const checkItemLength = (element: string) => {
@@ -26,11 +25,21 @@ const Select = (props: SelectPropsTypes) => {
         } return element;
     };
 
-    const menu = variation.map(item => 
+    const prepareMultipleValue = (arr: string[]) => {
+        for (var q=1, i=1; q<arr.length; ++q) {
+            if (arr[q] !== arr[q-1]) {
+                arr[i++] = arr[q];
+            }
+        }
+        arr.length = i;
+        return arr;
+    };
+
+    const menu = prepareMultipleValue(variation).map(item => 
         <li key={item} onClick={() => handleLiClick(item)}>
             {checkItemLength(item)}
         </li>
-    )
+    );
 
     const handleDivClick = () => {
         setIsOpen(!isOpen);
@@ -42,6 +51,7 @@ const Select = (props: SelectPropsTypes) => {
             copy.push(val);
             setMultipleValue(copy);
             setIsOpen(false);
+            getResult(val);
         } else {
             setValue(val);
             setIsOpen(false);

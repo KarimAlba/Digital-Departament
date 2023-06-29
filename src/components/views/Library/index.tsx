@@ -7,14 +7,15 @@ import ClosedBook from '../ClosedBook';
 import Pagination from '../../ui/Pagination';
 import IBook from '../../../models/requests/IPublicationRequest';
 import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
+import ObjectSelector from '../../ui/ObjectSelector';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize]= useState<number>(7);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
-    const [authors, setAuthors] = useState<string[]>([]);
-    const [subjects, setSubjects] = useState<string[]>([]);
+    const [authors, setAuthors] = useState<{id: number, name: string}[]>([]);
+    const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
     const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
 
@@ -39,8 +40,7 @@ const Library = () => {
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
-                        const newAuthors = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        setAuthors(newAuthors);
+                        const newAuthors = setAuthors(response.data);
                     }
                 }
             })
@@ -52,8 +52,7 @@ const Library = () => {
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
-                        const newSubjects = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        setSubjects(newSubjects);
+                        setSubjects(response.data);
                     }
                 }
             })
@@ -104,15 +103,15 @@ const Library = () => {
         console.log(copy);
     }
 
-    const filterByAuthors = (val: string) => {
+    const filterByAuthors = (obj: {id: number, name: string}[]) => {
         const copy = Object.assign({}, book);
-        copy.authors = [1];
+        copy.authors = obj.map(item => item.id);
         sendFiltrationRequest(copy);
     }
 
-    const filterBySubjects = (val: string) => {
+    const filterBySubjects = (obj: {id: number, name: string}[]) => {
         const copy = Object.assign({}, book);
-        copy.subjects = [1];
+        copy.subjects = obj.map(item => item.id);
         sendFiltrationRequest(copy);
     }
 
@@ -133,7 +132,7 @@ const Library = () => {
             <div className={styles.selectors}>
                 <div className={styles.select}>
                     <Select 
-                        getResult={filterByType} 
+                        setResult={filterByType} 
                         variation={["Книга", "Статья", "Альбом", "Атлас",  "Руководство", "Справочник", "Пособие"]} 
                         multiple={false} 
                         defaultValue='Тип' 
@@ -141,8 +140,8 @@ const Library = () => {
                     />
                 </div>
                 <div className={styles.select}>
-                    <Select 
-                        getResult={filterByAuthors} 
+                    <ObjectSelector 
+                        setResult={filterByAuthors} 
                         variation={authors} 
                         multiple={true} 
                         defaultValue='Автор' 
@@ -151,8 +150,8 @@ const Library = () => {
                     />
                 </div>
                 <div className={styles.select}>
-                    <Select 
-                        getResult={filterBySubjects} 
+                    <ObjectSelector 
+                        setResult={filterBySubjects} 
                         variation={subjects} 
                         multiple={true} 
                         defaultValue='Предмет' 

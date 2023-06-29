@@ -92,7 +92,12 @@ const Autorization = (props: any) => {
             {isOpenMistakes ? <MistakeModal phraseArr = {mistakesArr}/> : null}
             <form>
                 <h2>Авторизация</h2>
-                <CustomInput getValue={handleLoginChange} placeholderValue='Логин/Email' labelValue='Логин/Email' type="text" />
+                <CustomInput 
+                    setValue={handleLoginChange} 
+                    placeholderValue='Логин/Email' 
+                    labelValue='Логин/Email' 
+                    type="text" 
+                />
 
                 <Password getPasswordValue={getPasswordValue}/>
                 <div className={styles.btns}>

@@ -4,7 +4,7 @@ import SelectImg from '../../../assets/images/icons/select-icon.svg';
 
 interface SelectPropsTypes{
     variation: string[];
-    getResult: Function;
+    setResult: Function;
     multiple: boolean;
     defaultValue: string;
     isImg?: boolean;
@@ -12,7 +12,7 @@ interface SelectPropsTypes{
 }
 
 const Select = (props: SelectPropsTypes) => {
-    const { variation, multiple, getResult, defaultValue, isImg, placeholderVal } = props;
+    const { variation, multiple, setResult, defaultValue, isImg, placeholderVal } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [value, setValue] = useState<string>(defaultValue);
     const [multipleValue, setMultipleValue] = useState<string[]>([]);
@@ -24,17 +24,6 @@ const Select = (props: SelectPropsTypes) => {
             return result;
         } return element;
     };
-
-    // const prepareMultipleValue = (arr: string[]) => {
-    //     for (var q=1, i=1; q<arr.length; ++q) {
-    //         if (arr[q] !== arr[q-1]) {
-    //             arr[i++] = arr[q];
-    //         }
-    //     }
-
-    //     arr.length = i;
-    //     return arr;
-    // };
 
     const menu = variation.map(item => 
         <li key={item} onClick={() => handleLiClick(item)}>
@@ -52,11 +41,11 @@ const Select = (props: SelectPropsTypes) => {
             copy.push(val);
             setMultipleValue(copy);
             setIsOpen(false);
-            getResult(val);
+            setResult(val);
         } else {
             setValue(val);
             setIsOpen(false);
-            getResult(val);
+            setResult(val);
         };
     };
 

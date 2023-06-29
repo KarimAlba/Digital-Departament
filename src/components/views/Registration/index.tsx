@@ -194,16 +194,16 @@ const Registration = (props: any) => {
                 <div className={styles['columns-container']}>
                     <div className={styles.column}>
                         <CustomInput 
-                            getValue={handleNameChange} placeholderValue='Имя' 
+                            setValue={handleNameChange} placeholderValue='Имя' 
                             type='text' labelValue='Имя'
                         />
                         <CustomInput 
-                            getValue={handleLoginChange} placeholderValue='Логин' 
+                            setValue={handleLoginChange} placeholderValue='Логин' 
                             type='text' labelValue='Логин'
                         />
                         <CustomInput 
-                            getValue={handleEmailChange} placeholderValue='Email' 
-                            type='email' labelValue='Email'
+                            setValue={handleEmailChange} placeholderValue='Email' 
+                            type='text' labelValue='Email'
                         />
                         <Password getPasswordValue={getPasswordValue}/>  
                         <div  
@@ -246,17 +246,17 @@ const Registration = (props: any) => {
 
                     <div className={styles.column}>
                         <CustomInput 
-                            getValue={handleBirthDateChange} placeholderValue='Дата рождения' 
+                            setValue={handleBirthDateChange} placeholderValue='Дата рождения' 
                             type='date' labelValue='Дата рождения'
                         />
                         <Switcher getGender={getGender} genderValue={gender}/>
                         <Select 
-                            getResult={handleCareerChange} multiple={false} 
+                            setResult={handleCareerChange} multiple={false} 
                             variation={['ВУЗ', 'Предприятие', 'Другое']}
                             defaultValue='Род деятельности'
                         />
                         <Select 
-                            getResult={handlePostChange} multiple={false} 
+                            setResult={handlePostChange} multiple={false} 
                             variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
                             defaultValue='Должность'
                         />

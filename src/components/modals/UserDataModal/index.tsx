@@ -5,9 +5,9 @@ import Switcher from '../../ui/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
-import IEditUser from '../../../models/request/IEditUser';
-import EnumGender from '../../../models/request/EnumGender';
-import IUserBody from '../../../models/request/IUserBody';
+import IEditUser from '../../../models/requests/IEditUserRequest';
+import EnumGender from '../../../models/requests/EnumGenderRequest';
+import IUserBody from '../../../models/requests/IUserBodyRequest';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';
 
@@ -171,9 +171,21 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
                 x
             </button>
 
-            <CustomInput type="text" getValue={handleNameChange} defaultValue={String(localStorage.getItem('name'))} placeholderValue='Имя' labelValue='Имя'/>
+            <CustomInput 
+                type="text" 
+                setValue={handleNameChange} 
+                defaultValue={String(localStorage.getItem('name'))} 
+                placeholderValue='Имя' 
+                labelValue='Имя'
+            />
 
-            <CustomInput type="text" getValue={handleLoginChange} defaultValue={String(localStorage.getItem('login'))} placeholderValue='Логин' labelValue='Логин'/>
+            <CustomInput 
+                type="text" 
+                setValue={handleLoginChange} 
+                defaultValue={String(localStorage.getItem('login'))} 
+                placeholderValue='Логин' 
+                labelValue='Логин'
+            />
 
             <h3>Электронная почта</h3>
             <div className={styles.email}>
@@ -196,7 +208,7 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             </div>
 
             <CustomInput 
-                type="date" getValue={handleBirthDateChange} 
+                type="date" setValue={handleBirthDateChange} 
                 defaultValue={(new Date(String(localStorage.getItem('birthDate'))).toLocaleDateString())} 
                 placeholderValue='Дата рождения' labelValue='Дата рождения'
             />
@@ -209,12 +221,12 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             />
 
             <Select 
-                getResult={handleCareerChange} multiple={false} 
+                setResult={handleCareerChange} multiple={false} 
                 variation={['ВУЗ', 'Предприятие', 'Другое']}
                 defaultValue={String(localStorage.getItem('career'))}
             />
             <Select 
-                getResult={handlePostChange} multiple={false} 
+                setResult={handlePostChange} multiple={false} 
                 variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
                 defaultValue={String(localStorage.getItem('post'))}
             />

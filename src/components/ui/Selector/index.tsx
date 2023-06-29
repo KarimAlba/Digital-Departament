@@ -1,10 +1,10 @@
 import styles from './style.module.scss';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import SelectImg from '../../../assets/images/icons/select-icon.svg';
 
 interface SelectPropsTypes{
     variation: string[];
-    getResult: Function;
+    setResult: Function;
     multiple: boolean;
     defaultValue: string;
     isImg?: boolean;
@@ -12,10 +12,9 @@ interface SelectPropsTypes{
 }
 
 const Select = (props: SelectPropsTypes) => {
-    const { variation, multiple, getResult, defaultValue, isImg, placeholderVal } = props;
+    const { variation, multiple, setResult, defaultValue, isImg, placeholderVal } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [value, setValue] = useState<string>(defaultValue);
-
     const [multipleValue, setMultipleValue] = useState<string[]>([]);
 
     const checkItemLength = (element: string) => {
@@ -30,7 +29,7 @@ const Select = (props: SelectPropsTypes) => {
         <li key={item} onClick={() => handleLiClick(item)}>
             {checkItemLength(item)}
         </li>
-    )
+    );
 
     const handleDivClick = () => {
         setIsOpen(!isOpen);
@@ -42,10 +41,11 @@ const Select = (props: SelectPropsTypes) => {
             copy.push(val);
             setMultipleValue(copy);
             setIsOpen(false);
+            setResult(val);
         } else {
             setValue(val);
             setIsOpen(false);
-            getResult(val);
+            setResult(val);
         };
     };
 

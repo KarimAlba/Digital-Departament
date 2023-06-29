@@ -1,7 +1,8 @@
 import styles from './style.module.scss';
 import PrevImg from '../../../assets/images/icons/to-prev-icon.svg';
 import NextImg from '../../../assets/images/icons/to-next-icon.svg'; 
-import { useState, useEffect, ReactElement } from 'react';
+import { useState, useEffect } from 'react';
+import { StringDecoder } from 'string_decoder';
 
 interface PaginationPropsTypes{
     size: number;
@@ -68,13 +69,6 @@ const Pagination = (props: PaginationPropsTypes) => {
         };
     };
 
-
-    const btns = arrayOfBtnText.map(item => 
-        <button key={item} className={styles.passive} onClick={(e: any) => handleBtnClick(e)}>
-            {item}
-        </button>
-    );
-
     useEffect(() => {
         prepareArray();
     }, [pagBtnsSize]);
@@ -85,7 +79,11 @@ const Pagination = (props: PaginationPropsTypes) => {
                 <button className={styles['pagination_arrow']} onClick={() => handlePrevClick()}>
                     <img src={PrevImg} alt="arrow" />
                 </button>
-                {btns}
+                {arrayOfBtnText.map((item, index) => 
+                    <button key={item} className={String(index + 1) === currentPage ? styles.active : styles.passive} onClick={(e: any) => handleBtnClick(e)}>
+                        {item}
+                    </button>
+                )}
                 <button  className={styles['pagination_arrow']} onClick={() => handleNextClick()}>
                     <img src={NextImg} alt="arrow" />
                 </button>

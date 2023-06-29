@@ -1,10 +1,10 @@
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import IServerUser from '../../../models/response/IServerUser';
+import IServerUser from '../../../models/responses/IServerUserResponse';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
-import IVisitor from '../../../models/request/IVisitor';
+import IVisitor from '../../../models/requests/IVisitorRequest';
 import Password from '../../ui/Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';
@@ -92,7 +92,12 @@ const Autorization = (props: any) => {
             {isOpenMistakes ? <MistakeModal phraseArr = {mistakesArr}/> : null}
             <form>
                 <h2>Авторизация</h2>
-                <CustomInput getValue={handleLoginChange} placeholderValue='Логин/Email' labelValue='Логин/Email' type="text" />
+                <CustomInput 
+                    setValue={handleLoginChange} 
+                    placeholderValue='Логин/Email' 
+                    labelValue='Логин/Email' 
+                    type="text" 
+                />
 
                 <Password getPasswordValue={getPasswordValue}/>
                 <div className={styles.btns}>

@@ -1,4 +1,4 @@
-import ITag from "./ITag";
+import ITag from "./ITagResponse";
 
 export default interface IBook{
     type?: string;

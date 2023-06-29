@@ -1,4 +1,4 @@
-import Gender from "./EnumGender";
+import Gender from "./EnumGenderRequest";
 
 export default interface IUser{
     name: string;

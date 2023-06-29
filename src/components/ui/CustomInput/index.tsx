@@ -1,10 +1,10 @@
 import styles from './style.module.scss';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 interface CustomInputPropsTypes{
-    getValue: Function;
+    setValue: Function;
     defaultValue?: string;
     placeholderValue?: string;
     labelValue?: string;
@@ -13,14 +13,14 @@ interface CustomInputPropsTypes{
 
 const CustomInput = (props: CustomInputPropsTypes) => {
 
-    const { getValue, defaultValue, placeholderValue, labelValue, type } = props;
+    const { setValue, defaultValue, placeholderValue, labelValue, type } = props;
 
-    const [value, setValue] = useState<string>('');
+    const [inputValue, setInputValue] = useState<string | undefined>(defaultValue);
     const [isActive, setIsActive] = useState<boolean>(false);
 
     const handleInputChange = (e: any) => {
+        setInputValue(e.target.value);
         setValue(e.target.value);
-        getValue(e.target.value);
         setIsActive(true);
     }
 
@@ -36,11 +36,20 @@ const CustomInput = (props: CustomInputPropsTypes) => {
             <div className={styles['active-input']}>
                 {isActive && type === 'text'? <label htmlFor="activeInput">{labelValue}</label> : null}
                 {isActive && type === 'date'
-                    ? <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date); setValue(date.toLocaleDateString())}} onSelect={() => setIsActive(false)}/>
+                    ? <DatePicker 
+                        selected={startDate}
+                        onChange={
+                            (date: Date) => {
+                                setStartDate(date); 
+                                setValue(date.toLocaleDateString());
+                                setInputValue(date.toLocaleDateString());
+                            }} 
+                        onSelect={() => setIsActive(false)}
+                    />
                     : <input                 
                         type={isActive ? type : 'text'} 
                         className={isActive ? styles['focused-input'] : styles['text-input']} 
-                        placeholder={placeholderValue} defaultValue={value}
+                        placeholder={placeholderValue} defaultValue={inputValue}
                         onInput={handleInputChange} onBlur={() => setIsActive(false)}
                         onClick={() => setIsActive(true)}
                     />

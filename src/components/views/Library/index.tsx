@@ -1,19 +1,22 @@
 import styles from './style.module.scss';
 import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
-import IServerBook from '../../../models/response/IServerBook';
+import IServerBook from '../../../models/responses/IServerBookResponse';
 import PublicationAPI from '../../../api/PublicationsAPI';
 import ClosedBook from '../ClosedBook';
 import Pagination from '../../ui/Pagination';
+import IBook from '../../../models/requests/IPublicationRequest';
+import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
+import ObjectSelector from '../../ui/ObjectSelector';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize]= useState<number>(7);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
-    const [authors, setAuthors] = useState<string[]>([]);
-    const [subjects, setSubjects] = useState<string[]>([]);
-
+    const [authors, setAuthors] = useState<{id: number, name: string}[]>([]);
+    const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
+    const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
 
     const getTypeResult = () => {
@@ -24,7 +27,6 @@ const Library = () => {
         PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response);
                     const maxPageSize = Math.floor(response.data.totalCount / 4);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
@@ -37,11 +39,8 @@ const Library = () => {
         PublicationAPI.getAuthors(name)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response.data);
                     if (response.data) {
-                        const newAuthors = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        console.log(newAuthors);
-                        setAuthors(newAuthors);
+                        const newAuthors = setAuthors(response.data);
                     }
                 }
             })
@@ -52,15 +51,68 @@ const Library = () => {
         PublicationAPI.getSubjects(name)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response.data);
                     if (response.data) {
-                        const newSubjects = response.data.map((item: {id: number, name: string}) => String(item.name));
-                        console.log(newSubjects);
-                        setSubjects(newSubjects);
+                        setSubjects(response.data);
                     }
                 }
             })
             .catch(error => console.log(error));
+    }
+
+    const sendFiltrationRequest = (bookVal: IBook) => {
+        PublicationAPI.getAllPublications(bookVal)
+            .then(response => {
+                if (response.status <= 204) {
+                    const maxPageSize = Math.floor(response.data.totalCount / 4);
+                    setPagBtnsSize(maxPageSize);
+                    setBooks(response.data.data);
+                }
+            })
+            .catch(error => console.log(error));
+    };
+
+    const filterByType = (val: string) => {
+        const copy = Object.assign({}, book);
+        switch (val) {
+            case "Книга":
+                copy.type = EnumTypePublication.Книга;
+                break;
+            case "Статья": 
+                copy.type = EnumTypePublication.Статья;
+                break;
+            case "Альбом": 
+                copy.type = EnumTypePublication.Альбом;
+                break;
+            case "Атлас": 
+                copy.type = EnumTypePublication.Атлас;
+                break;
+            case "Руководство": 
+                copy.type = EnumTypePublication.Руководство;
+                break;
+            case "Справочник": 
+                copy.type = EnumTypePublication.Справочник;
+                break;
+            case "Пособие": 
+                copy.type = EnumTypePublication.Пособие;
+                break;  
+            default:
+                break;
+        }        
+
+        sendFiltrationRequest(copy);
+        console.log(copy);
+    }
+
+    const filterByAuthors = (obj: {id: number, name: string}[]) => {
+        const copy = Object.assign({}, book);
+        copy.authors = obj.map(item => item.id);
+        sendFiltrationRequest(copy);
+    }
+
+    const filterBySubjects = (obj: {id: number, name: string}[]) => {
+        const copy = Object.assign({}, book);
+        copy.subjects = obj.map(item => item.id);
+        sendFiltrationRequest(copy);
     }
 
     const getPage = (curPage: number) => {
@@ -80,20 +132,31 @@ const Library = () => {
             <div className={styles.selectors}>
                 <div className={styles.select}>
                     <Select 
-                        getResult={getTypeResult} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
-                        multiple={false} defaultValue='Тип' isImg={true}
+                        setResult={filterByType} 
+                        variation={["Книга", "Статья", "Альбом", "Атлас",  "Руководство", "Справочник", "Пособие"]} 
+                        multiple={false} 
+                        defaultValue='Тип' 
+                        isImg={true}
                     />
                 </div>
                 <div className={styles.select}>
-                    <Select 
-                        getResult={getTypeResult} variation={authors} 
-                        multiple={true} defaultValue='Автор' isImg={true} placeholderVal='Выбранные авторы'
+                    <ObjectSelector 
+                        setResult={filterByAuthors} 
+                        variation={authors} 
+                        multiple={true} 
+                        defaultValue='Автор' 
+                        isImg={true} 
+                        placeholderVal='Выбранные авторы'
                     />
                 </div>
                 <div className={styles.select}>
-                    <Select 
-                        getResult={getTypeResult} variation={subjects} 
-                        multiple={true} defaultValue='Предмет' isImg={true} placeholderVal='Выбранные предметы'
+                    <ObjectSelector 
+                        setResult={filterBySubjects} 
+                        variation={subjects} 
+                        multiple={true} 
+                        defaultValue='Предмет' 
+                        isImg={true} 
+                        placeholderVal='Выбранные предметы'
                     />
                 </div>
 

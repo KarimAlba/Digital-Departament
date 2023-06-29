@@ -3,10 +3,20 @@
     height: 315px;
     background-color: #fff;
     border-radius: 6px;
+    position: relative;
 
     img{
         margin: 5px 0 0 4%;
         height: 67%;
+    }
+
+    .favourite{
+        position: absolute;
+        top: 0;
+        left: 10px;
+        margin: 0;
+        height: 20px;
+        cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
     }
 
     .book_description{

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
-import IUser from '../../../models/request/IUser';
+import IUser from '../../../models/requests/IUserRequest';
 import AccountAPI from '../../../api/AccountAPI';
 import Switcher from '../../ui/Switcher';
 import Password from '../../ui/Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
-import EnumGender from '../../../models/request/EnumGender';
+import EnumGender from '../../../models/requests/EnumGenderRequest';
 import InternetModal from '../../modals/InternetModal';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';
@@ -68,7 +68,8 @@ const Registration = (props: any) => {
         AccountAPI.registration(user)
             .then(response => console.log(response))
             .catch(error => {
-                if (error.response.status === 400) {
+                console.log(error)
+                if (error.response.status !== 500) {
                     mistakesArr.push(error.response.data.message);
                     setMistakesArr([...mistakesArr]);
                 }
@@ -193,16 +194,16 @@ const Registration = (props: any) => {
                 <div className={styles['columns-container']}>
                     <div className={styles.column}>
                         <CustomInput 
-                            getValue={handleNameChange} placeholderValue='Имя' 
+                            setValue={handleNameChange} placeholderValue='Имя' 
                             type='text' labelValue='Имя'
                         />
                         <CustomInput 
-                            getValue={handleLoginChange} placeholderValue='Логин' 
+                            setValue={handleLoginChange} placeholderValue='Логин' 
                             type='text' labelValue='Логин'
                         />
                         <CustomInput 
-                            getValue={handleEmailChange} placeholderValue='Email' 
-                            type='email' labelValue='Email'
+                            setValue={handleEmailChange} placeholderValue='Email' 
+                            type='text' labelValue='Email'
                         />
                         <Password getPasswordValue={getPasswordValue}/>  
                         <div  
@@ -245,17 +246,17 @@ const Registration = (props: any) => {
 
                     <div className={styles.column}>
                         <CustomInput 
-                            getValue={handleBirthDateChange} placeholderValue='Дата рождения' 
+                            setValue={handleBirthDateChange} placeholderValue='Дата рождения' 
                             type='date' labelValue='Дата рождения'
                         />
                         <Switcher getGender={getGender} genderValue={gender}/>
                         <Select 
-                            getResult={handleCareerChange} multiple={false} 
+                            setResult={handleCareerChange} multiple={false} 
                             variation={['ВУЗ', 'Предприятие', 'Другое']}
                             defaultValue='Род деятельности'
                         />
                         <Select 
-                            getResult={handlePostChange} multiple={false} 
+                            setResult={handlePostChange} multiple={false} 
                             variation={['Преподаватель', 'Студент', 'ПТО', 'Инженер', 'Проектировщик', 'Другое']}
                             defaultValue='Должность'
                         />

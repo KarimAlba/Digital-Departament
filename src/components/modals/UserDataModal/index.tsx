@@ -5,9 +5,9 @@ import Switcher from '../../ui/Switcher';
 import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
-import IEditUser from '../../../models/request/IEditUser';
-import EnumGender from '../../../models/request/EnumGender';
-import IUserBody from '../../../models/request/IUserBody';
+import IEditUser from '../../../models/requests/IEditUserRequest';
+import EnumGender from '../../../models/requests/EnumGenderRequest';
+import IUserBody from '../../../models/requests/IUserBodyRequest';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';
 

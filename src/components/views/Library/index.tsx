@@ -1,11 +1,12 @@
 import styles from './style.module.scss';
 import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
-import IServerBook from '../../../models/response/IServerBook';
+import IServerBook from '../../../models/responses/IServerBookResponse';
 import PublicationAPI from '../../../api/PublicationsAPI';
 import ClosedBook from '../ClosedBook';
 import Pagination from '../../ui/Pagination';
-import IBook from '../../../models/request/IBook';
+import IBook from '../../../models/requests/IPublicationRequest';
+import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
@@ -73,7 +74,32 @@ const Library = () => {
 
     const filterByType = (val: string) => {
         const copy = Object.assign({}, book);
-        copy.type = ['0'];
+        switch (val) {
+            case "Книга":
+                copy.type = EnumTypePublication.Книга;
+                break;
+            case "Статья": 
+                copy.type = EnumTypePublication.Статья;
+                break;
+            case "Альбом": 
+                copy.type = EnumTypePublication.Альбом;
+                break;
+            case "Атлас": 
+                copy.type = EnumTypePublication.Атлас;
+                break;
+            case "Руководство": 
+                copy.type = EnumTypePublication.Руководство;
+                break;
+            case "Справочник": 
+                copy.type = EnumTypePublication.Справочник;
+                break;
+            case "Пособие": 
+                copy.type = EnumTypePublication.Пособие;
+                break;  
+            default:
+                break;
+        }        
+
         sendFiltrationRequest(copy);
         console.log(copy);
     }
@@ -107,20 +133,31 @@ const Library = () => {
             <div className={styles.selectors}>
                 <div className={styles.select}>
                     <Select 
-                        getResult={filterByType} variation={["Альбом", "Атлас", "Книга", "Справочник"]} 
-                        multiple={false} defaultValue='Тип' isImg={true}
+                        getResult={filterByType} 
+                        variation={["Книга", "Статья", "Альбом", "Атлас",  "Руководство", "Справочник", "Пособие"]} 
+                        multiple={false} 
+                        defaultValue='Тип' 
+                        isImg={true}
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={filterByAuthors} variation={authors} 
-                        multiple={true} defaultValue='Автор' isImg={true} placeholderVal='Выбранные авторы'
+                        getResult={filterByAuthors} 
+                        variation={authors} 
+                        multiple={true} 
+                        defaultValue='Автор' 
+                        isImg={true} 
+                        placeholderVal='Выбранные авторы'
                     />
                 </div>
                 <div className={styles.select}>
                     <Select 
-                        getResult={filterBySubjects} variation={subjects} 
-                        multiple={true} defaultValue='Предмет' isImg={true} placeholderVal='Выбранные предметы'
+                        getResult={filterBySubjects} 
+                        variation={subjects} 
+                        multiple={true} 
+                        defaultValue='Предмет' 
+                        isImg={true} 
+                        placeholderVal='Выбранные предметы'
                     />
                 </div>
 

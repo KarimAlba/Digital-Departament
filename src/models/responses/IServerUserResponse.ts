@@ -1,4 +1,4 @@
-import EnumGender from "../request/EnumGender";
+import EnumGender from "../requests/EnumGenderRequest";
 
 export default interface IServerUser{
     role?: number;

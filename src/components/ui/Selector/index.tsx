@@ -25,17 +25,18 @@ const Select = (props: SelectPropsTypes) => {
         } return element;
     };
 
-    const prepareMultipleValue = (arr: string[]) => {
-        for (var q=1, i=1; q<arr.length; ++q) {
-            if (arr[q] !== arr[q-1]) {
-                arr[i++] = arr[q];
-            }
-        }
-        arr.length = i;
-        return arr;
-    };
+    // const prepareMultipleValue = (arr: string[]) => {
+    //     for (var q=1, i=1; q<arr.length; ++q) {
+    //         if (arr[q] !== arr[q-1]) {
+    //             arr[i++] = arr[q];
+    //         }
+    //     }
 
-    const menu = prepareMultipleValue(variation).map(item => 
+    //     arr.length = i;
+    //     return arr;
+    // };
+
+    const menu = variation.map(item => 
         <li key={item} onClick={() => handleLiClick(item)}>
             {checkItemLength(item)}
         </li>

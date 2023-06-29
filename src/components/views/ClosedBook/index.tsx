@@ -1,5 +1,5 @@
 import styles from './style.module.scss';
-import IServerBook from '../../../models/response/IServerBook';
+import IServerBook from '../../../models/responses/IServerBookResponse';
 import { useState, useEffect } from 'react';
 import DefaultImg from '../../../assets/images/icons/default-book-icon.svg';
 import PreferIcon from '../../../assets/images/icons/prefer-icon.svg';

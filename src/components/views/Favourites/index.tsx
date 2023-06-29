@@ -1,7 +1,7 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
 import PublicationAPI from '../../../api/PublicationsAPI';
-import IServerBook from '../../../models/response/IServerBook';
+import IServerBook from '../../../models/responses/IServerBookResponse';
 import ClosedBook from '../ClosedBook';
 
 interface FavouritesPropsTypes{

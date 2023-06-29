@@ -1,10 +1,10 @@
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import IServerUser from '../../../models/response/IServerUser';
+import IServerUser from '../../../models/responses/IServerUserResponse';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
-import IVisitor from '../../../models/request/IVisitor';
+import IVisitor from '../../../models/requests/IVisitorRequest';
 import Password from '../../ui/Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';

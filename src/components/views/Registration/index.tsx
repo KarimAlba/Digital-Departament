@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
-import IUser from '../../../models/request/IUser';
+import IUser from '../../../models/requests/IUserRequest';
 import AccountAPI from '../../../api/AccountAPI';
 import Switcher from '../../ui/Switcher';
 import Password from '../../ui/Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
-import EnumGender from '../../../models/request/EnumGender';
+import EnumGender from '../../../models/requests/EnumGenderRequest';
 import InternetModal from '../../modals/InternetModal';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';
@@ -68,7 +68,8 @@ const Registration = (props: any) => {
         AccountAPI.registration(user)
             .then(response => console.log(response))
             .catch(error => {
-                if (error.response.status === 400) {
+                console.log(error)
+                if (error.response.status !== 500) {
                     mistakesArr.push(error.response.data.message);
                     setMistakesArr([...mistakesArr]);
                 }

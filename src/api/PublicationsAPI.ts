@@ -1,8 +1,10 @@
 import axiosConfig from "./axiosConfig";
-import IBook from "../models/request/IBook";
+import { Axios, AxiosResponse } from "axios";
+import IErrorResponse from "../models/responses/IErrorResponse";
+import IBook from "../models/requests/IPublicationRequest";
 
 class PublicationAPI {
-    public static getFavourites(page: number, pageSize: number) {
+    public static getFavourites(page: number, pageSize: number): Promise<AxiosResponse<any | IErrorResponse>> {
         return axiosConfig.get('/favourites', { 
             params: { 
                 page: page, 
@@ -11,27 +13,27 @@ class PublicationAPI {
         });
     };
 
-    public static getAllPublications(body: IBook) {
+    public static getAllPublications(body: IBook): Promise<AxiosResponse<any | IErrorResponse>>  {
         return axiosConfig.get('/publications/filter', {
             params: {...body}
         });
     };
 
-    public static getAuthors(name?: string) {
+    public static getAuthors(name?: string): Promise<AxiosResponse<any | IErrorResponse>>  {
         return axiosConfig.get('/authors/filter', {
             params: {name}
         });
     };
 
-    public static getSubjects(name?: string) {
+    public static getSubjects(name?: string): Promise<AxiosResponse<any | IErrorResponse>>  {
         return axiosConfig.get('/subjects/filter', {
             params: {name}
         });
     };
 
-    public static updateFavourites(body: {id?: number}) {
+    public static updateFavourites(body: {id?: number}): Promise<AxiosResponse<any | IErrorResponse>>  {
         return axiosConfig.put(`/favourites/update/${body.id}`, {
-            Body: {
+            body: {
                 id: body.id
             }
         });

@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import IBook from '../../../models/response/IBook';
+import IBook from '../../../models/responses/IPublicationResponse';
 import BookImg from '../../../assets/images/icons/default-book-icon.svg';
 
 const LastBook = (props: any) => {

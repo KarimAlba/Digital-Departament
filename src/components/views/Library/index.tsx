@@ -18,16 +18,12 @@ const Library = () => {
     const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
     const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
-
-    const getTypeResult = () => {
-        console.log('type');
-    }
     
     const sendReq = (curPage: number) => {
         PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
             .then(response => {
                 if (response.status <= 204) {
-                    const maxPageSize = Math.floor(response.data.totalCount / 4);
+                    const maxPageSize = Math.floor(response.data.totalCount / pageSize);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
                 }
@@ -40,7 +36,7 @@ const Library = () => {
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
-                        const newAuthors = setAuthors(response.data);
+                        setAuthors(response.data);
                     }
                 }
             })
@@ -63,7 +59,7 @@ const Library = () => {
         PublicationAPI.getAllPublications(bookVal)
             .then(response => {
                 if (response.status <= 204) {
-                    const maxPageSize = Math.floor(response.data.totalCount / 4);
+                    const maxPageSize = Math.floor(response.data.totalCount / pageSize);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
                 }
@@ -100,7 +96,6 @@ const Library = () => {
         }        
 
         sendFiltrationRequest(copy);
-        console.log(copy);
     }
 
     const filterByAuthors = (obj: {id: number, name: string}[]) => {
@@ -180,9 +175,8 @@ const Library = () => {
             <div className={styles['library_books']}>
                 {books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>)}
             </div>
+            <Pagination size={pagBtnsSize} getPage={getPage}/> 
 
-            <Pagination size={pagBtnsSize} getPage={getPage}/>
-            
         </div>
     )
 }

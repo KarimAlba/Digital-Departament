@@ -17,7 +17,9 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
 
     const handleFavouriteClick = () => {
         setFavourite(!favourite);
-        PublicationAPI.updateFavourites(book)
+        const copy = Object.assign({}, book);
+        copy.isFavourite = !favourite;
+        PublicationAPI.updateFavourites(copy)
             .then(response => console.log(response))
             .catch(error => console.log(error));
     };

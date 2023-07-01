@@ -15,9 +15,9 @@ const Pagination = (props: PaginationPropsTypes) => {
     const [arrayOfBtnText, setArrayOfBtnText] = useState<string[]>([]); 
     const [currentPage, setCurrentPage] = useState<string>('1');
 
-    const prepareArray = () => {
+    const prepareArray = (size: number) => {
         const copy = Object.assign([], arrayOfBtnText);
-        for (let i = 1; i <= pagBtnsSize; i++) {
+        for (let i = 1; i <= size; i++) {
             copy.push(String(i));
         };
 
@@ -85,9 +85,9 @@ const Pagination = (props: PaginationPropsTypes) => {
     };
 
     useEffect(() => {
-        prepareArray();
         setPagBtnsSize(size);
-    }, []);
+        prepareArray(size);
+    }, [size]);
 
     return (
         pagBtnsSize !== 0

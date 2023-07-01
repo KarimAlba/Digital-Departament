@@ -59,6 +59,7 @@ const Library = () => {
         PublicationAPI.getAllPublications(bookVal)
             .then(response => {
                 if (response.status <= 204) {
+                    console.log(response);
                     const maxPageSize = Math.floor(response.data.totalCount / pageSize);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
@@ -98,15 +99,27 @@ const Library = () => {
         sendFiltrationRequest(copy);
     }
 
-    const filterByAuthors = (obj: {id: number, name: string}[]) => {
-        const copy = Object.assign({}, book);
-        copy.authors = obj.map(item => item.id);
-        sendFiltrationRequest(copy);
-    }
+    // const filterByAuthors = (obj: {id: number, name: string}[]) => {
+    //     const copy = Object.assign({}, book);
+    //     copy.authors = obj.map(item => item.id);
+    //     sendFiltrationRequest(copy);
+    // }
 
-    const filterBySubjects = (obj: {id: number, name: string}[]) => {
+    // const filterBySubjects = (obj: {id: number, name: string}[]) => {
+    //     const copy = Object.assign({}, book);
+    //     copy.subjects = obj.map(item => item.id);
+    //     sendFiltrationRequest(copy);
+    // }
+
+    const filtration = (param: number, array: {id: number, name: string}[]) => {
+        console.log(param);
         const copy = Object.assign({}, book);
-        copy.subjects = obj.map(item => item.id);
+        if (param) {
+            copy.authors = array.map(item => item.id);
+        } else {
+            copy.subjects = array.map(item => item.id);
+        }
+
         sendFiltrationRequest(copy);
     }
 
@@ -136,7 +149,7 @@ const Library = () => {
                 </div>
                 <div className={styles.select}>
                     <ObjectSelector 
-                        setResult={filterByAuthors} 
+                        setResult={filtration} 
                         variation={authors} 
                         multiple={true} 
                         defaultValue='Автор' 
@@ -146,7 +159,7 @@ const Library = () => {
                 </div>
                 <div className={styles.select}>
                     <ObjectSelector 
-                        setResult={filterBySubjects} 
+                        setResult={filtration} 
                         variation={subjects} 
                         multiple={true} 
                         defaultValue='Предмет' 

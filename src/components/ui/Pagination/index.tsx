@@ -81,7 +81,7 @@ const Pagination = (props: PaginationPropsTypes) => {
                 }
             } ;
             setArrayOfBtnText(copy);
-        }
+        };
     };
 
     useEffect(() => {

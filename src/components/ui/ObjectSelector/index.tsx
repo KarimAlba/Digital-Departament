@@ -36,28 +36,33 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             setIsOpen(!isOpen);
         };
 
-        const handleLiClick = (obj: {id: number, name: string}) => {
-            if (multiple) {
-                const copy = Object.assign([], resultFiltration);
-                copy.push(obj);
-                setResultFiltration(copy);
-                setIsOpen(false);
-                setResult(copy);
+        const prepareParam = () => {
+            if (defaultValue === 'Автор') {
+                return 1;
             } else {
-                setValue(obj.name);
-                setIsOpen(false);
-            };
+                return  0;
+            }
+        }
+
+        const handleLiClick = (obj: {id: number, name: string}) => {
+            const copy = Object.assign([], resultFiltration);
+            copy.push(obj);
+            setResultFiltration(copy);
+            setIsOpen(false);
+            setResult(prepareParam(), copy);
+            console.log(copy);
         };
 
-        const handleCloseButtonClick = (e: any) => {
-            const index = resultFiltration.findIndex(item => item.id === e.target.id);
+        const handleCloseButtonClick = (e: any, elem: {id: number, name: string}) => {
             const copy = Object.assign([], resultFiltration);
-            if (index) {
+            const index = resultFiltration.findIndex(item => item.id === elem.id);
+
+            if (index !== -1) {
                 copy.splice(index, 1);
                 setResultFiltration(copy);
-                setResultFiltration(copy);
+                setResult(prepareParam(), copy);
             } else {
-                setResult(resultFiltration);
+                setResult(prepareParam(), resultFiltration);
             }
         }; 
 
@@ -91,11 +96,11 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
                 {multiple
                     ? <div className={styles['multiple-select_value']}>
                         {
-                        resultFiltration.map(item => 
-                            <div className={styles['multiple-select_value_item']}>
+                        resultFiltration.map((item) => 
+                            (<div className={styles['multiple-select_value_item']}>
                                 <span>{checkItemLength(item.name)}</span>
-                                <button onClick={(e: any) => handleCloseButtonClick(e)}>x</button>
-                            </div>
+                                <button onClick={(e: any) => handleCloseButtonClick(e, item)}>x</button>
+                            </div>)
                         )  
                         }
                     </div>

@@ -1,0 +1,81 @@
+.creation{
+    width: 100%;
+    padding-left: 2%; 
+    box-sizing: border-box;
+
+    h2{
+        margin-bottom: 10px;
+    }
+
+    .creation_columns{
+        margin-left: 5%;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+
+        .columns_column{
+            width: 40%;
+
+            h3{
+                margin:15px 0 15px 0;
+            }
+
+            input{
+                margin: 0;
+            }
+
+            .file{
+                margin: 10px 0 10px 0;
+                width: 70%;
+                display: flex;
+                align-items: center;
+
+                button:last-child{
+                    height: 30px;
+                    border-radius: 10px;
+                    border: 1px solid var(--unnamed, #D2D2D2);
+                    background: #FFF;
+                }
+            }
+
+            .cover{
+                width: 70%;
+                display: flex;
+                align-items: center;
+            }
+
+            textarea{
+                width: 90%;
+                border-radius: 6px;
+            }
+
+            .info{
+                float: right;
+                text-align: right;
+            }
+        }
+    }
+
+    .add-btn{
+        margin: 0 5px 0 5px;
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        border: none;
+        background: url(../../../assets/images/icons/file-icon.svg), #FFF;
+        box-shadow: 0px 0px 8px 2px rgba(48, 117, 156, 0.25);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .send-btn{
+        margin-left: 35%;
+        width: 20%;
+        height: 35px;
+        border-radius: 12px;
+        border: none;
+        background: #10599D;
+        color: #fff;
+    }
+}

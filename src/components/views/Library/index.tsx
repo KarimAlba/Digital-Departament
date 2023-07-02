@@ -99,18 +99,6 @@ const Library = () => {
         sendFiltrationRequest(copy);
     }
 
-    // const filterByAuthors = (obj: {id: number, name: string}[]) => {
-    //     const copy = Object.assign({}, book);
-    //     copy.authors = obj.map(item => item.id);
-    //     sendFiltrationRequest(copy);
-    // }
-
-    // const filterBySubjects = (obj: {id: number, name: string}[]) => {
-    //     const copy = Object.assign({}, book);
-    //     copy.subjects = obj.map(item => item.id);
-    //     sendFiltrationRequest(copy);
-    // }
-
     const filtration = (param: number, array: {id: number, name: string}[]) => {
         console.log(param);
         const copy = Object.assign({}, book);

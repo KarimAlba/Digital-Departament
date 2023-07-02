@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './style.module.scss'
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
 import License from '../License';
 import LastBook from '../LastBook';
@@ -12,6 +12,8 @@ import Favourites from '../Favourites';
 import Welcoming from '../Welcoming';
 import Library from '../Library';
 import TagsPage from '../TagsPage';
+import CreationImg from '../../../assets/images/icons/create-publication-icon.svg';
+import CreationPage from '../CreationPage';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -20,6 +22,13 @@ const Main = (props: any) => {
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
     const getInternet = (value: boolean) => {setIsInternet(value)};
+
+    const navigate = useNavigate();
+    const handleCreationClick = () => {
+        setUserData(false);
+        navigate('creation');
+    }
+
 
     return (
         <div 
@@ -41,6 +50,7 @@ const Main = (props: any) => {
                         onClick={() => setUserData(false)}
                     >
                     </Link>
+                    <img src={CreationImg} className={styles['creation-img']} onClick={handleCreationClick}/>
                     <img src={Face} className={styles.face} onClick={handleFaceClick}/>
                 </div>
                 <nav>
@@ -70,6 +80,7 @@ const Main = (props: any) => {
                     <Route path='lastbook' element={<LastBook/>}/>
                     <Route path='favourites' element={<Favourites/>}/>
                     <Route path='tags' element={<TagsPage/>}/>
+                    <Route path='creation' element={<CreationPage/>}/>
                 </Routes>
             </div>
         </div>

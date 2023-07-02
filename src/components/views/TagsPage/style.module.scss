@@ -1,0 +1,33 @@
+.container{
+    width: 100%;
+
+    .search{
+        margin-left: 2%;
+        width: 30%;
+        display: flex;
+
+        input{
+            margin: auto;
+            width: 70%;
+            border-radius: 8px;
+            border: 1px solid #BABABA;
+            background-repeat: no-repeat;
+            background-position: right;
+        }
+    }
+
+    ul{
+        margin: 0;
+        color: #003E78;
+
+        li{
+            margin-bottom: 5px;
+            text-decoration: underline;
+
+
+            a{
+                font-size: 20px;
+            }
+        }
+    }
+}

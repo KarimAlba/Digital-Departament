@@ -11,6 +11,7 @@ import InternetModal from '../../modals/InternetModal';
 import Favourites from '../Favourites';
 import Welcoming from '../Welcoming';
 import Library from '../Library';
+import TagsPage from '../TagsPage';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -45,7 +46,7 @@ const Main = (props: any) => {
                 <nav>
                     <Link to='library' onClick={() => setUserData(false)}>Вся литература</Link>
                     <Link to='/' onClick={() => setUserData(false)}>Предметы</Link>
-                    <Link to='/' onClick={() => setUserData(false)}>Тэги</Link>
+                    <Link to='tags' onClick={() => setUserData(false)}>Тэги</Link>
                     <Link 
                         to='license' onClick={() => setUserData(false)}
                     >
@@ -68,6 +69,7 @@ const Main = (props: any) => {
                     <Route path='license' element={<License/>}/>
                     <Route path='lastbook' element={<LastBook/>}/>
                     <Route path='favourites' element={<Favourites/>}/>
+                    <Route path='tags' element={<TagsPage/>}/>
                 </Routes>
             </div>
         </div>

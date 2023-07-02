@@ -1,5 +1,5 @@
 import axiosConfig from "./axiosConfig";
-import { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import IErrorResponse from "../models/responses/IErrorResponse";
 import IBook from "../models/requests/IPublicationRequest";
 

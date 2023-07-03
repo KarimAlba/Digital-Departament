@@ -1,4 +1,4 @@
-interface IServerBook{
+interface IServerBookResponse{
     id: number;
     userId: number;
     type: number;
@@ -23,4 +23,4 @@ interface IServerBook{
     filePath: string;
 }
 
-export default IServerBook;
+export default IServerBookResponse;

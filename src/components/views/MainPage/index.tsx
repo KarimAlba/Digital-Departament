@@ -3,7 +3,7 @@ import styles from './style.module.scss'
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
 import License from '../License';
-import LastBook from '../LastBook';
+import OpenedBook from '../OpenedBook';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';
@@ -41,7 +41,7 @@ const Main = (props: any) => {
                     <img src={Logo} alt="" className={styles.logo}/>
                     <input type="text" className={styles.search} onClick={() => setUserData(false)}/>
                     <Link 
-                        to='lastbook' className={styles.book} 
+                        to='openedbook' className={styles.book} 
                         onClick={() => setUserData(false)}
                     >
                     </Link>
@@ -75,9 +75,12 @@ const Main = (props: any) => {
                 }
                 <Routes>
                     <Route path='welcoming' element={<Welcoming/>}/>
+
                     <Route path='library' element={<Library/>}/>
+                    <Route path='library/:id' element={<OpenedBook/>}/>
+
                     <Route path='license' element={<License/>}/>
-                    <Route path='lastbook' element={<LastBook/>}/>
+                    <Route path='openedbook' element={<OpenedBook/>}/>
                     <Route path='favourites' element={<Favourites/>}/>
                     <Route path='tags' element={<TagsPage/>}/>
                     <Route path='creation' element={<CreationPage/>}/>

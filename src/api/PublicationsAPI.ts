@@ -38,6 +38,10 @@ class PublicationAPI {
             }
         });
     };
+
+    public static getUniqPublication(id: number): Promise<AxiosResponse<any | IErrorResponse>> {
+        return axiosConfig.get(`/publications/${id}`);
+    } ;
 };
 
 export default PublicationAPI;

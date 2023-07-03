@@ -44,14 +44,21 @@
         flex-flow: column;
 
         h2{
+            width: 75%;
             font-style: normal;
             font-weight: 500;
             font-size: 24px;
             line-height: 28px;
-            display: flex;
-            align-items: center;
-            text-align: center;
+            text-align: left;
             color: #323965;
+        }
+
+        .authors{
+            display: flex;
+
+            h4{
+                margin-right: 5px;
+            }
         }
 
         h4{
@@ -68,7 +75,7 @@
         .book_date{
             position: absolute;
             top: 20px;
-            left: 90%;
+            left: 80%;
             color: #0B1839;
         }
 

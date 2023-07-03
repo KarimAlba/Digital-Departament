@@ -1,5 +1,5 @@
 .book{
-    width: 11.2%;
+    width: 153px;
     height: 315px;
     background-color: #fff;
     border-radius: 6px;
@@ -37,7 +37,9 @@
         }
 
         .book_description_date{
-            margin: 3px 77%;
+            position: absolute;
+            top: 92%;
+            left: 80%;
         }
     }
 }

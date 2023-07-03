@@ -85,6 +85,19 @@
                 color: rgba(0, 0, 0, 0.8);
                 margin-left:2%;
             }
+
+            .subjects{
+                margin-left: 2%;
+                position: relative;
+
+                button{
+                    border: none;
+                    background: none;
+                    font-weight: 500;
+                    font-size: 15.5px;
+                    color: rgba(0, 0, 0, 0.8);
+                }
+            }
         }
     }
 

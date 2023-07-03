@@ -84,12 +84,18 @@ const CreationPage = (props: any) => {
 
                     <div className={styles.file}>
                         <span>Прикрепить файл</span>
-                        <button className={styles['add-btn']}></button>
-                        <button>Написать здесь</button>
+                        <label htmlFor="fileInp">
+                            <input type="file" name='fileInp'/>    
+                        </label>
+                        <button>
+                            Написать здесь
+                        </button>
                     </div>
                     <div className={styles.cover}>
                         <span>Обложка</span>
-                        <button className={styles['add-btn']}></button>
+                        <label htmlFor="fileInp">
+                            <input type="file" name='fileInp'/>    
+                        </label>
                     </div>
                 </div>
 

@@ -50,7 +50,6 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             setResultFiltration(copy);
             setIsOpen(false);
             setResult(prepareParam(), copy);
-            console.log(copy);
         };
 
         const handleCloseButtonClick = (e: any, elem: {id: number, name: string}) => {
@@ -97,9 +96,14 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
                     ? <div className={styles['multiple-select_value']}>
                         {
                         resultFiltration.map((item) => 
-                            (<div className={styles['multiple-select_value_item']}>
-                                <span>{checkItemLength(item.name)}</span>
-                                <button onClick={(e: any) => handleCloseButtonClick(e, item)}>x</button>
+                            (<div className={styles['multiple-select_value_item']} key={item.id + item.name}>
+                                <span key={item.id*54 + item.name}>{checkItemLength(item.name)}</span>
+                                <button 
+                                    onClick={(e: any) => handleCloseButtonClick(e, item)} 
+                                    key={item.id + item.name.split('').reverse().join('')}
+                                >
+                                    x
+                                </button>
                             </div>)
                         )  
                         }

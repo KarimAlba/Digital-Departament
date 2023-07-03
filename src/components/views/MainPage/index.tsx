@@ -85,10 +85,8 @@ const Main = (props: any) => {
                 }
                 <Routes>
                     <Route path='welcoming' element={<Welcoming/>}/>
-
                     <Route path='library' element={<Library/>}/>
                     <Route path='library/:id' element={<OpenedBook/>}/>
-
                     <Route path='license' element={<License/>}/>
                     <Route path='openedbook' element={<OpenedBook/>}/>
                     <Route path='favourites' element={<Favourites/>}/>

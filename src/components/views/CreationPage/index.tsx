@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Select from '../../ui/Selector';
 import ObjectSelector from '../../ui/ObjectSelector';
 import PublicationAPI from '../../../api/PublicationsAPI';
+import SubjectsAPI from '../../../api/SubjectsAPI';
 
 const CreationPage = (props: any) => {
     const [authors, setAuthors] = useState<{id: number, name: string}[]>([]);
@@ -33,7 +34,7 @@ const CreationPage = (props: any) => {
     };
 
     const getSubjects = (name?: string) => {
-        PublicationAPI.getSubjects(name)
+        SubjectsAPI.getSubjects(name)
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {

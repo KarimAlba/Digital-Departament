@@ -14,10 +14,12 @@ import Library from '../Library';
 import TagsPage from '../TagsPage';
 import CreationImg from '../../../assets/images/icons/create-publication-icon.svg';
 import CreationPage from '../CreationPage';
+import SubjectsModal from '../../modals/SubjectsModal';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
+    const [isOpenSubjects, setIsOpenSubjects] = useState<boolean>(false);
     const [isInternet, setIsInternet] = useState<boolean>(false);
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
@@ -29,7 +31,9 @@ const Main = (props: any) => {
         navigate('creation');
     }
 
-
+    const handleSubjectsClick = () => {
+        setIsOpenSubjects(!isOpenSubjects);
+    }
     return (
         <div 
             className={styles['main-container']} 
@@ -55,7 +59,13 @@ const Main = (props: any) => {
                 </div>
                 <nav>
                     <Link to='library' onClick={() => setUserData(false)}>Вся литература</Link>
-                    <Link to='/' onClick={() => setUserData(false)}>Предметы</Link>
+                    <div className={styles.subjects}>
+                        <button onClick={handleSubjectsClick}>Предметы</button>
+                        {isOpenSubjects
+                            ? <SubjectsModal/>
+                            : null
+                        }
+                    </div>
                     <Link to='tags' onClick={() => setUserData(false)}>Тэги</Link>
                     <Link 
                         to='license' onClick={() => setUserData(false)}

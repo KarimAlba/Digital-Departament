@@ -1,0 +1,30 @@
+.subjects{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 150px;
+    height: 200px;
+    border: 1px solid black;
+    background-color: #ffff;
+    overflow:scroll;
+    z-index: 3;
+
+    ul{
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+
+        li{
+            margin: 5px 0;
+            height: 40px;
+            font-size: 14px;
+            list-style-type: none;
+            border-bottom: 1px solid gray;
+        }
+
+        li:hover{
+            color: gray;
+        }
+    }
+}

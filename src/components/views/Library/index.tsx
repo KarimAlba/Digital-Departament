@@ -175,7 +175,7 @@ const Library = () => {
             </div>
 
             <div className={styles['library_books']}>
-                {books.map(book => <ClosedBook book={book} key={book.coverPath + book.filePath}/>)}
+                {books.map(book => <ClosedBook book={book} key={book.coverPath + book.id}/>)}
             </div>
             <Pagination size={pagBtnsSize} getPage={getPage}/> 
 

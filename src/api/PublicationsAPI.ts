@@ -25,12 +25,6 @@ class PublicationAPI {
         });
     };
 
-    public static getSubjects(name?: string): Promise<AxiosResponse<any | IErrorResponse>>  {
-        return axiosConfig.get('/subjects/filter', {
-            params: {name}
-        });
-    };
-
     public static updateFavourites(body: {id?: number}): Promise<AxiosResponse<any | IErrorResponse>>  {
         return axiosConfig.put(`/favourites/update/${body.id}`, {
             body: {

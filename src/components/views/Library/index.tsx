@@ -8,6 +8,7 @@ import Pagination from '../../ui/Pagination';
 import IBook from '../../../models/requests/IPublicationRequest';
 import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
 import ObjectSelector from '../../ui/ObjectSelector';
+import SubjectsAPI from '../../../api/SubjectsAPI';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
@@ -44,7 +45,7 @@ const Library = () => {
     };
 
     const getSubjects = (name?: string) => {
-        PublicationAPI.getSubjects(name)
+        SubjectsAPI.getSubjects(name)
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {

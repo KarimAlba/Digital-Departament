@@ -88,7 +88,7 @@ const Registration = (props: any) => {
             post: userPost
         }
 
-        console.log(gender);
+        console.log(user.birthDate);
         setNewUser(user);
         sendReq(user);
         checkRegistrationReady();
@@ -183,7 +183,11 @@ const Registration = (props: any) => {
         setGender(value);
     };
 
-    const getInternet = (value: boolean) => {setInternetConnection(value)}
+    const getInternet = (value: boolean) => {setInternetConnection(value)};
+
+    useEffect(() =>{
+        console.log(userBirthDate);
+    }, [userBirthDate]);
 
     return(
         <div className='background'>

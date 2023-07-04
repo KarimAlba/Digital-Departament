@@ -1,11 +1,12 @@
 import styles from './style.module.scss';
 import IServerBook from '../../../models/responses/IServerBookResponse';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DefaultImg from '../../../assets/images/icons/default-book-icon.svg';
 import PreferIcon from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferIcon from '../../../assets/images/icons/not-prefer-icon.svg';
 import PublicationAPI from '../../../api/PublicationsAPI';
 import OpenedBook from '../OpenedBook';
+import axiosConfig from '../../../api/axiosConfig';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 interface ClosedBookPropsTypes{
@@ -31,6 +32,8 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
         navigate(`:${book.id}`);
     }
 
+    console.log(axiosConfig.defaults.baseURL + book.coverPath );
+
     return(
         <div>
             <div key={book.coverPath + book.id} className={styles.book} onClick={handleDivClick}>
@@ -38,7 +41,14 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
                     ? <img src={PreferIcon} alt="" className={styles.favourite} onClick={handleFavouriteClick}/>
                     : <img src={NotPreferIcon} alt="" className={styles.favourite} onClick={handleFavouriteClick}/>
                 }
-                <img src={DefaultImg} alt="book img" key={book.coverPath}/>
+                <img 
+                    src={book.coverPath 
+                        ? axiosConfig.defaults.baseURL + book.coverPath 
+                        : DefaultImg
+                    } 
+                    alt="book cover" 
+                    key={book.coverPath}
+                />
                 <div key={book.creationDate + book.id} className={styles['book_description']}>
                     <span key={book.id  + book.coverPath}>
                         {book.authors.map(item => (

@@ -9,6 +9,7 @@
     box-sizing: border-box;
     color: black;
 
+    span, 
     p{
         margin: 8px 2%;
         font-family: 'Roboto';
@@ -16,6 +17,14 @@
         font-weight: 400;
         font-size: 14px;
         color: #000000a7;
+    }
+
+    span{
+        position: absolute;
+    }
+
+    span:hover{
+        text-decoration: underline;
     }
 
     .list{

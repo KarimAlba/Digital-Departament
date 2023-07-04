@@ -1,6 +1,6 @@
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IServerUser from '../../../models/responses/IServerUserResponse';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
@@ -46,7 +46,6 @@ const Autorization = (props: any) => {
     const fillLocalStorage = (person: IServerUser) => {
         localStorage.clear();
         localStorage.setItem('name', String(person.name));
-        localStorage.setItem('login', String(person.login));
         localStorage.setItem('email', String(person.email));
         localStorage.setItem('birthDate', String(person.birthDate));
         localStorage.setItem('gender', String(person.gender));
@@ -62,6 +61,8 @@ const Autorization = (props: any) => {
                     console.log(response.data);
                     fillLocalStorage(user);
                     localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('password', userPassword);
+                    localStorage.setItem('login', userLogin);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
                     navigate('main/welcoming');
                     setIsOpenMistakes(false);
@@ -82,9 +83,14 @@ const Autorization = (props: any) => {
 
     const checkToken = () => {
         if (localStorage.getItem('token')) {
-            
+            setUserLogin(String(localStorage.getItem('login')));
+            setUserPassword(String(localStorage.getItem('password')));
         }
     }
+
+    useEffect(() => {
+        checkToken();
+    }, []);
 
     return (
         <div className={styles.autorization}>
@@ -97,9 +103,10 @@ const Autorization = (props: any) => {
                     placeholderValue='Логин/Email' 
                     labelValue='Логин/Email' 
                     type="text" 
+                    defaultValue={userLogin}
                 />
 
-                <Password getPasswordValue={getPasswordValue}/>
+                <Password getPasswordValue={getPasswordValue} defaultVal={userPassword}/>
                 <div className={styles.btns}>
                     <button onClick={(e: any) => handleComeClick(e)}>
                         Войти

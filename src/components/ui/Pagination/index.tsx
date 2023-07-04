@@ -88,7 +88,6 @@ const Pagination = (props: PaginationPropsTypes) => {
     useEffect(() => {
         setPagBtnsSize(size);
         prepareArray(size);
-        console.log(size);
     }, [size]);
 
     return (

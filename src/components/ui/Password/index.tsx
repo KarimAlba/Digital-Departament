@@ -12,13 +12,16 @@ const Password = (props: PasswordPropsTypes) => {
     const [isActivePassword, setIsActivePassword] = useState<boolean>(false);
     const [showedPassword, setShowedPassword] = useState<boolean>(false);
 
-    const handlePasswordChange = (e: any) => {getPasswordValue(e.target.value)}
+    const handlePasswordChange = (e: any) => {
+        getPasswordValue(e.target.value);
+        setIsActivePassword(true);
+    }
 
     const showPassword = () => {
         setShowedPassword(!showedPassword);
     }
     return (
-        <div className={styles.password}>
+        <div className={styles.password} onBlur={() => setIsActivePassword(false)}>
             {isActivePassword? <label htmlFor="password">Пароль</label>: null}
             <input 
                 type={showedPassword
@@ -27,7 +30,6 @@ const Password = (props: PasswordPropsTypes) => {
                 } 
                 name="password" placeholder="Введите пароль"
                 onInput={handlePasswordChange}
-                onClick={() => setIsActivePassword(true)}
                 style={isActivePassword
                     ? {border: 'none', borderBottom: '1px solid #309FFF', borderRadius: 0}
                     : {border: '1px solid #C1CAD2', borderRadius: '6px'}

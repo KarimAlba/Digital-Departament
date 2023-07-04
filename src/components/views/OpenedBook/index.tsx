@@ -33,9 +33,18 @@ const OpenedBook = (props: any) => {
         setIsReader(!isReader);
     }
 
+    const checkCoverPath = () => {
+        if (book !== undefined) {
+            if (book.coverPath) {
+                return book.coverPath;
+            } else {
+                return BookImg;
+            }
+        } return BookImg;
+    }
+
     useEffect(() => {
         sendReq();
-        console.log(id);
     }, []);
 
     return (
@@ -43,7 +52,7 @@ const OpenedBook = (props: any) => {
             {book !== undefined
                 ? (<div className={styles.book}>
                         <div className={styles['book_container']}>
-                            <img src={BookImg} alt="" className={styles['book_img']}/>
+                            <img src={checkCoverPath()} alt="book cover" className={styles['book_img']}/>
                             <div className={styles.reader}>
                                 <button>Скачать</button>
                                 <button onClick={handleReadClick}>                                

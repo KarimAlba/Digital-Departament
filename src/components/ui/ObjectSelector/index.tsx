@@ -68,6 +68,11 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
         return (
             <div style={{position: 'relative'}}>
                 <div className={styles.select} onClick={handleDivClick}>
+                    {
+                        isOpen 
+                            ? <span onClick={() => setIsOpen(false)}>Закрыть</span>
+                            : null
+                    }
                     {isOpen
                         ? (<ul className={styles.list}>{menu}</ul>)
                         : multiple 

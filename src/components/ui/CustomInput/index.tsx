@@ -15,13 +15,22 @@ const CustomInput = (props: CustomInputPropsTypes) => {
 
     const { setValue, defaultValue, placeholderValue, labelValue, type } = props;
 
-    const [inputValue, setInputValue] = useState<string | undefined>(defaultValue);
+    const [inputValue, setInputValue] = useState<string>('');
     const [isActive, setIsActive] = useState<boolean>(false);
 
     const handleInputChange = (e: any) => {
         setInputValue(e.target.value);
         setValue(e.target.value);
         setIsActive(true);
+    }
+
+    const handleInputActivation = () => {
+        setIsActive(true);
+        if (defaultValue) {
+            setInputValue(defaultValue);
+        } else {
+            setInputValue(inputValue);
+        }
     }
 
     useEffect(() => {
@@ -49,9 +58,11 @@ const CustomInput = (props: CustomInputPropsTypes) => {
                     : <input                 
                         type={isActive ? type : 'text'} 
                         className={isActive ? styles['focused-input'] : styles['text-input']} 
-                        placeholder={placeholderValue} defaultValue={inputValue}
-                        onInput={handleInputChange} onBlur={() => setIsActive(false)}
-                        onClick={() => setIsActive(true)}
+                        placeholder={placeholderValue} 
+                        defaultValue={inputValue}
+                        onInput={handleInputChange} 
+                        onBlur={() => setIsActive(false)}
+                        onClick={handleInputActivation}
                     />
                 }
             </div>

@@ -4,11 +4,13 @@ import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 
 interface PasswordPropsTypes{
     getPasswordValue: Function;
+    defaultVal?: string;
 }
 
 const Password = (props: PasswordPropsTypes) => {
-    const { getPasswordValue } = props;
+    const { getPasswordValue, defaultVal } = props;
 
+    const [value, setValue] = useState<string>('');
     const [isActivePassword, setIsActivePassword] = useState<boolean>(false);
     const [showedPassword, setShowedPassword] = useState<boolean>(false);
 
@@ -34,6 +36,8 @@ const Password = (props: PasswordPropsTypes) => {
                     ? {border: 'none', borderBottom: '1px solid #309FFF', borderRadius: 0}
                     : {border: '1px solid #C1CAD2', borderRadius: '6px'}
                 }
+                onClick={() => {defaultVal ? setValue(defaultVal) : setValue(value)}}
+                defaultValue={value}
             />
             {isActivePassword
                 ? <img 

@@ -19,10 +19,11 @@
         }
 
         .sorting{
-            width: 12%;
+            width: 15%;
             top: 5px;
             left: 88%;
             position: absolute;
+            z-index: 3;
     
             .sorting_btn{
                 width: 35px;
@@ -39,16 +40,30 @@
                 background-color: #fff;
                 border-radius: 6px;
 
-                button{
-                    width: 100%;
-                    border-radius: 6px;
-                    text-align: left;
-                    border: none;
-                    background-color: #fff;
-                }
+                .sorting-blocks{
+                    display: flex;
 
-                button:hover{
-                    background-color: #727070;
+                    button{
+                        width: 90%;
+                        border-radius: 6px;
+                        text-align: left;
+                        border: none;
+                        background-color: #fff;
+                    }
+    
+                    button:hover{
+                        background-color: #727070;
+                    }
+                    
+                    img{
+                        width: 20px;
+                        height: 20px;
+                        cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
+                    }
+
+                    img:hover{
+                        border: 0.5px dotted black;
+                    }
                 }
             }
         }

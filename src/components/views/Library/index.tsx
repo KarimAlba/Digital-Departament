@@ -9,6 +9,10 @@ import IBook from '../../../models/requests/IPublicationRequest';
 import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
 import ObjectSelector from '../../ui/ObjectSelector';
 import SubjectsAPI from '../../../api/SubjectsAPI';
+import EnumSortBy from '../../../models/responses/EnumSortByResponse';
+import EnumSortOrder from '../../../models/responses/EnumSortOrderResponse';
+import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
+import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
 
 const Library = () => {
     const [books, setBooks] = useState<IServerBook[] | []>([]);
@@ -19,6 +23,8 @@ const Library = () => {
     const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
     const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
+    const [sortedBy, setSortedBy] = useState<EnumSortBy>(0);
+    const [sortedOrder, setSortedOrder] = useState<EnumSortOrder>(0);
     
     const sendReq = (curPage: number) => {
         PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
@@ -117,6 +123,36 @@ const Library = () => {
         sendReq(curPage);
     };
 
+    const handleAlphabetBtnClick = () => {
+        setIsOpenSorting(!isOpenSorting);
+        setSortedBy(0);
+        const copy = Object.assign({}, book);
+        copy.sortBy = 0;
+        sendFiltrationRequest(copy);
+    }
+
+    const handleDateOfCreationBtnClick = () => {
+        setIsOpenSorting(!isOpenSorting);
+        setSortedBy(1);
+        const copy = Object.assign({}, book);
+        copy.sortBy = 1;
+        sendFiltrationRequest(copy);
+    }
+
+    const handleArrowUpClick = () => {
+        setSortedOrder(1);
+        const copy = Object.assign({}, book);
+        copy.sortOrder = 1;
+        sendFiltrationRequest(copy);
+    }
+
+    const handleArrowBottomClick = () => {
+        setSortedOrder(0);
+        const copy = Object.assign({}, book);
+        copy.sortOrder = 0;
+        sendFiltrationRequest(copy);
+    }
+
     useEffect(() => {
         sendReq(page);
         getAuthors();
@@ -157,17 +193,61 @@ const Library = () => {
                     />
                 </div>
 
-                <div className={styles.sorting}>
+                <div 
+                    className={styles.sorting}
+                    onBlur={() => setIsOpenSorting(false)}
+                >
                     <button 
                         className={styles['sorting_btn']} 
                         onClick={() => setIsOpenSorting(!isOpenSorting)}
-                        onBlur={() => setIsOpenSorting(!isOpenSorting)}
                     >
                     </button>
                     {isOpenSorting
                         ? (<div className={styles['sorting_modal']}>
-                            <button onClick={() => setIsOpenSorting(!isOpenSorting)}>По алфавиту</button>
-                            <button onClick={() => setIsOpenSorting(!isOpenSorting)}>По дате публикации</button>
+                            <div className={styles['sorting-blocks']}>
+                                <button 
+                                    onClick={handleAlphabetBtnClick}
+                                >
+                                    По алфавиту
+                                </button>
+                                {sortedBy === 0
+                                    ? (sortedOrder === 0
+                                        ? <img 
+                                            src={ArrowUpImg} 
+                                            alt="" 
+                                            onClick={handleArrowUpClick}
+                                        />
+                                        : <img 
+                                            src={ArrowBottomImg} 
+                                            alt=""
+                                            onClick={handleArrowBottomClick}
+                                        />
+                                    )
+                                    : null
+                                }
+                            </div>
+                            <div className={styles['sorting-blocks']}>
+                                <button 
+                                    onClick={handleDateOfCreationBtnClick}
+                                >
+                                    По дате публикации
+                                </button>
+                                {sortedBy === 1
+                                    ? (sortedOrder === 0
+                                        ? <img 
+                                            src={ArrowUpImg} 
+                                            alt="" 
+                                            onClick={handleArrowUpClick}
+                                        />
+                                        : <img 
+                                            src={ArrowBottomImg} 
+                                            alt=""
+                                            onClick={handleArrowBottomClick}
+                                        />
+                                    )
+                                    : null
+                                }
+                            </div>
                         </div>)
                         : null
                     }

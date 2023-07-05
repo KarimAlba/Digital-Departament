@@ -1,3 +1,3 @@
-enum SortBy {Alphabet, CreationDate};
+enum EnumSortBy {Alphabet, CreationDate};
 
-export default SortBy;
+export default EnumSortBy;

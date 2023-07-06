@@ -29,6 +29,8 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
 
     const handleDivClick = () => {
         navigate(`:${book.id}`);
+        localStorage.removeItem('id');
+        localStorage.setItem('id', String(book.id));
     }
 
     const checkCoverPath = () => {

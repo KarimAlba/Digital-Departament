@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './style.module.scss'
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
@@ -15,6 +15,7 @@ import TagsPage from '../TagsPage';
 import CreationImg from '../../../assets/images/icons/create-publication-icon.svg';
 import CreationPage from '../CreationPage';
 import SubjectsModal from '../../modals/SubjectsModal';
+import BookImg from '../../../assets/images/icons/book-icon.svg';
 
 const Main = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
@@ -34,6 +35,16 @@ const Main = (props: any) => {
     const handleSubjectsClick = () => {
         setIsOpenSubjects(!isOpenSubjects);
     }
+
+    const handleOpenedBookClick = () => {
+        setUserData(false)
+        if (localStorage.getItem('id')) {
+            navigate(`library/:${localStorage.getItem('id')}`);
+        } else {
+            console.log(localStorage.getItem('id'));
+        }
+    }
+
     return (
         <div 
             className={styles['main-container']} 
@@ -44,11 +55,11 @@ const Main = (props: any) => {
                 <div className={styles.header}>
                     <img src={Logo} alt="" className={styles.logo}/>
                     <input type="text" className={styles.search} onClick={() => setUserData(false)}/>
-                    <Link 
-                        to='openedbook' className={styles.book} 
-                        onClick={() => setUserData(false)}
-                    >
-                    </Link>
+                    <img 
+                        src={BookImg}
+                        className={styles.book} 
+                        onClick={handleOpenedBookClick}
+                    />
                     <Link 
                         to='favourites' className={styles.star} 
                         onClick={() => setUserData(false)}

@@ -47,7 +47,7 @@
         }
 
         input{
-            margin: 0 0 15px 5%;
+            margin-bottom: 15px;
             width: 90%;
             text-align: left;
             padding:0 7px;
@@ -59,14 +59,14 @@
         }
 
         .btns{
-            margin: 0 0 0 5%;
+            margin: 0;
             width: 90%;
             display: flex;
             justify-content: space-between;
 
             button{
                 height: 40px;
-                width: 45%;
+                width: 47%;
                 background: #075497;
                 border-radius: 6px;
                 border: none;
@@ -75,7 +75,7 @@
 
             .password-new-btn{
                 margin: auto;
-                width: 45%;
+                width: 47%;
                 color: #075497;
                 background-color: #ffff;
                 text-decoration: underline #075497;

@@ -35,7 +35,13 @@ class PublicationAPI {
 
     public static getUniqPublication(id: number): Promise<AxiosResponse<any | IErrorResponse>> {
         return axiosConfig.get(`/publications/${id}`);
-    } ;
+    };
+
+    public static createPublication(formElem: any): Promise<AxiosResponse<any | IErrorResponse>> {
+        return axiosConfig.post('/publications/create', {
+            body: new FormData(formElem)
+        })
+    }
 };
 
 export default PublicationAPI;

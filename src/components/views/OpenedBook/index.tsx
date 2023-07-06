@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import CommentsBlock from '../CommentsBlock';
 import PreferImg from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferImg from '../../../assets/images/icons/not-prefer-icon.svg';
+import axiosConfig from '../../../api/axiosConfig';
 
 const OpenedBook = (props: any) => {
     const [book, setBook] = useState<IServerBookResponse>();
@@ -35,10 +36,8 @@ const OpenedBook = (props: any) => {
 
     const checkCoverPath = () => {
         if (book !== undefined) {
-            if (book.coverPath) {
-                return book.coverPath;
-            } else {
-                return BookImg;
+            if (book.coverPath && book.coverPath !== 'null') {
+                return `${axiosConfig.defaults.baseURL}/download/${book.coverPath}/${book.title}`;
             }
         } return BookImg;
     }

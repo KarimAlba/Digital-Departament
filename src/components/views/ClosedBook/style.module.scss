@@ -6,8 +6,9 @@
     position: relative;
 
     img{
-        margin: 5px 0 0 4%;
-        height: 67%;
+        margin: 4px 0 0 5px;
+        width: 142px;
+        height: 210px;
     }
 
     .favourite{
@@ -15,6 +16,7 @@
         top: 0;
         left: 10px;
         margin: 0;
+        width: 20px;
         height: 20px;
         cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
     }

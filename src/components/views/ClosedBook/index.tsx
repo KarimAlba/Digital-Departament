@@ -5,9 +5,8 @@ import DefaultImg from '../../../assets/images/icons/default-book-icon.svg';
 import PreferIcon from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferIcon from '../../../assets/images/icons/not-prefer-icon.svg';
 import PublicationAPI from '../../../api/PublicationsAPI';
-import OpenedBook from '../OpenedBook';
 import axiosConfig from '../../../api/axiosConfig';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface ClosedBookPropsTypes{
     book: IServerBook;
@@ -32,7 +31,17 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
         navigate(`:${book.id}`);
     }
 
-    console.log(axiosConfig.defaults.baseURL + book.coverPath );
+    const checkCoverPath = () => {
+        if (book !== undefined) {
+            if (book.coverPath && book.coverPath !== 'null') {
+                return `${axiosConfig.defaults.baseURL}/download/${book.coverPath}/${book.title}`;
+            }
+        } return DefaultImg;
+    }
+
+    useEffect(() => {
+        console.log(book);
+    }, []);
 
     return(
         <div>
@@ -42,10 +51,7 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
                     : <img src={NotPreferIcon} alt="" className={styles.favourite} onClick={handleFavouriteClick}/>
                 }
                 <img 
-                    src={book.coverPath 
-                        ? axiosConfig.defaults.baseURL + book.coverPath 
-                        : DefaultImg
-                    } 
+                    src={checkCoverPath()} 
                     alt="book cover" 
                     key={book.coverPath}
                 />

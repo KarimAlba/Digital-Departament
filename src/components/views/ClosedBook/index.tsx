@@ -1,6 +1,6 @@
 import styles from './style.module.scss';
 import IServerBook from '../../../models/responses/IServerBookResponse';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DefaultImg from '../../../assets/images/icons/default-book-icon.svg';
 import PreferIcon from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferIcon from '../../../assets/images/icons/not-prefer-icon.svg';
@@ -29,6 +29,8 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
 
     const handleDivClick = () => {
         navigate(`:${book.id}`);
+        localStorage.removeItem('id');
+        localStorage.setItem('id', String(book.id));
     }
 
     const checkCoverPath = () => {
@@ -37,11 +39,7 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
                 return `${axiosConfig.defaults.baseURL}/download/${book.coverPath}/${book.title}`;
             }
         } return DefaultImg;
-    }
-
-    useEffect(() => {
-        console.log(book);
-    }, []);
+    };
 
     return(
         <div>

@@ -104,9 +104,6 @@ const CreationPage = (props: any) => {
                         <label htmlFor="fileInp">
                             <input type="file" name='fileInp'/>    
                         </label>
-                        <button>
-                            Написать здесь
-                        </button>
                     </div>
                     <div className={styles.cover}>
                         <span>Обложка</span>

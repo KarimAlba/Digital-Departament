@@ -19,12 +19,12 @@ const OpenedBook = (props: any) => {
     const sendReq = () => {
         if (id) {
             PublicationAPI.getUniqPublication(Number(id.split(':')[1]))
-                .then(response => {
-                    setBook(response.data);
-                })
-                .catch(error => console.log(error));
-        }
-    }
+            .then(response => {
+                setBook(response.data);
+            })
+            .catch(error => console.log(error));
+        };
+    };
 
     const handleImgClick = () => {
         setFavorite(!favorite)
@@ -117,6 +117,6 @@ const OpenedBook = (props: any) => {
             <CommentsBlock id={id ? Number(id.split(':')[1]) : 1}/>
         </div>
     )
-}
+};
 
 export default OpenedBook;

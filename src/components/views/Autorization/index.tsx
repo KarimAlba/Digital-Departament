@@ -43,8 +43,17 @@ const Autorization = (props: any) => {
         }
     }
 
+    const cleanLocaleStorage = (person: IServerUser) => {
+        localStorage.removeItem('name');
+        localStorage.removeItem('email');
+        localStorage.removeItem('birthDate');
+        localStorage.removeItem('gender');
+        localStorage.removeItem('career');
+        localStorage.removeItem('post');
+    }
+
     const fillLocalStorage = (person: IServerUser) => {
-        localStorage.clear();
+        cleanLocaleStorage(person);
         localStorage.setItem('name', String(person.name));
         localStorage.setItem('email', String(person.email));
         localStorage.setItem('birthDate', String(person.birthDate));

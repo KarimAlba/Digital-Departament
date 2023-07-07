@@ -193,10 +193,7 @@ const Library = () => {
                     />
                 </div>
 
-                <div 
-                    className={styles.sorting}
-                    onBlur={() => setIsOpenSorting(false)}
-                >
+                <div className={styles.sorting}>
                     <button 
                         className={styles['sorting_btn']} 
                         onClick={() => setIsOpenSorting(!isOpenSorting)}

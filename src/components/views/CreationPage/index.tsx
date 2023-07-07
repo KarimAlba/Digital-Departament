@@ -10,6 +10,8 @@ const CreationPage = (props: any) => {
     const [bookType, setBookType] = useState<string>('');
     const [bookTitle, setBookTitle] = useState<string>('');
     const [bookAuthors, setBookAuthors] = useState<{id: number, name: string}[]>([]);
+    const [authorVariation, setAuthorVariation] = useState<{id: number, name: string}[]>([]);
+    const [subjectVariation, setSubjectVariation] = useState<{id: number, name: string}[]>([]);
     const [bookSubjects, setBookSubjects] = useState<{id: number, name: string}[]>([]);
     const [bookReview, setBookReview] = useState<string>('');
 
@@ -23,6 +25,7 @@ const CreationPage = (props: any) => {
 
     const handleAuthorSelect = (val: {id: number, name: string}[]) => {
         setBookAuthors(val);
+        console.log(val);
     }
 
     const handleSubjectSelect = (val: {id: number, name: string}[]) => {
@@ -38,7 +41,7 @@ const CreationPage = (props: any) => {
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
-                        setBookAuthors(response.data);
+                        setAuthorVariation(response.data);
                     }
                 }
             })
@@ -50,7 +53,7 @@ const CreationPage = (props: any) => {
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
-                        setBookSubjects(response.data);
+                        setSubjectVariation(response.data);
                     }
                 }
             })
@@ -68,6 +71,10 @@ const CreationPage = (props: any) => {
         getSubjects();
     }, []);
 
+    useEffect(() => {
+
+    }, []);
+
     return (
         <form id='formData'>
             <h2>Создание публикации</h2>
@@ -76,7 +83,7 @@ const CreationPage = (props: any) => {
                 <div className={styles['columns_column']}>
                     <h3>Тип</h3>
                     <Select
-                    setResult={handleTypeSelect}
+                        setResult={handleTypeSelect}
                         variation={["Книга", "Статья", "Альбом", "Атлас",  "Руководство", "Справочник", "Пособие"]} 
                         multiple={false} 
                         defaultValue='Тип' 
@@ -89,14 +96,15 @@ const CreationPage = (props: any) => {
                     <h3>Автор</h3>
                     <ObjectSelector 
                         setResult={handleAuthorSelect} 
-                        variation={bookAuthors} 
+                        variation={authorVariation} 
                         multiple={true} 
                         defaultValue='Автор' 
                         isImg={true} 
                         placeholderVal='Выбранные авторы'
+                        isOther={true}
                     />
 
-                    <h3>Год</h3>
+                    <h3 className={styles['special-h3']}>Год</h3>
                     <input type="text" />
 
                     <div className={styles.file}>
@@ -120,14 +128,15 @@ const CreationPage = (props: any) => {
                     <h3>Предметы</h3>
                     <ObjectSelector 
                         setResult={handleSubjectSelect} 
-                        variation={bookSubjects} 
+                        variation={subjectVariation} 
                         multiple={true} 
                         defaultValue='Предметы' 
                         isImg={true} 
                         placeholderVal='Выбранные предметы'
+                        isOther={true}
                     />   
 
-                    <h3>О книге</h3>
+                    <h3 className={styles['special-h3']}>О книге</h3>
                     <textarea name="" id="" cols={30} rows={7} onInput={(e: any) => handleReviewChange(e)}></textarea>   
 
                     <h3 className={styles.info}>

@@ -1,3 +1,20 @@
+.other-block{
+    position: relative;
+
+    button{
+        position: absolute;
+        top: 8px;
+        left: 70%;
+        border: none;
+        background: none;
+        color: #000000a7;
+    }
+
+    button:hover{
+        text-decoration: underline; 
+    }
+}
+
 .select{
     margin: 5px 0 10px 0;
     width: 90%;
@@ -21,6 +38,12 @@
 
     span{
         position: absolute;
+    }
+
+    span:nth-child(2){
+        margin-left: 70px;
+        padding-left: 10px;
+        border-left: 1px solid #000000a7;
     }
 
     span:hover{

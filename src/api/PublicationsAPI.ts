@@ -37,11 +37,13 @@ class PublicationAPI {
         return axiosConfig.get(`/publications/${id}`);
     };
 
-    public static createPublication(formElem: any): Promise<AxiosResponse<any | IErrorResponse>> {
-        return axiosConfig.post('/publications/create', {
-            body: new FormData(formElem)
-        })
-    }
+    public static createPublication(formData: FormData): Promise<AxiosResponse<any | IErrorResponse>> {
+        return axiosConfig.post('/publications/create', formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+        });
+    };
 };
 
 export default PublicationAPI;

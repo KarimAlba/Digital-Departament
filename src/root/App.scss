@@ -10,8 +10,9 @@ body{
 
 a,
 button,
-input{
-    cursor: url(../assets/images/icons/focused-rocket-icon.svg) 2 2, pointer;
+input,
+textarea{
+    cursor: url(../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
     text-decoration: none;
 }
 

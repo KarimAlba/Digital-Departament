@@ -22,11 +22,11 @@ const CreationPage = (props: any) => {
     }
 
     const handleAuthorSelect = (val: {id: number, name: string}[]) => {
-        setBookAuthors(val);
+        // setBookAuthors(val);
     }
 
     const handleSubjectSelect = (val: {id: number, name: string}[]) => {
-        setBookSubjects(val);
+        // setBookSubjects(val);
     }
 
     const handleReviewChange = (e: any) => {
@@ -68,6 +68,10 @@ const CreationPage = (props: any) => {
         getSubjects();
     }, []);
 
+    useEffect(() => {
+
+    }, []);
+
     return (
         <form id='formData'>
             <h2>Создание публикации</h2>
@@ -76,7 +80,7 @@ const CreationPage = (props: any) => {
                 <div className={styles['columns_column']}>
                     <h3>Тип</h3>
                     <Select
-                    setResult={handleTypeSelect}
+                        setResult={handleTypeSelect}
                         variation={["Книга", "Статья", "Альбом", "Атлас",  "Руководство", "Справочник", "Пособие"]} 
                         multiple={false} 
                         defaultValue='Тип' 
@@ -94,6 +98,7 @@ const CreationPage = (props: any) => {
                         defaultValue='Автор' 
                         isImg={true} 
                         placeholderVal='Выбранные авторы'
+                        isOther={true}
                     />
 
                     <h3>Год</h3>
@@ -125,6 +130,7 @@ const CreationPage = (props: any) => {
                         defaultValue='Предметы' 
                         isImg={true} 
                         placeholderVal='Выбранные предметы'
+                        isOther={true}
                     />   
 
                     <h3>О книге</h3>

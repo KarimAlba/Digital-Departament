@@ -78,6 +78,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             setResultFiltration(copy);
             setIsOpenOther(false);
             setOtherInputValue('');
+            setResult(prepareParam(), copy);
         }
 
         const buildMenu = () => {

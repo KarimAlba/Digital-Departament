@@ -8,6 +8,8 @@ import CommentsBlock from '../CommentsBlock';
 import PreferImg from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferImg from '../../../assets/images/icons/not-prefer-icon.svg';
 import axiosConfig from '../../../api/axiosConfig';
+import { Viewer, Worker } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 
 const OpenedBook = (props: any) => {
     const [book, setBook] = useState<IServerBookResponse>();
@@ -120,7 +122,14 @@ const OpenedBook = (props: any) => {
                 </div>)
                 : null
             }
-
+            {isReader && book !== undefined
+                ? (<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                    <div className={styles['reader-block']}>
+                        <Viewer fileUrl={`${axiosConfig.defaults.baseURL}/download/${book.filePath}/${book.title}`} />
+                    </div>
+                </Worker>) 
+                : null
+            }
             <CommentsBlock id={id ? Number(id.split(':')[1]) : 1}/>
         </div>
     )

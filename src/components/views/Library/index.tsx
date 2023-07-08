@@ -106,8 +106,7 @@ const Library = () => {
         sendFiltrationRequest(copy);
     }
 
-    const filtration = (param: number, array: {id: number, name: string}[]) => {
-        console.log(param);
+    const filtration = (array: {id: number, name: string}[], param?: number) => {
         const copy = Object.assign({}, book);
         if (param) {
             copy.authors = array.map(item => item.id);

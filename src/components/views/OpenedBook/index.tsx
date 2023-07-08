@@ -53,7 +53,14 @@ const OpenedBook = (props: any) => {
                         <div className={styles['book_container']}>
                             <img src={checkCoverPath()} alt="book cover" className={styles['book_img']}/>
                             <div className={styles.reader}>
-                                <button>Скачать</button>
+                                <button>
+                                    <a 
+                                        href={`${axiosConfig.defaults.baseURL}/download/${book.filePath}/${book.title}`} 
+                                        download
+                                    >
+                                        Скачать
+                                    </a>
+                                </button>
                                 <button onClick={handleReadClick}>                                
                                     {isReader
                                         ? "Закрыть"

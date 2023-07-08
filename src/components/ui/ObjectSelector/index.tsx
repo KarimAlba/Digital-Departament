@@ -10,10 +10,11 @@ interface ObjectSelectorPropsTypes{
     isImg?: boolean;
     placeholderVal?: string;
     isOther?: boolean;
+    isTags?: boolean;
 }
 
 const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
-    const { variation, multiple, setResult, defaultValue, isImg, placeholderVal, isOther } = props;
+    const { variation, multiple, setResult, defaultValue, isImg, placeholderVal, isOther, isTags } = props;
 
         const [isOpen, setIsOpen] = useState<boolean>(false);
         const [value, setValue] = useState<string>(defaultValue);
@@ -23,6 +24,16 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
         const [isOpenAddingBtn, setIsOpenAddingBtn] = useState<boolean>(false); 
 
         const checkItemLength = (element: string) => {
+            if(isTags) {
+                const tag = `#${element}`;
+
+                if (tag.length > 13) {
+                    const slicedElem = tag.slice(0, 12);
+                    const result = slicedElem + '...';
+                    return result;
+                } return tag;
+            }
+
             if (element.length > 13) {
                 const slicedElem = element.slice(0, 12);
                 const result = slicedElem + '...';
@@ -48,18 +59,18 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             setResultFiltration(copy);
             setIsOpen(false);
             setIsOpenOther(false);
-            setResult(prepareParam(), copy);
+            setResult(copy, prepareParam());
         };
 
-        const handleCloseButtonClick = (e: any, elem: {id: number, name: string}) => {
+        const handleCloseButtonClick = (elem: {id: number, name: string}) => {
             const copy = Object.assign([], resultFiltration);
             const index = resultFiltration.findIndex(item => item.id === elem.id);
             if (index !== -1) {
                 copy.splice(index, 1);
                 setResultFiltration(copy);
-                setResult(prepareParam(), copy);
+                setResult(copy, prepareParam());
             } else {
-                setResult(prepareParam(), resultFiltration);
+                setResult(resultFiltration, prepareParam());
             }
         }; 
 
@@ -74,11 +85,11 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
 
         const handleAddingClick = () => {
             const copy = Object.assign([], resultFiltration);
-            copy.push({id: 1, name: otherInpValue});
+            copy.push({id: 0, name: otherInpValue});
             setResultFiltration(copy);
             setIsOpenOther(false);
             setOtherInputValue('');
-            setResult(prepareParam(), copy);
+            setResult(copy, prepareParam());
         }
 
         const buildMenu = () => {
@@ -96,7 +107,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             <div style={{position: 'relative'}}>
                 {isOpenOther
                     ? (<div className={styles['other-block']} >
-                        <input type="text" onInput={handleOtherInputClick} placeholder='Карибов А.В.'/>
+                        <input type="text" onInput={handleOtherInputClick} placeholder={defaultValue}/>
                         {isOpenAddingBtn
                             ? <button onClick={handleAddingClick}>Добавить</button>
                             : null
@@ -141,7 +152,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
                             (<div className={styles['multiple-select_value_item']} key={item.id + item.name}>
                                 <span key={item.id*54 + item.name}>{checkItemLength(item.name)}</span>
                                 <button 
-                                    onClick={(e: any) => handleCloseButtonClick(e, item)} 
+                                    onClick={() => handleCloseButtonClick(item)} 
                                     key={item.id + item.name.split('').reverse().join('')}
                                 >
                                     x

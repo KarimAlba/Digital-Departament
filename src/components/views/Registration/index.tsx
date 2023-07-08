@@ -148,6 +148,9 @@ const Registration = (props: any) => {
         if (phraseArr.length > 0) {
             setMistakesArr(phraseArr);
             setIsOpenMistakes(true);
+            setTimeout(() => {
+                setIsOpenMistakes(false);
+            }, 3000);
         } else {
             navigate('/');
             setIsOpenMistakes(false);

@@ -124,7 +124,13 @@ const OpenedBook = (props: any) => {
             }
             {isReader && book !== undefined
                 ? (<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                    <div className={styles['reader-block']}>
+                    <div 
+                        style={{
+                            margin: '20px 0 20px 15%',
+                            width: '70%',
+                            border: '1px solid rgba(0, 0, 0, 0.3)',
+                        }}
+                    >
                         <Viewer fileUrl={`${axiosConfig.defaults.baseURL}/download/${book.filePath}/${book.title}`} />
                     </div>
                 </Worker>) 

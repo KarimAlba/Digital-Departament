@@ -124,7 +124,9 @@ const Library = () => {
 
     const getPage = (curPage: number) => {
         setPage(curPage);
-        sendReq(book);
+        const copy = Object.assign({}, book);
+        copy.page = curPage;
+        sendReq(copy);
     };
 
     const handleAlphabetBtnClick = () => {
@@ -162,7 +164,6 @@ const Library = () => {
         getSubjects();
 
         if (tagId !== undefined) {
-            console.log(tagId);
             const copy = Object.assign({}, book);
             copy.tags = [tagId];
             sendReq(copy);

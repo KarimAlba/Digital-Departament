@@ -32,7 +32,7 @@ const SubjectsModal = (props: SubjectsModalPropsTypes) => {
                     <li key={subject.id + subject.name}>
                         <Link 
                             to='/main/library'
-                            state={{ subjectId: subject.id }}
+                            state={{ subject: subject }}
                             key={subject.id + subject.name}
                             onClick={() => setOpenStatus()}
                         >

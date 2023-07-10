@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 
 const Library = () => {
     const location = useLocation();
-    const { tagId, subjectId } = location.state;
+    const { tagId, subject } = location.state;
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
@@ -29,7 +29,8 @@ const Library = () => {
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
     const [sortedBy, setSortedBy] = useState<EnumSortBy>(0);
     const [sortedOrder, setSortedOrder] = useState<EnumSortOrder>(0);
-    
+    const [subjectProps, setSubjectProps] = useState<{id: number, name: string}>();
+
     const sendReq = (bookObj: IBook) => {
         PublicationAPI.getAllPublications({...bookObj})
             .then(response => {
@@ -168,11 +169,8 @@ const Library = () => {
             return;
         }
 
-        if (subjectId !== undefined) {
-            const copy = Object.assign({}, book);
-            copy.subjects = [subjectId];
-            sendReq(copy);
-            return;
+        if (subject !== undefined) {
+            setSubjectProps(subject);
         }
 
         sendReq(book);
@@ -209,6 +207,7 @@ const Library = () => {
                         defaultValue='Предмет' 
                         isImg={true} 
                         placeholderVal='Выбранные предметы'
+                        isSubject={subjectProps}
                     />
                 </div>
 

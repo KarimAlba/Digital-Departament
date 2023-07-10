@@ -1,5 +1,5 @@
 import styles from'./style.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SelectImg from '../../../assets/images/icons/select-icon.svg';
 
 interface ObjectSelectorPropsTypes{
@@ -11,10 +11,21 @@ interface ObjectSelectorPropsTypes{
     placeholderVal?: string;
     isOther?: boolean;
     isTags?: boolean;
+    isSubject?: {id: number, name: string}; 
 }
 
 const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
-    const { variation, multiple, setResult, defaultValue, isImg, placeholderVal, isOther, isTags } = props;
+    const { 
+        variation, 
+        multiple, 
+        setResult, 
+        defaultValue, 
+        isImg, 
+        placeholderVal, 
+        isOther, 
+        isTags,
+        isSubject 
+    } = props;
 
         const [isOpen, setIsOpen] = useState<boolean>(false);
         const [value, setValue] = useState<string>(defaultValue);
@@ -102,6 +113,15 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
                 return menu;
             }; 
         };
+
+        useEffect(() => {
+            if(isSubject !== undefined) {
+                const copy = Object.assign([], resultFiltration);
+                copy.push(isSubject);
+                setResultFiltration(copy);
+                setResult(copy, prepareParam());
+            }
+        }, [isSubject]);
 
         return (
             <div style={{position: 'relative'}}>

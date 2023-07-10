@@ -34,6 +34,7 @@ const Main = (props: any) => {
 
     const handleSubjectsClick = () => {
         setIsOpenSubjects(!isOpenSubjects);
+        navigate('welcoming');
     }
 
     const handleSubjectSelect = () => {

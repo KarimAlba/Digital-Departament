@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Autorization from '../components/views/Autorization';
 import Registration from '../components/views/Registration';
 import Main from '../components/views/MainPage';
+
 function App() {
   return (
     <div className="App">

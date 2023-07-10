@@ -1,5 +1,5 @@
 import styles from'./style.module.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SelectImg from '../../../assets/images/icons/select-icon.svg';
 
 interface ObjectSelectorPropsTypes{

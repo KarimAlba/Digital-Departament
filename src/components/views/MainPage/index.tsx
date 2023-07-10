@@ -36,6 +36,10 @@ const Main = (props: any) => {
         setIsOpenSubjects(!isOpenSubjects);
     }
 
+    const handleSubjectSelect = () => {
+        setIsOpenSubjects(false);
+    }
+
     const handleOpenedBookClick = () => {
         setUserData(false)
         if (localStorage.getItem('id')) {
@@ -69,11 +73,17 @@ const Main = (props: any) => {
                     <img src={Face} className={styles.face} onClick={handleFaceClick}/>
                 </div>
                 <nav>
-                    <Link to='library' onClick={() => setUserData(false)}>Вся литература</Link>
+                    <Link 
+                        to='library' 
+                        onClick={() => setUserData(false)}
+                        state={{ tagId: null }}
+                    >
+                        Вся литература
+                    </Link>
                     <div className={styles.subjects}>
                         <button onClick={handleSubjectsClick}>Предметы</button>
                         {isOpenSubjects
-                            ? <SubjectsModal/>
+                            ? <SubjectsModal setOpenStatus={handleSubjectSelect}/>
                             : null
                         }
                     </div>

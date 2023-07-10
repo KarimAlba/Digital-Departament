@@ -1,7 +1,9 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import SearchImg from '../../../assets/images/icons/search-icon.svg';
 import TagsAPI from '../../../api/TagsAPI';
+import Library from '../Library';
 
 const TagsPage = (props: any) => {
     const [tags, setTags] = useState<{id: number, name: string}[]>([]);
@@ -38,7 +40,13 @@ const TagsPage = (props: any) => {
             <ul>
                 {tags.map(item => 
                     <li key={item.name + item.id}>
-                        <a href="#" key={item.id + item.name}>{'#' + item.name}</a>
+                        <Link 
+                            to='/main/library'
+                            state={{ tagId: item.id }}
+                            key={item.id + item.name}
+                        >
+                            {'#' + item.name}
+                        </Link>
                     </li>
                 )}
             </ul>

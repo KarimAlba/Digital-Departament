@@ -13,21 +13,26 @@ import EnumSortBy from '../../../models/responses/EnumSortByResponse';
 import EnumSortOrder from '../../../models/responses/EnumSortOrderResponse';
 import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
 import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
+import { useLocation } from 'react-router-dom';
 
 const Library = () => {
+    const location = useLocation();
+    const { tagId, subject } = location.state;
+
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize]= useState<number>(7);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
     const [authors, setAuthors] = useState<{id: number, name: string}[]>([]);
     const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
-    const [book, setBook] = useState<IBook>({page: 1, pageSize: 7})
+    const [book, setBook] = useState<IBook>({page: page, pageSize: 7})
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
     const [sortedBy, setSortedBy] = useState<EnumSortBy>(0);
     const [sortedOrder, setSortedOrder] = useState<EnumSortOrder>(0);
-    
-    const sendReq = (curPage: number) => {
-        PublicationAPI.getAllPublications({page: curPage, pageSize: pageSize})
+    const [subjectProps, setSubjectProps] = useState<{id: number, name: string}>();
+
+    const sendReq = (bookObj: IBook) => {
+        PublicationAPI.getAllPublications({...bookObj})
             .then(response => {
                 if (response.status <= 204) {
                     const maxPageSize = Math.floor(response.data.totalCount / pageSize);
@@ -119,7 +124,7 @@ const Library = () => {
 
     const getPage = (curPage: number) => {
         setPage(curPage);
-        sendReq(curPage);
+        sendReq(book);
     };
 
     const handleAlphabetBtnClick = () => {
@@ -153,9 +158,22 @@ const Library = () => {
     }
 
     useEffect(() => {
-        sendReq(page);
         getAuthors();
         getSubjects();
+
+        if (tagId !== undefined) {
+            console.log(tagId);
+            const copy = Object.assign({}, book);
+            copy.tags = [tagId];
+            sendReq(copy);
+            return;
+        }
+
+        if (subject !== undefined) {
+            setSubjectProps(subject);
+        }
+
+        sendReq(book);
     }, []);
 
     return (
@@ -189,6 +207,7 @@ const Library = () => {
                         defaultValue='Предмет' 
                         isImg={true} 
                         placeholderVal='Выбранные предметы'
+                        isSubject={subjectProps}
                     />
                 </div>
 
@@ -254,7 +273,6 @@ const Library = () => {
                 {books.map(book => <ClosedBook book={book} key={book.coverPath + book.id}/>)}
             </div>
             <Pagination size={pagBtnsSize} getPage={getPage}/> 
-
         </div>
     )
 }

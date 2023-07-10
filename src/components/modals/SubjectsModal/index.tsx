@@ -1,8 +1,15 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
 import SubjectsAPI from '../../../api/SubjectsAPI';
+import { Link } from 'react-router-dom';
 
-const SubjectsModal = () => {
+interface SubjectsModalPropsTypes{
+    setOpenStatus: Function;
+}
+
+const SubjectsModal = (props: SubjectsModalPropsTypes) => {
+    const { setOpenStatus } = props;
+
     const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
 
     const sendReq = () => {
@@ -22,7 +29,16 @@ const SubjectsModal = () => {
         <div className={styles.subjects}>
             <ul>
                 {subjects.map(subject => 
-                    <li key={subject.id + subject.name}>{subject.name}</li>
+                    <li key={subject.id + subject.name}>
+                        <Link 
+                            to='/main/library'
+                            state={{ subject: subject }}
+                            key={subject.id + subject.name}
+                            onClick={() => setOpenStatus()}
+                        >
+                            {subject.name}
+                        </Link>
+                    </li>
                 )}
             </ul>
         </div>

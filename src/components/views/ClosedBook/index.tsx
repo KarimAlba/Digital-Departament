@@ -15,10 +15,10 @@ interface ClosedBookPropsTypes{
 const ClosedBook = (props: ClosedBookPropsTypes) => {
     const { book } = props;
     const navigate = useNavigate();
-
     const [favourite, setFavourite] = useState<boolean>(book.isFavourite);
 
-    const handleFavouriteClick = () => {
+    const handleFavouriteClick = (e: any) => {
+        e.preventDefault();
         setFavourite(!favourite);
         const copy = Object.assign({}, book);
         copy.isFavourite = !favourite;
@@ -28,7 +28,7 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
     };
 
     const handleDivClick = () => {
-        navigate(`:${book.id}`);
+        navigate(`/main/library/:${book.id}`);
         localStorage.removeItem('id');
         localStorage.setItem('id', String(book.id));
     }
@@ -43,17 +43,18 @@ const ClosedBook = (props: ClosedBookPropsTypes) => {
 
     return(
         <div>
-            <div key={book.coverPath + book.id} className={styles.book} onClick={handleDivClick}>
+            <div key={book.coverPath + book.id} className={styles.book}>
                 {favourite
-                    ? <img src={PreferIcon} alt="" className={styles.favourite} onClick={handleFavouriteClick}/>
-                    : <img src={NotPreferIcon} alt="" className={styles.favourite} onClick={handleFavouriteClick}/>
+                    ? <img src={PreferIcon} alt="" className={styles.favourite} onClick={(e: any) => handleFavouriteClick(e)}/>
+                    : <img src={NotPreferIcon} alt="" className={styles.favourite} onClick={(e: any) => handleFavouriteClick(e)}/>
                 }
                 <img 
                     src={checkCoverPath()} 
                     alt="book cover" 
                     key={book.coverPath}
+                    onClick={handleDivClick}
                 />
-                <div key={book.creationDate + book.id} className={styles['book_description']}>
+                <div key={book.creationDate + book.id} className={styles['book_description']} onClick={handleDivClick}>
                     <span key={book.id  + book.coverPath}>
                         {book.authors.map(item => (
                             <span key={book.id + item.name + item.id}>{item.name}</span>

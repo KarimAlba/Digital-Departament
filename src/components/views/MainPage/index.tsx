@@ -30,16 +30,16 @@ const Main = (props: any) => {
     const handleCreationClick = () => {
         setUserData(false);
         navigate('creation');
-    }
+    };
 
     const handleSubjectsClick = () => {
         setIsOpenSubjects(!isOpenSubjects);
         navigate('welcoming');
-    }
+    };
 
     const handleSubjectSelect = () => {
         setIsOpenSubjects(false);
-    }
+    };
 
     const handleOpenedBookClick = () => {
         setUserData(false)
@@ -47,8 +47,8 @@ const Main = (props: any) => {
             navigate(`library/:${localStorage.getItem('id')}`);
         } else {
             console.log(localStorage.getItem('id'));
-        }
-    }
+        };
+    };
 
     return (
         <div 
@@ -88,7 +88,9 @@ const Main = (props: any) => {
                             : null
                         }
                     </div>
-                    <Link to='tags' onClick={() => setUserData(false)}>Тэги</Link>
+                    <Link to='tags' onClick={() => setUserData(false)}>
+                        Тэги
+                    </Link>
                     <Link 
                         to='license' onClick={() => setUserData(false)}
                     >

@@ -23,6 +23,7 @@ const OpenedBook = (props: any) => {
             PublicationAPI.getUniqPublication(Number(id.split(':')[1]))
             .then(response => {
                 setBook(response.data);
+                setFavorite(response.data.isFavourite);
             })
             .catch(error => console.log(error));
         };

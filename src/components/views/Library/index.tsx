@@ -3,7 +3,7 @@ import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
 import IServerBook from '../../../models/responses/IServerBookResponse';
 import PublicationAPI from '../../../api/PublicationsAPI';
-import ClosedBook from '../ClosedBook';
+import ClosedBook from '../../ui/ClosedBook';
 import Pagination from '../../ui/Pagination';
 import IBook from '../../../models/requests/IPublicationRequest';
 import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';

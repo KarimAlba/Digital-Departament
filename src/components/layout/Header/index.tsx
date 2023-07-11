@@ -2,22 +2,22 @@ import { useState } from 'react';
 import styles from './style.module.scss'
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
-import License from '../License';
-import OpenedBook from '../OpenedBook';
+import License from '../../views/License';
+import OpenedBook from '../../views/OpenedBook';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';
 import InternetModal from '../../modals/InternetModal';
-import Favourites from '../Favourites';
-import Welcoming from '../Welcoming';
-import Library from '../Library';
-import TagsPage from '../TagsPage';
+import Favourites from '../../views/Favourites';
+import Welcoming from '../../views/Welcoming';
+import Library from '../../views/Library';
+import TagsPage from '../../views/TagsPage';
 import CreationImg from '../../../assets/images/icons/create-publication-icon.svg';
-import CreationPage from '../CreationPage';
+import CreationPage from '../../views/CreationPage';
 import SubjectsModal from '../../modals/SubjectsModal';
 import BookImg from '../../../assets/images/icons/book-icon.svg';
 
-const Main = (props: any) => {
+const Header = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
     const [isOpenSubjects, setIsOpenSubjects] = useState<boolean>(false);
@@ -122,4 +122,4 @@ const Main = (props: any) => {
     )
 }
 
-export default Main;
+export default Header;

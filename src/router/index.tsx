@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Autorization from "../components/views/Autorization";
-import Main from "../components/views/MainPage";
+import Main from "../components/layout/Header";
 import Registration from "../components/views/Registration";
 
 const Router = () => {

@@ -14,6 +14,7 @@ import EnumSortOrder from '../../../models/responses/EnumSortOrderResponse';
 import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
 import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
 import { useLocation } from 'react-router-dom';
+import AuthorsAPI from '../../../api/AuthorsAPI';
 
 const Library = () => {
     const location = useLocation();
@@ -44,7 +45,7 @@ const Library = () => {
     }
 
     const getAuthors = (name?: string) => {
-        PublicationAPI.getAuthors(name)
+        AuthorsAPI.getAuthors(name)
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {

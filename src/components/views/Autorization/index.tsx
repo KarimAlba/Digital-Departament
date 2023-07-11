@@ -92,8 +92,7 @@ const Autorization = (props: any) => {
 
     const checkToken = () => {
         if (localStorage.getItem('token')) {
-            setUserLogin(String(localStorage.getItem('login')));
-            setUserPassword(String(localStorage.getItem('password')));
+            navigate('main/welcoming');
         }
     }
 

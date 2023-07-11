@@ -21,14 +21,14 @@ const Library = () => {
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
-    const [pageSize, setPageSize]= useState<number>(7);
+    const [pageSize, setPageSize]= useState<number>(6);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
-    const [authors, setAuthors] = useState<{id: number, name: string}[]>([]);
-    const [subjects, setSubjects] = useState<{id: number, name: string}[]>([]);
-    const [book, setBook] = useState<IBook>({page: page, pageSize: 7})
+    const [authors, setAuthors] = useState<{id: number, name: string}[] | []>([]);
+    const [subjects, setSubjects] = useState<{id: number, name: string}[] | []>([]);
+    const [book, setBook] = useState<IBook>({page: page, pageSize: pageSize});
     const [pagBtnsSize, setPagBtnsSize] = useState<number>(0);
-    const [sortedBy, setSortedBy] = useState<EnumSortBy>(0);
-    const [sortedOrder, setSortedOrder] = useState<EnumSortOrder>(0);
+    const [sortedBy, setSortedBy] = useState<EnumSortBy>(EnumSortBy.Alphabet);
+    const [sortedOrder, setSortedOrder] = useState<EnumSortOrder>(EnumSortOrder.Increase);
     const [subjectProps, setSubjectProps] = useState<{id: number, name: string}>();
 
     const sendReq = (bookObj: IBook) => {
@@ -36,6 +36,8 @@ const Library = () => {
             .then(response => {
                 if (response.status <= 204) {
                     const maxPageSize = Math.floor(response.data.totalCount / pageSize);
+                    console.log(response);
+                    console.log(maxPageSize);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
                 }
@@ -146,16 +148,16 @@ const Library = () => {
     }
 
     const handleArrowUpClick = () => {
-        setSortedOrder(1);
+        setSortedOrder(EnumSortOrder.Increase);
         const copy = Object.assign({}, book);
-        copy.sortOrder = 1;
+        copy.sortOrder = EnumSortOrder.Increase;
         sendFiltrationRequest(copy);
     }
 
     const handleArrowBottomClick = () => {
-        setSortedOrder(0);
+        setSortedOrder(EnumSortOrder.Decrease);
         const copy = Object.assign({}, book);
-        copy.sortOrder = 0;
+        copy.sortOrder = EnumSortOrder.Decrease;
         sendFiltrationRequest(copy);
     }
 
@@ -227,7 +229,7 @@ const Library = () => {
                                     По алфавиту
                                 </button>
                                 {sortedBy === 0
-                                    ? (sortedOrder === 0
+                                    ? (sortedOrder === EnumSortOrder.Decrease
                                         ? <img 
                                             src={ArrowUpImg} 
                                             alt="" 
@@ -249,7 +251,7 @@ const Library = () => {
                                     По дате публикации
                                 </button>
                                 {sortedBy === 1
-                                    ? (sortedOrder === 0
+                                    ? (sortedOrder === EnumSortOrder.Decrease
                                         ? <img 
                                             src={ArrowUpImg} 
                                             alt="" 

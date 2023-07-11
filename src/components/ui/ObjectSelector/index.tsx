@@ -29,7 +29,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
 
         const [isOpen, setIsOpen] = useState<boolean>(false);
         const [value, setValue] = useState<string>(defaultValue);
-        const [resultFiltration, setResultFiltration] = useState<{id: number, name: string}[]>([]);
+        const [resultFiltration, setResultFiltration] = useState<{id: number | null, name: string}[]>([]);
         const [isOpenOther, setIsOpenOther] = useState<boolean>(false);
         const [otherInpValue, setOtherInputValue] = useState<string>('');
         const [isOpenAddingBtn, setIsOpenAddingBtn] = useState<boolean>(false); 
@@ -73,7 +73,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
             setResult(copy, prepareParam());
         };
 
-        const handleCloseButtonClick = (elem: {id: number, name: string}) => {
+        const handleCloseButtonClick = (elem: {id: number | null, name: string}) => {
             const copy = Object.assign([], resultFiltration);
             const index = resultFiltration.findIndex(item => item.id === elem.id);
             if (index !== -1) {
@@ -96,7 +96,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
 
         const handleAddingClick = () => {
             const copy = Object.assign([], resultFiltration);
-            copy.push({id: 0, name: otherInpValue});
+            copy.push({id: null, name: otherInpValue});
             setResultFiltration(copy);
             setIsOpenOther(false);
             setOtherInputValue('');
@@ -170,7 +170,7 @@ const ObjectSelector = (props: ObjectSelectorPropsTypes) => {
                     ? <div className={styles['multiple-select_value']}>
                         {resultFiltration.map((item) => 
                             (<div className={styles['multiple-select_value_item']} key={item.id + item.name}>
-                                <span key={item.id*54 + item.name}>{checkItemLength(item.name)}</span>
+                                <span key={item.name + item.id}>{checkItemLength(item.name)}</span>
                                 <button 
                                     onClick={() => handleCloseButtonClick(item)} 
                                     key={item.id + item.name.split('').reverse().join('')}

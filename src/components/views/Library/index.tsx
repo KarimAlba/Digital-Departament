@@ -3,7 +3,7 @@ import Select from '../../ui/Selector';
 import { useState, useEffect } from 'react';
 import IServerBook from '../../../models/responses/IServerBookResponse';
 import PublicationAPI from '../../../api/PublicationsAPI';
-import ClosedBook from '../ClosedBook';
+import ClosedBook from '../../ui/ClosedBook';
 import Pagination from '../../ui/Pagination';
 import IBook from '../../../models/requests/IPublicationRequest';
 import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
@@ -36,8 +36,6 @@ const Library = () => {
             .then(response => {
                 if (response.status <= 204) {
                     const maxPageSize = Math.floor(response.data.totalCount / pageSize);
-                    console.log(response);
-                    console.log(maxPageSize);
                     setPagBtnsSize(maxPageSize);
                     setBooks(response.data.data);
                 }
@@ -108,9 +106,10 @@ const Library = () => {
                 break;  
             default:
                 break;
-        }        
-
-        sendFiltrationRequest(copy);
+        }      
+        
+        setBook(copy);
+        sendReq(copy);
     }
 
     const filtration = (array: {id: number, name: string}[], param?: number) => {
@@ -133,17 +132,19 @@ const Library = () => {
 
     const handleAlphabetBtnClick = () => {
         setIsOpenSorting(!isOpenSorting);
-        setSortedBy(0);
+        setSortedBy(EnumSortBy.Alphabet);
         const copy = Object.assign({}, book);
-        copy.sortBy = 0;
+        copy.sortBy = EnumSortBy.Alphabet;
+        setBook(copy);
         sendFiltrationRequest(copy);
     }
 
     const handleDateOfCreationBtnClick = () => {
         setIsOpenSorting(!isOpenSorting);
-        setSortedBy(1);
+        setSortedBy(EnumSortBy.CreationDate);
         const copy = Object.assign({}, book);
-        copy.sortBy = 1;
+        copy.sortBy = EnumSortBy.CreationDate;
+        setBook(copy);
         sendFiltrationRequest(copy);
     }
 
@@ -178,6 +179,10 @@ const Library = () => {
 
         sendReq(book);
     }, []);
+
+    useEffect(() => {
+        console.log(book);
+    }, [book]);
 
     return (
         <div className={styles.library}>
@@ -228,7 +233,7 @@ const Library = () => {
                                 >
                                     По алфавиту
                                 </button>
-                                {sortedBy === 0
+                                {sortedBy === EnumSortBy.Alphabet
                                     ? (sortedOrder === EnumSortOrder.Decrease
                                         ? <img 
                                             src={ArrowUpImg} 

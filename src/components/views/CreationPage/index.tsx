@@ -7,6 +7,7 @@ import SubjectsAPI from '../../../api/SubjectsAPI';
 import MistakeModal from '../../modals/MistakeModal';
 import TagsAPI from '../../../api/TagsAPI';
 import moment from 'moment';
+import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
 
 const CreationPage = (props: any) => {
     const [bookType, setBookType] = useState<string>('');
@@ -26,7 +27,34 @@ const CreationPage = (props: any) => {
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
 
     const handleTypeSelect = (val: string) => {
-        setBookType(val);
+        let type: string = '0';
+
+        switch (val) {
+            case "Книга":
+                type = String(1);
+                break;
+            case "Статья": 
+                type = String(2);
+                break;
+            case "Альбом": 
+                type = String(3);
+                break;
+            case "Атлас": 
+                type = String(4);
+                break;
+            case "Руководство": 
+                type = String(5);
+                break;
+            case "Справочник": 
+                type = String(6);
+                break;
+            case "Пособие": 
+                type = String(7);
+                break;  
+            default:
+                break;
+        }        
+        setBookType(type);
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +170,7 @@ const CreationPage = (props: any) => {
             }, 3000);
             return 0;
         } else {
-            setIsOpenMistakes(true);
+            setIsOpenMistakes(false);
             return 1;
         }
     }
@@ -150,7 +178,6 @@ const CreationPage = (props: any) => {
     const prepareFormData = () => {
         const formData = new FormData();
         formData.append('type', bookType);
-        formData.append('title', bookTitle);
         formData.append('title', bookTitle);
 
         bookAuthors.forEach((author, index) => {
@@ -189,7 +216,6 @@ const CreationPage = (props: any) => {
 
     const sendReq = () => {
         const formData = prepareFormData();
-        console.log(formData);
         PublicationAPI.createPublication(formData)
             .then(response => {
                 console.log(response);
@@ -272,7 +298,6 @@ const CreationPage = (props: any) => {
 
                 <div className = {styles['columns_column']}>
                     <h3>Тэги</h3>
-                    {/* <input type="text" placeholder='#...'/> */}
                     <ObjectSelector 
                         setResult={handleTagSelect} 
                         variation={tagVariation} 

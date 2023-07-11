@@ -1,3 +1,3 @@
-enum EnumSortOrder {MinToMax, MaxToMin};
+enum EnumSortOrder {Increase, Decrease};
 
 export default EnumSortOrder;

@@ -1,6 +1,6 @@
-import EnumSortBy from '../responses/EnumSortByResponse';
-import EnumSortOrder from '../responses/EnumSortOrderResponse';
-import EnumTypePublication from './EnumTypePublicationRequest';
+import EnumSortBy from '../enums/EnumSortByResponse';
+import EnumSortOrder from '../enums/EnumSortOrderResponse';
+import EnumTypePublication from '../enums/EnumTypePublicationRequest';
 
 interface IBook{
     type?: EnumTypePublication;

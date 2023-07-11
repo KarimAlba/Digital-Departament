@@ -6,7 +6,7 @@ import EmailImg from '../../../assets/images/icons/pen-icon.svg';
 import AccountAPI from '../../../api/AccountAPI';
 import axiosConfig from '../../../api/axiosConfig';
 import IEditUser from '../../../models/requests/IEditUserRequest';
-import EnumGender from '../../../models/requests/EnumGenderRequest';
+import EnumGender from '../../../models/enums/EnumGenderRequest';
 import IUserBody from '../../../models/requests/IUserBodyRequest';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';

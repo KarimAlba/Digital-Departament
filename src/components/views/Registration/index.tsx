@@ -7,7 +7,7 @@ import Switcher from '../../ui/Switcher';
 import Password from '../../ui/Password';
 import EyeImg from '../../../assets/images/icons/eye-icon.svg';
 import MistakeModal from '../../modals/MistakeModal';
-import EnumGender from '../../../models/requests/EnumGenderRequest';
+import EnumGender from '../../../models/enums/EnumGenderRequest';
 import InternetModal from '../../modals/InternetModal';
 import Select from '../../ui/Selector';
 import CustomInput from '../../ui/CustomInput';

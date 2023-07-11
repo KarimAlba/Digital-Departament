@@ -1,5 +1,5 @@
 import styles from './style.module.scss';
-import EnumGender from '../../../models/requests/EnumGenderRequest';
+import EnumGender from '../../../models/enums/EnumGenderRequest';
 import { useState, useEffect } from 'react';
 
 interface SwitcerPropsTypes{

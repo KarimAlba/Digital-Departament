@@ -4,7 +4,7 @@ import PublicationAPI from '../../../api/PublicationsAPI';
 import IServerBookResponse from '../../../models/responses/IServerBookResponse';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CommentsBlock from '../CommentsBlock';
+import CommentsBlock from '../../ui/CommentsBlock';
 import PreferImg from '../../../assets/images/icons/prefer-icon.svg';
 import NotPreferImg from '../../../assets/images/icons/not-prefer-icon.svg';
 import axiosConfig from '../../../api/axiosConfig';

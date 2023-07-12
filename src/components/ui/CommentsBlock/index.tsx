@@ -11,13 +11,16 @@ interface CommentsBlockPropsTypes{
 const CommentsBlock = (props: CommentsBlockPropsTypes) => {
     const { id } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(3);
     const [commentVal, setCommentVal] = useState<string>('');
+    const [comments, setComments] = useState<ICommentResponse[] | []>([]);
 
-    const [comments, setComments] = useState<ICommentResponse>();
-
-    const sendReq = () => {
-        CommentsAPI.getCommentaries(1, 2, id)
-            .then(response => console.log(response))
+    const getComments = () => {
+        CommentsAPI.getCommentaries(page, pageSize, id)
+            .then(response => {
+                setComments(response.data.data);
+            })
             .catch(error => console.log(error));
     }
 
@@ -30,12 +33,8 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
         }
     }
 
-    // const handleSendBtnClick = () => {
-    //     CommentsAPI.setComment()
-    // }
-
     useEffect(() => {
-        sendReq();
+        getComments();
     }, []);
 
     return (
@@ -52,7 +51,7 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
             </div>  
             <textarea name="" id="" placeholder='Введите текст обращения' onInput={handleTextAreaChange}></textarea>
             <div className={styles['comments_container']}>
-
+                {comments.map((item) => <ClientComment key={item.id + item.textComment} comment={item}/>)}
             </div>
         </div>
     );

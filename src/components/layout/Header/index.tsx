@@ -16,14 +16,15 @@ import CreationImg from '../../../assets/images/icons/create-publication-icon.sv
 import CreationPage from '../../views/CreationPage';
 import SubjectsModal from '../../modals/SubjectsModal';
 import BookImg from '../../../assets/images/icons/book-icon.svg';
+import IBook from '../../../models/requests/IPublicationRequest';
 
 const Header = (props: any) => {
     const [userData, setUserData] = useState<boolean>(false);
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
     const [isOpenSubjects, setIsOpenSubjects] = useState<boolean>(false);
     const [isInternet, setIsInternet] = useState<boolean>(false);
-    const [subjectProps, setSubjectProps] = useState<{id: number, name: string}>();
-    const [tagProps, setTagProps] = useState<{id: number, name: string}>();
+    const [book, setBook] = useState<IBook>({page: 1, pageSize: 7});
+    const [subjectVal, setSubjectVal] = useState<{id: number, name: string}>();
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
     const getInternet = (value: boolean) => {setIsInternet(value)};
@@ -41,11 +42,16 @@ const Header = (props: any) => {
 
     const handleSubjectSelect = (item: {id: number, name: string}) => {
         setIsOpenSubjects(false);
-        setSubjectProps(item);
+        const copy = Object.assign({}, book);
+        copy.subjects = [item.id];
+        setSubjectVal(item);
+        setBook(copy);
     };
 
     const handleTagSelect = (item: {id: number, name: string}) => {
-        setTagProps(item);
+        const copy = Object.assign({}, book);
+        copy.tags = [item.id];
+        setBook(copy);
     }; 
 
     const handleOpenedBookClick = () => {
@@ -59,6 +65,8 @@ const Header = (props: any) => {
 
     const handleLibraryClick = () => {
         setUserData(false);
+        const copy: IBook = {page: 1, pageSize: 7};
+        setBook(copy);
     }
 
     return (
@@ -141,8 +149,8 @@ const Header = (props: any) => {
                         path='library' 
                         element={
                             <Library 
-                                subjectValue={subjectProps} 
-                                tagValue={tagProps}
+                                bookValue={book}
+                                subjectVal={subjectVal}
                             />
                         }
                     />

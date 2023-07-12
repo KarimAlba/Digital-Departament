@@ -16,9 +16,13 @@ import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
 import { useLocation } from 'react-router-dom';
 import AuthorsAPI from '../../../api/AuthorsAPI';
 
-const Library = () => {
-    const location = useLocation();
-    const { tagId, subject } = location.state;
+interface LibraryPropsTypes {
+    subjectValue?: {id: number, name: string};
+    tagValue?: {id: number, name: string};
+}
+
+const Library = (props: LibraryPropsTypes) => {
+    const { subjectValue, tagValue } = props;
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
@@ -167,15 +171,15 @@ const Library = () => {
         getAuthors();
         getSubjects();
 
-        if (tagId !== undefined) {
+        if (tagValue !== undefined) {
             const copy = Object.assign({}, book);
-            copy.tags = [tagId];
+            copy.tags = [tagValue.id];
             sendReq(copy);
             return;
         }
 
-        if (subject !== undefined) {
-            setSubjectProps(subject);
+        if (subjectValue !== undefined) {
+            setSubjectProps(subjectValue);
         }
 
         sendReq(book);

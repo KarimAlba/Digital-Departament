@@ -25,11 +25,8 @@
         li{
             margin-bottom: 5px;
             text-decoration: underline;
-
-
-            a{
-                font-size: 20px;
-            }
+            font-size: 20px;
+            cursor: url(../../../assets/images/icons/focused-rocket-icon.svg) 0 0, pointer;
         }
     }
 }

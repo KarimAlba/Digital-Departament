@@ -22,11 +22,14 @@ const Header = (props: any) => {
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
     const [isOpenSubjects, setIsOpenSubjects] = useState<boolean>(false);
     const [isInternet, setIsInternet] = useState<boolean>(false);
+    const [subjectProps, setSubjectProps] = useState<{id: number, name: string}>();
+    const [tagProps, setTagProps] = useState<{id: number, name: string}>();
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
     const getInternet = (value: boolean) => {setIsInternet(value)};
 
     const navigate = useNavigate();
+
     const handleCreationClick = () => {
         setUserData(false);
         navigate('creation');
@@ -34,12 +37,16 @@ const Header = (props: any) => {
 
     const handleSubjectsClick = () => {
         setIsOpenSubjects(!isOpenSubjects);
-        navigate('welcoming');
     };
 
-    const handleSubjectSelect = () => {
+    const handleSubjectSelect = (item: {id: number, name: string}) => {
         setIsOpenSubjects(false);
+        setSubjectProps(item);
     };
+
+    const handleTagSelect = (item: {id: number, name: string}) => {
+        setTagProps(item);
+    }; 
 
     const handleOpenedBookClick = () => {
         setUserData(false)
@@ -50,6 +57,10 @@ const Header = (props: any) => {
         };
     };
 
+    const handleLibraryClick = () => {
+        setUserData(false);
+    }
+
     return (
         <div 
             className={styles['main-container']} 
@@ -58,20 +69,37 @@ const Header = (props: any) => {
             {isOpenMistakes ? <MistakeModal phraseArr = {['Некорректно заполненные поля']}/> : null}
             <div className={styles['main-container_head']}>
                 <div className={styles.header}>
-                    <img src={Logo} alt="" className={styles.logo}/>
-                    <input type="text" className={styles.search} onClick={() => setUserData(false)}/>
+                    <img 
+                        src={Logo} 
+                        alt="" 
+                        className={styles.logo}
+                    />
+                    <input 
+                        type="text" 
+                        className={styles.search} 
+                        onClick={() => setUserData(false)}
+                    />
                     <img 
                         src={BookImg}
                         className={styles.book} 
                         onClick={handleOpenedBookClick}
                     />
                     <Link 
-                        to='favourites' className={styles.star} 
-                        onClick={() => setUserData(false)}
+                        to='favourites' 
+                        className={styles.star} 
+                        onClick={handleLibraryClick}
                     >
                     </Link>
-                    <img src={CreationImg} className={styles['creation-img']} onClick={handleCreationClick}/>
-                    <img src={Face} className={styles.face} onClick={handleFaceClick}/>
+                    <img 
+                        src={CreationImg} 
+                        className={styles['creation-img']} 
+                        onClick={handleCreationClick}
+                    />
+                    <img 
+                        src={Face} 
+                        className={styles.face} 
+                        onClick={handleFaceClick}
+                    />
                 </div>
                 <nav>
                     <Link 
@@ -109,12 +137,20 @@ const Header = (props: any) => {
                 }
                 <Routes>
                     <Route path='welcoming' element={<Welcoming/>}/>
-                    <Route path='library' element={<Library/>}/>
+                    <Route 
+                        path='library' 
+                        element={
+                            <Library 
+                                subjectValue={subjectProps} 
+                                tagValue={tagProps}
+                            />
+                        }
+                    />
                     <Route path='library/:id' element={<OpenedBook/>}/>
                     <Route path='license' element={<License/>}/>
                     <Route path='openedbook' element={<OpenedBook/>}/>
                     <Route path='favourites' element={<Favourites/>}/>
-                    <Route path='tags' element={<TagsPage/>}/>
+                    <Route path='tags' element={<TagsPage setSubject={handleTagSelect}/>}/>
                     <Route path='creation' element={<CreationPage/>}/>
                 </Routes>
             </div>

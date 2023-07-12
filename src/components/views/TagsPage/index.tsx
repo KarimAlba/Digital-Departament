@@ -1,12 +1,17 @@
 import styles from './style.module.scss';
 import { useState, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchImg from '../../../assets/images/icons/search-icon.svg';
 import TagsAPI from '../../../api/TagsAPI';
-import Library from '../Library';
 
-const TagsPage = (props: any) => {
+interface TagsPagePropsTypes{
+    setSubject: Function;
+}
+
+const TagsPage = (props: TagsPagePropsTypes) => {
+    const { setSubject } = props;
     const [tags, setTags] = useState<{id: number, name: string}[]>([]);
+    const navigate = useNavigate();
 
     const handleInputChange = (val: string) => {
         sendReq(val);
@@ -19,6 +24,11 @@ const TagsPage = (props: any) => {
                 setTags(response.data);
             })
             .catch(error => console.log(error))
+    }
+
+    const handleTagClick = (item: {id: number, name: string}) => {
+        navigate('/main/library');
+        setSubject(item);
     }
     
     useEffect(() => {
@@ -39,14 +49,8 @@ const TagsPage = (props: any) => {
 
             <ul>
                 {tags.map(item => 
-                    <li key={item.name + item.id}>
-                        <Link 
-                            to='/main/library'
-                            state={{ tagId: item.id }}
-                            key={item.id + item.name}
-                        >
-                            {'#' + item.name}
-                        </Link>
+                    <li key={item.name + item.id} onClick={() => handleTagClick(item)}>
+                        {'#' + item.name}
                     </li>
                 )}
             </ul>

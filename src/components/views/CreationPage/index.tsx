@@ -7,7 +7,7 @@ import SubjectsAPI from '../../../api/SubjectsAPI';
 import MistakeModal from '../../modals/MistakeModal';
 import TagsAPI from '../../../api/TagsAPI';
 import moment from 'moment';
-import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
+import AuthorsAPI from '../../../api/AuthorsAPI';
 
 const CreationPage = (props: any) => {
     const [bookType, setBookType] = useState<string>('');
@@ -93,7 +93,7 @@ const CreationPage = (props: any) => {
     };
 
     const getAuthors = (name?: string) => {
-        PublicationAPI.getAuthors(name)
+        AuthorsAPI.getAuthors(name)
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {

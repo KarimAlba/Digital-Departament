@@ -129,6 +129,7 @@ const OpenedBook = (props: any) => {
                         style={{
                             margin: '20px 0 20px 15%',
                             width: '70%',
+                            height: '600px',
                             border: '1px solid rgba(0, 0, 0, 0.3)',
                         }}
                     >

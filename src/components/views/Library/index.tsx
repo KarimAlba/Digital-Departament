@@ -6,18 +6,23 @@ import PublicationAPI from '../../../api/PublicationsAPI';
 import ClosedBook from '../../ui/ClosedBook';
 import Pagination from '../../ui/Pagination';
 import IBook from '../../../models/requests/IPublicationRequest';
-import EnumTypePublication from '../../../models/requests/EnumTypePublicationRequest';
+import EnumTypePublication from '../../../models/enums/EnumTypePublicationRequest';
 import ObjectSelector from '../../ui/ObjectSelector';
 import SubjectsAPI from '../../../api/SubjectsAPI';
-import EnumSortBy from '../../../models/responses/EnumSortByResponse';
-import EnumSortOrder from '../../../models/responses/EnumSortOrderResponse';
+import EnumSortBy from '../../../models/enums/EnumSortByResponse';
+import EnumSortOrder from '../../../models/enums/EnumSortOrderResponse';
 import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
 import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
 import { useLocation } from 'react-router-dom';
+import AuthorsAPI from '../../../api/AuthorsAPI';
 
-const Library = () => {
-    const location = useLocation();
-    const { tagId, subject } = location.state;
+interface LibraryPropsTypes {
+    subjectValue?: {id: number, name: string};
+    tagValue?: {id: number, name: string};
+}
+
+const Library = (props: LibraryPropsTypes) => {
+    const { subjectValue, tagValue } = props;
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
@@ -44,7 +49,7 @@ const Library = () => {
     }
 
     const getAuthors = (name?: string) => {
-        PublicationAPI.getAuthors(name)
+        AuthorsAPI.getAuthors(name)
             .then(response => {
                 if (response.status <= 204) {
                     if (response.data) {
@@ -166,15 +171,15 @@ const Library = () => {
         getAuthors();
         getSubjects();
 
-        if (tagId !== undefined) {
+        if (tagValue !== undefined) {
             const copy = Object.assign({}, book);
-            copy.tags = [tagId];
+            copy.tags = [tagValue.id];
             sendReq(copy);
             return;
         }
 
-        if (subject !== undefined) {
-            setSubjectProps(subject);
+        if (subjectValue !== undefined) {
+            setSubjectProps(subjectValue);
         }
 
         sendReq(book);

@@ -181,7 +181,6 @@ const Library = (props: LibraryPropsTypes) => {
         if (subjectValue !== undefined) {
             setSubjectProps(subjectValue);
         }
-
         sendReq(book);
     }, []);
 

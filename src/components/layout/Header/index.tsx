@@ -3,7 +3,7 @@ import styles from './style.module.scss'
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import UserDataModal from '../../modals/UserDataModal';
 import License from '../../views/License';
-import OpenedBook from '../../views/OpenedBook';
+import OpenedBook from '../../ui/OpenedBook';
 import Logo from '../../../assets/images/icons/logo-icon.svg';
 import Face from '../../../assets/images/icons/face-icon.svg';
 import MistakeModal from '../../modals/MistakeModal/index';

@@ -282,6 +282,10 @@ const CreationPage = (props: any) => {
                                 onInput={(e: any) => handleFileChange(e.target.value)}
                             />    
                         </label>
+                        {bookFile
+                            ? <span style={{fontSize: '10px'}}>{String(bookFile)}</span>
+                            : null
+                        }
                     </div>
                     <div className={styles.cover}>
                         <span>Обложка</span>
@@ -293,6 +297,10 @@ const CreationPage = (props: any) => {
                                 onInput={(e: any) => handleCoverChange(e.target.value)}
                             />    
                         </label>
+                        {bookCover
+                            ? <span style={{fontSize: '10px'}}>{String(bookCover)}</span>
+                            : null
+                        }
                     </div>
                 </div>
 

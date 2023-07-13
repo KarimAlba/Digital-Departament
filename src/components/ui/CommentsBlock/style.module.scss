@@ -1,7 +1,8 @@
 .comments{
     width: 100%;
-    box-sizing: border-box;
+    position: relative;
     padding-left: 2%;
+    box-sizing: border-box;
     display: flex;
     flex-flow: column;
     justify-content: start;
@@ -28,23 +29,10 @@
                 opacity: 0;
             }
         }
-
-        button{
-            margin: 0 0 0 10px;
-            width: 20%;
-            height: 30px;
-            border-radius: 12px;
-            background: #E52553;
-            border: none;
-            color: #FFF;
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 24px;
-        }
     }
 
     textarea{
-        margin-top: 15px;
+        margin: 15px 0 50px 0;
         width: 20%;
         height: 99px;
         padding: 19px 241px 62px 16px;
@@ -54,5 +42,21 @@
         border-radius: 10px;
         border: 1px solid var(--unnamed, #D2D2D2);
         background: #FFF;
+    }
+
+    
+    button{
+        position: absolute;
+        top: 310px;
+        left: 2%;
+        width: 200px;
+        height: 30px;
+        border-radius: 12px;
+        background: #E52553;
+        border: none;
+        color: #FFF;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
     }
 }

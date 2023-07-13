@@ -22,8 +22,9 @@ const OpenedBook = (props: any) => {
         if (id) {
             PublicationAPI.getUniqPublication(Number(id.split(':')[1]))
             .then(response => {
-                setBook(response.data);
-                setFavorite(response.data.isFavourite);
+                const data = (response.data as IServerBookResponse);
+                setBook(data);
+                setFavorite(data.isFavourite);
             })
             .catch(error => console.log(error));
         };

@@ -3,12 +3,9 @@ import { useState, useEffect } from 'react';
 import PublicationAPI from '../../../api/PublicationsAPI';
 import IServerBook from '../../../models/responses/IServerBookResponse';
 import ClosedBook from '../../ui/ClosedBook';
+import IGotFavourites from '../../../models/responses/IGotFavourites';
 
-interface FavouritesPropsTypes{
-
-}
-
-const Favourites = (props: FavouritesPropsTypes) => {
+const Favourites = () => {
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(7);
     const [contains, setContains] = useState<boolean>(true);
@@ -18,12 +15,12 @@ const Favourites = (props: FavouritesPropsTypes) => {
         PublicationAPI.getFavourites(page, pageSize)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response);
-                    if (response.data.totalCount === 0) {
+                    const data = (response.data as IGotFavourites)
+                    if (data.totalCount === 0) {
                         setContains(false);
                     } else {
                         setContains(true);
-                        setBooks(response.data.data)
+                        setBooks(data.data);
                     }
                 }
             })

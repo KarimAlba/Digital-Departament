@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './style.module.scss'
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../../models/requests/IUserRequest';
@@ -88,7 +88,6 @@ const Registration = (props: any) => {
             post: userPost
         }
 
-        console.log(user.birthDate);
         setNewUser(user);
         sendReq(user);
         checkRegistrationReady();
@@ -187,10 +186,6 @@ const Registration = (props: any) => {
     };
 
     const getInternet = (value: boolean) => {setInternetConnection(value)};
-
-    useEffect(() =>{
-        console.log(userBirthDate);
-    }, [userBirthDate]);
 
     return(
         <div className='background'>

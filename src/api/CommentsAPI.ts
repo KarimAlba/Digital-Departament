@@ -1,9 +1,10 @@
 import axiosConfig from "./axiosConfig";
 import { AxiosResponse } from "axios";
 import IErrorResponse from "../models/responses/IErrorResponse";
+import ITokenCommentResponse from "../models/responses/ITokenCommentResponse";
 
 class CommentsAPI {
-    public static getCommentaries(page: number, pageSize: number, id: number): Promise<AxiosResponse<any | IErrorResponse>> {
+    public static getCommentaries(page: number, pageSize: number, id: number): Promise<AxiosResponse<ITokenCommentResponse | IErrorResponse>> {
         return axiosConfig.get(`/comments/${id}`, {
             params: { 
                 page: page, 
@@ -12,9 +13,11 @@ class CommentsAPI {
         });
     };
 
-    public static setComment(body: any) : Promise<AxiosResponse<any | IErrorResponse>> {
-        return axiosConfig.post('/comments/create', {
-            params: {...body}
+    public static setComment(formData: FormData) : Promise<AxiosResponse<boolean | IErrorResponse>> {
+        return axiosConfig.post('/comments/create', formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
         });
     };
 };

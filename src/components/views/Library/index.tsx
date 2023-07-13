@@ -13,20 +13,20 @@ import EnumSortBy from '../../../models/enums/EnumSortByResponse';
 import EnumSortOrder from '../../../models/enums/EnumSortOrderResponse';
 import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
 import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
-import { useLocation } from 'react-router-dom';
 import AuthorsAPI from '../../../api/AuthorsAPI';
+import IPublicationTokenResponse from '../../../models/responses/IPublicationsTokenResponse';
 
 interface LibraryPropsTypes {
-    subjectValue?: {id: number, name: string};
-    tagValue?: {id: number, name: string};
+    bookValue?: IBook;
+    subjectVal?: {id: number, name: string}; 
 }
 
 const Library = (props: LibraryPropsTypes) => {
-    const { subjectValue, tagValue } = props;
+    const { bookValue, subjectVal } = props;
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
-    const [pageSize, setPageSize]= useState<number>(6);
+    const [pageSize, setPageSize]= useState<number>(7);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
     const [authors, setAuthors] = useState<{id: number, name: string}[] | []>([]);
     const [subjects, setSubjects] = useState<{id: number, name: string}[] | []>([]);
@@ -40,13 +40,14 @@ const Library = (props: LibraryPropsTypes) => {
         PublicationAPI.getAllPublications({...bookObj})
             .then(response => {
                 if (response.status <= 204) {
-                    const maxPageSize = Math.floor(response.data.totalCount / pageSize);
+                    const data = (response.data as IPublicationTokenResponse);
+                    const maxPageSize = Math.floor(data.totalCount / pageSize);
                     setPagBtnsSize(maxPageSize);
-                    setBooks(response.data.data);
+                    setBooks(data.data);
                 }
             })
-            .catch(error => console.log(error))
-    }
+            .catch(error => console.log(error));
+    };
 
     const getAuthors = (name?: string) => {
         AuthorsAPI.getAuthors(name)
@@ -71,19 +72,6 @@ const Library = (props: LibraryPropsTypes) => {
             })
             .catch(error => console.log(error));
     }
-
-    const sendFiltrationRequest = (bookVal: IBook) => {
-        PublicationAPI.getAllPublications(bookVal)
-            .then(response => {
-                if (response.status <= 204) {
-                    console.log(response);
-                    const maxPageSize = Math.floor(response.data.totalCount / pageSize);
-                    setPagBtnsSize(maxPageSize);
-                    setBooks(response.data.data);
-                }
-            })
-            .catch(error => console.log(error));
-    };
 
     const filterByType = (val: string) => {
         const copy = Object.assign({}, book);
@@ -125,7 +113,7 @@ const Library = (props: LibraryPropsTypes) => {
             copy.subjects = array.map(item => item.id);
         }
 
-        sendFiltrationRequest(copy);
+        sendReq(copy);
     }
 
     const getPage = (curPage: number) => {
@@ -141,7 +129,7 @@ const Library = (props: LibraryPropsTypes) => {
         const copy = Object.assign({}, book);
         copy.sortBy = EnumSortBy.Alphabet;
         setBook(copy);
-        sendFiltrationRequest(copy);
+        sendReq(copy);
     }
 
     const handleDateOfCreationBtnClick = () => {
@@ -150,44 +138,37 @@ const Library = (props: LibraryPropsTypes) => {
         const copy = Object.assign({}, book);
         copy.sortBy = EnumSortBy.CreationDate;
         setBook(copy);
-        sendFiltrationRequest(copy);
+        sendReq(copy);
     }
 
     const handleArrowUpClick = () => {
         setSortedOrder(EnumSortOrder.Increase);
         const copy = Object.assign({}, book);
         copy.sortOrder = EnumSortOrder.Increase;
-        sendFiltrationRequest(copy);
+        sendReq(copy);
     }
 
     const handleArrowBottomClick = () => {
         setSortedOrder(EnumSortOrder.Decrease);
         const copy = Object.assign({}, book);
         copy.sortOrder = EnumSortOrder.Decrease;
-        sendFiltrationRequest(copy);
+        sendReq(copy);
     }
 
     useEffect(() => {
         getAuthors();
         getSubjects();
 
-        if (tagValue !== undefined) {
-            const copy = Object.assign({}, book);
-            copy.tags = [tagValue.id];
-            sendReq(copy);
+        if (bookValue !== undefined) {
+            setBook(bookValue);
+            sendReq(bookValue);
+            if (subjectVal !== undefined) {
+                setSubjectProps(subjectVal);
+            }
             return;
         }
-
-        if (subjectValue !== undefined) {
-            setSubjectProps(subjectValue);
-        }
-
         sendReq(book);
     }, []);
-
-    useEffect(() => {
-        console.log(book);
-    }, [book]);
 
     return (
         <div className={styles.library}>

@@ -4,13 +4,14 @@ import IEditUser from "../models/requests/IEditUserRequest";
 import axiosConfig from "./axiosConfig";
 import { AxiosResponse } from "axios";
 import IErrorResponse from "../models/responses/IErrorResponse";
+import ISignInResponse from "../models/responses/ISignInResponse";
 
 class AccountAPI{
     public static registration(body: IUser): Promise<AxiosResponse<any | IErrorResponse>> {
         return axiosConfig.post('/account/sign-up', {...body});
     }
 
-    public static autorization(body: IServerUser): Promise<AxiosResponse<any | IErrorResponse>> {
+    public static autorization(body: IServerUser): Promise<AxiosResponse<ISignInResponse | IErrorResponse>> {
         return axiosConfig.post('/account/sign-in', {...body});
     }
 

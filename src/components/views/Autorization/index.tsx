@@ -9,6 +9,7 @@ import Password from '../../ui/Password';
 import MistakeModal from '../../modals/MistakeModal';
 import InternetModal from '../../modals/InternetModal';
 import CustomInput from '../../ui/CustomInput';
+import ISignInResponse from '../../../models/responses/ISignInResponse';
 
 const Autorization = (props: any) => {
     const [userLogin, setUserLogin] = useState<string>('');
@@ -43,7 +44,7 @@ const Autorization = (props: any) => {
         }
     }
 
-    const cleanLocaleStorage = (person: IServerUser) => {
+    const cleanLocaleStorage = () => {
         localStorage.removeItem('name');
         localStorage.removeItem('email');
         localStorage.removeItem('birthDate');
@@ -53,7 +54,7 @@ const Autorization = (props: any) => {
     }
 
     const fillLocalStorage = (person: IServerUser) => {
-        cleanLocaleStorage(person);
+        cleanLocaleStorage();
         localStorage.setItem('name', String(person.name));
         localStorage.setItem('email', String(person.email));
         localStorage.setItem('birthDate', String(person.birthDate));
@@ -66,13 +67,13 @@ const Autorization = (props: any) => {
         AccountAPI.autorization(user)
             .then(response => {
                 if (response.status <= 204) {
-                    const user = response.data.user;
-                    console.log(response.data);
+                    const data = (response.data as ISignInResponse);
+                    const user = data.user;
                     fillLocalStorage(user);
-                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('token', data.token);
                     localStorage.setItem('password', userPassword);
                     localStorage.setItem('login', userLogin);
-                    axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
+                    axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${data.token}`;
                     navigate('main/welcoming');
                     setIsOpenMistakes(false);
                 }
@@ -91,9 +92,9 @@ const Autorization = (props: any) => {
     }
 
     const checkToken = () => {
-        if (localStorage.getItem('token')) {
-            navigate('main/welcoming');
-        }
+        // if (localStorage.getItem('token')) {
+        //     navigate('main/welcoming');
+        // }
     }
 
     useEffect(() => {

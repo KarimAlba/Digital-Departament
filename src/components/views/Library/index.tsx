@@ -14,10 +14,11 @@ import EnumSortOrder from '../../../models/enums/EnumSortOrderResponse';
 import ArrowUpImg from '../../../assets/images/icons/arrow-up-icon.png';
 import ArrowBottomImg from '../../../assets/images/icons/arrow-bottom-icon.png';
 import AuthorsAPI from '../../../api/AuthorsAPI';
+import IPublicationTokenResponse from '../../../models/responses/IPublicationsTokenResponse';
 
 interface LibraryPropsTypes {
     bookValue?: IBook;
-    subjectVal?: {id: number, name: string} 
+    subjectVal?: {id: number, name: string}; 
 }
 
 const Library = (props: LibraryPropsTypes) => {
@@ -39,13 +40,14 @@ const Library = (props: LibraryPropsTypes) => {
         PublicationAPI.getAllPublications({...bookObj})
             .then(response => {
                 if (response.status <= 204) {
-                    const maxPageSize = Math.floor(response.data.totalCount / pageSize);
+                    const data = (response.data as IPublicationTokenResponse);
+                    const maxPageSize = Math.floor(data.totalCount / pageSize);
                     setPagBtnsSize(maxPageSize);
-                    setBooks(response.data.data);
+                    setBooks(data.data);
                 }
             })
-            .catch(error => console.log(error))
-    }
+            .catch(error => console.log(error));
+    };
 
     const getAuthors = (name?: string) => {
         AuthorsAPI.getAuthors(name)

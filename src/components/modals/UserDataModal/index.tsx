@@ -130,12 +130,9 @@ const UserDataModal = (props: UserDataModalPropsTypes) => {
             return
         };
 
-        console.log(user);
-
         AccountAPI.edit(user)
             .then(response => {
                 if (response.status <= 204) {
-                    console.log(response);
                     updateLocalStorage(user);
                     axiosConfig.defaults.headers.common['Authorization']  = `Bearer ${response.data.token}`;
                     handleMistakeBorn(false);

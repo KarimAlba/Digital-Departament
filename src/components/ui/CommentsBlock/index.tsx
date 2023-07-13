@@ -3,6 +3,7 @@ import ClientComment from '../ClientComment';
 import CommentsAPI from '../../../api/CommentsAPI';
 import ICommentResponse from '../../../models/responses/ICommentResponse';
 import { useState, useEffect } from 'react';
+import ITokenCommentResponse from '../../../models/responses/ITokenCommentResponse';
 
 interface CommentsBlockPropsTypes{
     id: number;
@@ -21,7 +22,8 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
     const getComments = () => {
         CommentsAPI.getCommentaries(page, pageSize, id)
             .then(response => {
-                setComments(response.data.data);
+                const data = (response.data as ITokenCommentResponse);
+                setComments(data.data);
             })
             .catch(error => console.log(error));
     }

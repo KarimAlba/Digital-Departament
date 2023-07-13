@@ -15,11 +15,44 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
     const [pageSize, setPageSize] = useState<number>(3);
     const [commentVal, setCommentVal] = useState<string>('');
     const [comments, setComments] = useState<ICommentResponse[] | []>([]);
+    const [commentFile, setCommentFile] = useState<any>();
+    const [commentAssets, setCommentAssets] = useState<any[] | []>([])
 
     const getComments = () => {
         CommentsAPI.getCommentaries(page, pageSize, id)
             .then(response => {
                 setComments(response.data.data);
+            })
+            .catch(error => console.log(error));
+    }
+
+    const handleFileAdding = (e: any) => {
+        const file = e.target.value;
+        setCommentFile(file);
+        const copy = [...commentAssets];
+        copy.push(file);
+        setCommentAssets(copy);
+    }
+
+    const prepareFormData = () => {
+        const formData = new FormData();
+        formData.append('publicationId', String(id));
+        formData.append('text', commentVal);
+        
+        commentAssets.forEach((asset, index) => {
+            Object.keys(asset).forEach((key) => {
+                formData.append(`assets[${index}][${key === 'value' ? 'name': key}]`, (asset as any)[key])                
+            });
+        });
+
+        return formData;
+    }
+
+    const sendComment = () => {
+        const formData = prepareFormData();
+        CommentsAPI.setComment(formData)
+            .then(response => {
+                console.log(response);
             })
             .catch(error => console.log(error));
     }
@@ -33,6 +66,10 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
         }
     }
 
+    const handleSendBtnClick = () => {
+        sendComment();
+    }
+
     useEffect(() => {
         getComments();
     }, []);
@@ -42,14 +79,36 @@ const CommentsBlock = (props: CommentsBlockPropsTypes) => {
             <h2>Комментарии</h2>
             <div className={styles['comments_header']}>
                 <label htmlFor="fileInp">
-                    <input type="file" name='fileInp'/>    
+                    <input type="file" name='fileInp' onInput={(e:any) => handleFileAdding(e)}/>    
                 </label>
-                {isOpen 
-                    ? <button className={styles['comments_header_send-btn']}>Отправить</button> 
+                {commentAssets.length > 0
+                    ? <ul style={{margin: 0}}>
+                        {commentAssets.map((com, index) => 
+                            <li 
+                                style={{fontSize: '10px'}}
+                                key={com + String(index)}
+                            >
+                                {com}
+                            </li>
+                        )}
+                    </ul>
                     : null
                 }
             </div>  
-            <textarea name="" id="" placeholder='Введите текст обращения' onInput={handleTextAreaChange}></textarea>
+            <textarea 
+                placeholder='Введите текст обращения' 
+                onInput={handleTextAreaChange}
+            >
+            </textarea>
+            {isOpen 
+                    ? (<button 
+                        onClick={handleSendBtnClick}
+                        className={styles['comments_header_send-btn']}
+                    >
+                        Отправить
+                    </button> )
+                    : null
+                }
             <div className={styles['comments_container']}>
                 {comments.map((item) => <ClientComment key={item.id + item.textComment} comment={item}/>)}
             </div>

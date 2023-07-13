@@ -12,9 +12,11 @@ class CommentsAPI {
         });
     };
 
-    public static setComment(body: any) : Promise<AxiosResponse<any | IErrorResponse>> {
-        return axiosConfig.post('/comments/create', {
-            params: {...body}
+    public static setComment(formData: FormData) : Promise<AxiosResponse<any | IErrorResponse>> {
+        return axiosConfig.post('/comments/create', formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
         });
     };
 };

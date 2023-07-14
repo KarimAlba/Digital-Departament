@@ -23,7 +23,8 @@ const Header = (props: any) => {
     const [isOpenMistakes, setIsOpenMistakes] = useState<boolean>(false);
     const [isOpenSubjects, setIsOpenSubjects] = useState<boolean>(false);
     const [isInternet, setIsInternet] = useState<boolean>(false);
-    const [book, setBook] = useState<IBook>({page: 1, pageSize: 7});
+    const [pageSize, setPageSize] = useState<number>(2)
+    const [book, setBook] = useState<IBook>({page: 1, pageSize: pageSize});
     const [subjectVal, setSubjectVal] = useState<{id: number, name: string}>();
     const handleFaceClick = () => {setUserData(!userData)}; 
     const handleMistakeBorn = (value: boolean) => {setIsOpenMistakes(value)};
@@ -65,7 +66,7 @@ const Header = (props: any) => {
 
     const handleLibraryClick = () => {
         setUserData(false);
-        const copy: IBook = {page: 1, pageSize: 7};
+        const copy: IBook = {page: 1, pageSize: pageSize};
         setBook(copy);
     }
 

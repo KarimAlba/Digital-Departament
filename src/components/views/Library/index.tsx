@@ -26,7 +26,7 @@ const Library = (props: LibraryPropsTypes) => {
 
     const [books, setBooks] = useState<IServerBook[] | []>([]);
     const [page, setPage] = useState<number>(1);
-    const [pageSize, setPageSize]= useState<number>(7);
+    const [pageSize, setPageSize]= useState<number>(2);
     const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
     const [authors, setAuthors] = useState<{id: number, name: string}[] | []>([]);
     const [subjects, setSubjects] = useState<{id: number, name: string}[] | []>([]);
@@ -160,13 +160,16 @@ const Library = (props: LibraryPropsTypes) => {
         getSubjects();
 
         if (bookValue !== undefined) {
+            setPageSize(bookValue.pageSize);
             setBook(bookValue);
             sendReq(bookValue);
+            console.log(1);
             if (subjectVal !== undefined) {
                 setSubjectProps(subjectVal);
             }
             return;
         }
+
         sendReq(book);
     }, []);
 

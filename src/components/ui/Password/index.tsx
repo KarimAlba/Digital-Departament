@@ -21,9 +21,13 @@ const Password = (props: PasswordPropsTypes) => {
 
     const showPassword = () => {
         setShowedPassword(!showedPassword);
+        setTimeout(() => {
+            setShowedPassword(false);
+            setIsActivePassword(false);
+        }, 1000);
     }
     return (
-        <div className={styles.password} onBlur={() => setIsActivePassword(false)}>
+        <div className={styles.password}>
             {isActivePassword? <label htmlFor="password">Пароль</label>: null}
             <input 
                 type={showedPassword
